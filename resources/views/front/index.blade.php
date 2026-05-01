@@ -9,7 +9,7 @@
             <figure class="your-image-container-class">
                 <div data-anim-child="slide-up" class="hero__bg">
                     <img src="assets/images/hero/sahara-desert-luxury-camp-stargazing-morocco.webp"
-                        alt="Magical night view of a luxury Berber camp in the Sahara Desert, Morocco, with tents illuminated under a dramatic, star-filled sky.">
+                        alt="Magx of a luxury Berber camp in the Sahara Desert, Morocco, with tents illuminated under a dramatic, star-filled sky.">
                 </div>
             </figure>
 
@@ -445,7 +445,7 @@
                                 <div class="tourCard -type-1 d-block bg-white relative">
                                     <div class="tourCard__header">
                                         <div class="tourCard__image ratio ratio-28:20">
-                                            <img src="{{ $activity->getFirstMediaUrl('activities') ?: asset('img/default-activity.jpg') }}"
+                                            <img src="{{ $activity->getFirstMediaUrl('activities') ?: asset('assets/images/default-image.png') }}"
                                                 alt="{{ $activity->title }}" class="img-ratio rounded-12">
                                         </div>
 
@@ -552,7 +552,7 @@
                                 <div class="tourCard -type-1 d-block bg-white relative">
                                     <div class="tourCard__header">
                                         <div class="tourCard__image ratio ratio-28:20">
-                                            <img src="{{ $trek->getFirstMediaUrl('trekking') ?: asset('img/default-trekking.jpg') }}"
+                                            <img src="{{ $trek->getFirstMediaUrl('trekking') ?: asset('assets/images/default-image.png') }}"
                                                 alt="{{ $trek->title }}" class="img-ratio rounded-12">
                                         </div>
 
@@ -912,6 +912,7 @@
 
     </div>
 
+    @if($posts->count())
     <section class="layout-pt-xl layout-pb-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
@@ -940,7 +941,8 @@
                             <div class="blogCard__content mt-30">
                                 <div class="blogCard__info text-14">
                                     <div class="lh-13">
-                                        {{ $post->published_at ? $post->published_at->format('F d, Y') : 'N/A' }}</div>
+                                        {{ $post->published_at ? $post->published_at->format('F d, Y') : 'N/A' }}
+                                    </div>
                                     <div class="blogCard__line"></div>
                                     <div class="lh-13">By {{ $post->author->name ?? 'N/A' }}</div>
                                 </div>
@@ -954,6 +956,6 @@
             </div>
         </div>
     </section>
-
+@endif
 
 @endsection

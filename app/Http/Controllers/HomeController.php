@@ -69,14 +69,14 @@ class HomeController extends Controller
             ->get();
 
         return view('front.index', [
-            'specialOffers'   => $specialOffers,
-            'tourCategories'  => $tourCategories,
-            'tours'           => $tours,
-            'activities'      => $activities,
-            'trekking'        => $trekking,
-            'posts'           => $posts,
+            'specialOffers'      => $specialOffers,
+            'tourCategories'     => $tourCategories,
+            'tours'              => $tours,
+            'activities'         => $activities,
+            'trekking'           => $trekking,
+            'posts'              => $posts,
             'locationsForSearch' => $locationsForSearch,
-            'locationsForSection' => $locationsForSection,
+            'locations'          => $locationsForSection, 
         ]);
     }
 
