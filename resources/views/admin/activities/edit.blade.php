@@ -78,28 +78,115 @@
                     <div class="card-body">
                         <div class="row">
 
-                            {{-- Current Image --}}
+                            {{-- ✅ Upload New Cover Image --}}
                             <div class="mb-3 col-md-12">
-                                <label class="form-label d-block">Current Image</label>
-                                @if ($activity->getFirstMediaUrl('activities'))
-                                    <img src="{{ $activity->getFirstMediaUrl('activities') }}" alt="{{ $activity->title }}"
-                                        class="img-thumbnail rounded-3" style="max-width: 300px;">
-                                @else
-                                    <p class="text-muted">No image uploaded yet.</p>
-                                @endif
-                            </div>
-
-                            {{-- New Image Upload --}}
-                            <div class="mb-3 col-md-12">
-                                <label for="image" class="form-label">Upload New Image</label>
+                                <label for="image" class="form-label">Upload New Cover Image</label>
                                 <input type="file" name="image" id="image"
                                     class="form-control @error('image') is-invalid @enderror">
                                 @error('image')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
-                                <small class="text-muted">Upload a new image to replace the current one. Leave blank to keep
-                                    existing.</small>
+                                <small class="text-muted">
+                                    Upload a new image to replace the current cover. Leave empty to keep the existing cover.
+                                </small>
                             </div>
+
+                            {{-- ✅ Cover Image Metadata --}}
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Cover Image Metadata</label>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Alt Text</label>
+                                    <input type="text" name="cover_alt"
+                                        class="form-control @error('cover_alt') is-invalid @enderror"
+                                        placeholder="E.g. People kayaking in river"
+                                        value="{{ old('cover_alt', $activity->getFirstMedia('cover')?->getCustomProperty('alt') ?? '') }}">
+                                    @error('cover_alt')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Title (optional)</label>
+                                    <input type="text" name="cover_title"
+                                        class="form-control @error('cover_title') is-invalid @enderror"
+                                        placeholder="E.g. Kayaking Adventure"
+                                        value="{{ old('cover_title', $activity->getFirstMedia('cover')?->getCustomProperty('title') ?? '') }}">
+                                    @error('cover_title')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Caption (optional)</label>
+                                    <input type="text" name="cover_caption"
+                                        class="form-control @error('cover_caption') is-invalid @enderror"
+                                        placeholder="E.g. Exploring rivers in Marrakech"
+                                        value="{{ old('cover_caption', $activity->getFirstMedia('cover')?->getCustomProperty('caption') ?? '') }}">
+                                    @error('cover_caption')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Description (optional)</label>
+                                    <textarea name="cover_description" rows="2" class="form-control @error('cover_description') is-invalid @enderror"
+                                        placeholder="Detailed description of the cover image...">{{ old('cover_description', $activity->getFirstMedia('cover')?->getCustomProperty('description') ?? '') }}</textarea>
+                                    @error('cover_description')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            {{-- ✅ Current Gallery Images --}}
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label d-block">Current Gallery Images</label>
+
+                                @php
+                                    $galleryImages = $activity->getMedia('gallery');
+                                @endphp
+
+                                @if ($galleryImages->count())
+                                    <div class="row g-2">
+                                        @foreach ($galleryImages as $image)
+                                            <div class="col-auto text-center">
+                                                <img src="{{ $image->getUrl('thumb') }}" alt="Gallery Image"
+                                                    class="rounded-3 img-thumbnail mb-2" style="width: 150px;">
+                                                <div class="form-check mt-1">
+                                                    <input type="checkbox" name="delete_gallery[]"
+                                                        value="{{ $image->id }}" class="form-check-input"
+                                                        id="delete_image_{{ $image->id }}">
+                                                    <label class="form-check-label small text-danger"
+                                                        for="delete_image_{{ $image->id }}">
+                                                        Delete
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p class="text-muted">No gallery images uploaded yet.</p>
+                                @endif
+                            </div>
+
+                            {{-- ✅ Upload New Gallery Images --}}
+                            <div class="mb-3 col-md-12">
+                                <label for="gallery" class="form-label">Upload New Gallery Images</label>
+                                <input type="file" name="gallery[]" id="gallery" multiple
+                                    class="form-control @error('gallery.*') is-invalid @enderror">
+                                @error('gallery.*')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">
+                                    Upload new images to add to the gallery. Recommended formats: JPG, PNG, WEBP.
+                                </small>
+
+                                {{-- ✅ Gallery Metadata Fields Container --}}
+                                <div id="gallery-meta-container" class="mt-4"></div>
+                            </div>
+
 
                             {{-- Title --}}
                             <div class="mb-3 col-md-6">
@@ -321,5 +408,45 @@
                 window.location.href = link.href;
             }, 800);
         }
+    </script>
+@section('scripts')
+    @parent
+    <script>
+        document.getElementById('gallery').addEventListener('change', function(e) {
+            const container = document.getElementById('gallery-meta-container');
+            container.innerHTML = '';
+            const files = e.target.files;
+
+            Array.from(files).forEach((file, index) => {
+                const div = document.createElement('div');
+                div.classList.add('gallery-meta-item', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
+
+                div.innerHTML = `
+                    <p class="fw-bold mb-2">Image: ${file.name}</p>
+
+                    <div class="mb-2">
+                        <label class="form-label">Alt Text</label>
+                        <input type="text" name="gallery_alt[]" class="form-control" placeholder="E.g. Activity scene">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Title (optional)</label>
+                        <input type="text" name="gallery_title[]" class="form-control" placeholder="E.g. Activity Adventure">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Caption (optional)</label>
+                        <input type="text" name="gallery_caption[]" class="form-control" placeholder="E.g. Group enjoying the day.">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Description (optional)</label>
+                        <textarea name="gallery_description[]" class="form-control" rows="2" placeholder="Detailed description of the image..."></textarea>
+                    </div>
+                `;
+
+                container.appendChild(div);
+            });
+        });
     </script>
 @endsection

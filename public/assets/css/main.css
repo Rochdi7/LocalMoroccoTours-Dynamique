@@ -102,39 +102,53 @@
 :root {
   --color-white: #FFFFFF;
   --color-black: #000000;
-  --color-border: #DDDDDD;
-  --color-accent-1: #EB662B;
-  --color-accent-1-dark: #CE5A25;
-  --color-accent-2: #4A43C4;
+  --color-border: #D1D1D1;
+
+  --color-accent-1: #f39903;
+  --color-accent-1-dark: #c87d02;
+
+  --color-accent-2: #05073C;
+
   --color-dark-1: #05073C;
-  --color-blue-1: #1967D2;
-  --color-red-1: #D93025;
-  --color-red-2: #F64E60;
-  --color-red-3: #FF0000;
-  --color-red-4: #FFE5E5;
-  --color-purple-1: #8950FC;
-  --color-yellow-1: #FFA800;
-  --color-yellow-2: #E2AD64;
-  --color-yellow-3: #F9AB00;
-  --color-light-1: #F5F5F5;
-  --color-light-2: #717171;
-  --color-light-3: #FBFBFB;
-  --color-light-4: #DDD3EC;
-  --color-light-5: #F2F1EC;
-  --color-light-6: #E7E6E6;
-  --color-light-7: #C6C6D2;
-  --color-green-1: #EFF7F1;
-  --color-green-2: #63B06F;
-  --color-green-3: #34A853;
-  --color-info-1: #CDE9F6;
-  --color-info-2: #4780AA;
-  --color-warning-1: #F7F3D7;
-  --color-warning-2: #927238;
-  --color-error-1: #ECC8C5;
-  --color-error-2: #AB3331;
-  --color-success-1: #DEF2D7;
-  --color-success-2: #5B7052;
+
+  --color-blue-1: #1d4f91; /* more muted Moroccan blue */
+
+  --color-red-1: #b23b2e;
+  --color-red-2: #d94a3a;
+  --color-red-3: #c12c1d;
+  --color-red-4: #fde7e5;
+text-accent-1
+  --color-purple-1: #5e3d78; /* muted Moroccan plum/purple */
+
+  --color-yellow-1: #f39903;
+  --color-yellow-2: #e3a535;
+  --color-yellow-3: #d28700;
+
+  --color-light-1: #f5f3ef;
+  --color-light-2: #6b6b78;
+  --color-light-3: #fefcf9;
+  --color-light-4: #d9d3e0;
+  --color-light-5: #edeae2;
+  --color-light-6: #e2e1df;
+  --color-light-7: #b8b8c5;
+
+  --color-green-1: #f2f8f4;
+  --color-green-2: #659d7c;
+  --color-green-3: #3c7f58;
+
+  --color-info-1: #d6edf2;
+  --color-info-2: #357482;
+
+  --color-warning-1: #fcf4e3;
+  --color-warning-2: #9c702d;
+
+  --color-error-1: #f1d4d2;
+  --color-error-2: #9c332f;
+
+  --color-success-1: #e2f2e2;
+  --color-success-2: #4f7055;
 }
+
 
 [data-anim-wrap] {
   pointer-events: none;
@@ -723,8 +737,8 @@ button:focus {
 }
 
 .button.-dark-1:hover {
-  border-color: var(--color-dark-1);
-  background-color: var(--color-dark-1) !important;
+  border-color: var(--color-blue-1);
+  background-color: var(--color-blue-1) !important;
   color: white !important;
 }
 
@@ -4607,16 +4621,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__container {
-  width: 490px;
+  width: 420px;
   max-width: calc(100vw - 14px);
-  padding: 20px;
+  padding: 12px;
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__list {
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  height: 302px;
+  height: auto;
+  max-height: 280px;
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__item button {
@@ -4661,9 +4676,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-tour-type .searchFormItemDropdown__container {
-  width: 347px;
+  width: 300px;
   max-width: calc(100vw - 14px);
-  padding: 20px;
+  padding: 12px;
 }
 
 @media (max-width: 575px) {
@@ -4673,10 +4688,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-tour-type .searchFormItemDropdown__list {
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  height: 302px;
+  height: auto;
+  max-height: 280px;
 }
 
 .searchForm.-type-1 .searchFormItemDropdown.-tour-type .searchFormItemDropdown__item button {
@@ -7096,83 +7112,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .submenu a {
   transform: translateY(100%);
-}
-
-.preloader {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 5000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: white;
-  transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.preloader__wrap {
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 30px;
-  background-color: white;
-  box-shadow: 0px 2px 24px 0px #00000014;
-  animation-name: preloaderWraper;
-  animation-iteration-count: infinite;
-  animation-duration: 1.8s;
-  animation-timing-function: ease;
-}
-
-.preloader__icon {
-  position: absolute;
-  animation-name: preloader;
-  animation-iteration-count: infinite;
-  animation-duration: 1.8s;
-  animation-timing-function: ease;
-}
-
-.preloader__title {
-  font-size: 47px;
-  font-weight: 600;
-  line-height: 68px;
-  letter-spacing: 0em;
-  margin-top: 16px;
-}
-
-.preloader.-is-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-@keyframes preloaderWraper {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: none;
-  }
-}
-
-@keyframes preloader {
-  0% {
-    transform: translateY(180%) scale(1);
-  }
-  50% {
-    transform: translateY(0%) scale(1.2);
-  }
-  100% {
-    transform: translateY(-180%);
-  }
 }
 
 .py-0 {
@@ -13619,8 +13558,8 @@ table.table-4.-border-bottom tbody > tr {
   transform: translateY(-50%) translateX(-50%);
   background-color: black;
   border-radius: 100%;
-  width: rem(52px);
-  height: rem(52px);
+  // width: rem(52px, 16px);
+  // height: rem(52px, 16px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13907,3 +13846,36 @@ button.gm-ui-hover-effect::after {
   background-color: #F5F5F5;
   z-index: -2;
 }
+
+/* my new style */ 
+ .layout-pt-xl {
+                padding-top: 120px;
+            }
+
+             .js-favorite-btn.is-favorited {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .js-favorite-btn.is-favorited i {
+            color: #ff4d4d;
+        }
+
+ .visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+ .layout-pt-xl {
+                padding-top: 120px;
+            }  .js-favorite-btn.is-favorited {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        .js-favorite-btn.is-favorited i {
+            color: #ff4d4d;
+        }

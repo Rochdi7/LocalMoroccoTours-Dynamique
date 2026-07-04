@@ -31,6 +31,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'excerpt' => 'nullable|string',
+            'quote' => 'nullable|string',
             'content' => 'required',
             'featured_image' => 'nullable|image|max:2048',
             'status' => 'required|in:draft,published',
@@ -39,20 +40,13 @@ class PostController extends Controller
             'tags.*' => 'exists:tags,id',
         ]);
 
-        // Generate unique slug
-        $slug = Str::slug($request->title);
-        $existingSlug = Post::where('slug', $slug)->first();
+        $slug = $this->generateUniqueSlug(Str::slug($request->title));
 
-        if ($existingSlug) {
-            // If the slug already exists, append a unique number
-            $slug = $this->generateUniqueSlug($slug);
-        }
-
-        // Create the post
         $post = Post::create([
             'title' => $request->title,
             'slug' => $slug,
             'excerpt' => $request->excerpt,
+            'quote' => $request->quote,
             'content' => $request->content,
             'status' => $request->status,
             'author_id' => Auth::id(),
@@ -60,13 +54,11 @@ class PostController extends Controller
             'published_at' => $request->status === 'published' ? now() : null,
         ]);
 
-        // Handle file upload for featured image
         if ($request->hasFile('featured_image')) {
             $post->addMediaFromRequest('featured_image')
                 ->toMediaCollection('featured_image');
         }
 
-        // Attach tags if any
         if ($request->filled('tags')) {
             $post->tags()->sync($request->tags);
         }
@@ -88,6 +80,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'excerpt' => 'nullable|string',
+            'quote' => 'nullable|string',
             'content' => 'required',
             'featured_image' => 'nullable|image|max:2048',
             'status' => 'required|in:draft,published',
@@ -96,10 +89,18 @@ class PostController extends Controller
             'tags.*' => 'exists:tags,id',
         ]);
 
+        // Check if title changed and update slug if needed
+        if ($request->title !== $post->title) {
+            $slug = $this->generateUniqueSlug(Str::slug($request->title));
+        } else {
+            $slug = $post->slug;
+        }
+
         $post->update([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
+            'slug' => $slug,
             'excerpt' => $request->excerpt,
+            'quote' => $request->quote,
             'content' => $request->content,
             'status' => $request->status,
             'category_id' => $request->category_id,
@@ -108,14 +109,12 @@ class PostController extends Controller
                 : $post->published_at,
         ]);
 
-        // Update featured image
         if ($request->hasFile('featured_image')) {
             $post->clearMediaCollection('featured_image');
             $post->addMediaFromRequest('featured_image')
                 ->toMediaCollection('featured_image');
         }
 
-        // Sync tags
         $post->tags()->sync($request->tags ?? []);
 
         return redirect()->route('admin.posts.index')
@@ -132,18 +131,33 @@ class PostController extends Controller
             ->with('success', 'Post deleted.');
     }
 
-    // Helper function to generate unique slug
     private function generateUniqueSlug($slug)
     {
+        $originalSlug = $slug;
         $count = 1;
-        $newSlug = $slug . '-' . $count;
 
-        // Keep incrementing the number until a unique slug is found
-        while (Post::where('slug', $newSlug)->exists()) {
+        while (Post::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count;
             $count++;
-            $newSlug = $slug . '-' . $count;
         }
 
-        return $newSlug;
+        return $slug;
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('uploads/posts', 'public');
+
+            return response()->json([
+                'success' => true,
+                'url' => asset('storage/' . $path),
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'No image uploaded.',
+        ], 400);
     }
 }

@@ -1,230 +1,192 @@
 @extends('front.layouts.app')
 
+@push('styles')
+    {{-- Load Bootstrap Icons only if not already in the layout --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+@endpush
+
 @section('content')
 
-
     <section data-anim-wrap class="hero -type-8">
-        <div class="hero-image-section">
-
-            <figure class="your-image-container-class">
-                <div data-anim-child="slide-up" class="hero__bg">
-                    <img src="assets/images/hero/sahara-desert-luxury-camp-stargazing-morocco.webp"
-                        alt="Magical night view of a luxury Berber camp in the Sahara Desert, Morocco, with tents illuminated under a dramatic, star-filled sky.">
-                </div>
-            </figure>
-
-            <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ImageObject",
-    "name": "Under the desert stars. There's nothing quite like the magic of a night in the Sahara.",
-    "description": "This photo captures the heart of the Moroccan desert experience. After a day of exploring the dunes, the evening settles into a serene magic. Our camp becomes a haven of warmth and light, where guests gather for a traditional meal, share stories around the campfire, and then witness the breathtaking celestial show in a sky free from city lights. It is an unforgettable night of peace, wonder, and authentic Berber hospitality.",
-    "contentUrl": "https://www.yourwebsite.com/assets/images/hero/sahara-desert-luxury-camp-stargazing-morocco.webp",
-    "creditText": "Your Website or Company Name",
-    "copyrightNotice": "© 2025 Your Company Name"
-  }
-  </script>
-
+        <div data-anim-child="slide-up" class="hero__bg">
+            <img src="{{ asset('assets/images/hero/sahara-desert-luxury-camp-stargazing-morocco.webp') }}"
+                alt="Luxury Berber camp in the Sahara Desert" width="1920" height="860" fetchpriority="high"
+                decoding="async">
         </div>
+
         <div class="container">
             <div data-anim-child="slide-up delay-2" class="row justify-center">
                 <div class="col-lg-8 col-md-10">
                     <div class="hero__content text-center">
+
+                        {{-- SEARCH FILTER --}}
                         <div class="hero__filter mb-60 md:mb-0 md:mt-30">
-                            <div class="searchForm -type-1 shadow-1 rounded-200">
-                                <div class="searchForm__form">
-                                    <div class="searchFormItem js-select-control js-form-dd">
-                                        <div class="searchFormItem__button" data-x-click="location">
-                                            <div class="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                                                <i class="text-20 icon-pin"></i>
+                            <form action="{{ route('front.tours.index') }}" method="GET">
+                                <div class="searchForm -type-1 shadow-1 rounded-200">
+                                    <div class="searchForm__form">
+
+                                        {{-- WHERE DROPDOWN --}}
+                                        <div class="searchFormItem js-select-control js-form-dd">
+                                            <div class="searchFormItem__button" data-x-click="location">
+                                                <div class="searchFormItem__icon size-50 rounded-full border-1 flex-center">
+                                                    <i class="text-20 icon-pin"></i>
+                                                </div>
+                                                <div class="searchFormItem__content">
+                                                    <h5>Where</h5>
+                                                    <div class="js-select-control-chosen">Search destinations</div>
+                                                </div>
                                             </div>
-                                            <div class="searchFormItem__content">
-                                                <h5>Where</h5>
-                                                <div class="js-select-control-chosen">Search destinations</div>
-                                            </div>
-                                        </div>
-
-                                        <div class="searchFormItemDropdown -location" data-x="location"
-                                            data-x-toggle="is-active">
-                                            <div class="searchFormItemDropdown__container">
-                                                <div class="searchFormItemDropdown__list sroll-bar-1">
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Europe</span>
-                                                            <span>Continent</span>
-                                                        </button>
+                                            <div class="searchFormItemDropdown -location" data-x="location"
+                                                data-x-toggle="is-active">
+                                                <div class="searchFormItemDropdown__container">
+                                                    <div class="searchFormItemDropdown__list scroll-bar-1">
+                                                        @foreach ($locationsForSearch as $location)
+                                                            <div class="searchFormItemDropdown__item">
+                                                                <button type="button" class="js-select-control-button"
+                                                                    data-slug="{{ $location->slug }}"
+                                                                    data-name="{{ $location->name }}">
+                                                                    <span
+                                                                        class="js-select-control-choice">{{ $location->name }}</span>
+                                                                    <span>Location</span>
+                                                                </button>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">France</span>
-                                                            <span>Country</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">London</span>
-                                                            <span>Destinations</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Asia</span>
-                                                            <span>Continent</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">United States</span>
-                                                            <span>Country</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Tokio</span>
-                                                            <span>Destinations</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Africa</span>
-                                                            <span>Continent</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">New Zealand</span>
-                                                            <span>Country</span>
-                                                        </button>
-                                                    </div>
-
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </div>
-
-                                    <div class="searchFormItem js-select-control js-form-dd js-calendar">
-                                        <div class="searchFormItem__button" data-x-click="calendar">
-                                            <div class="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                                                <i class="text-20 icon-calendar"></i>
-                                            </div>
-                                            <div class="searchFormItem__content">
-                                                <h5>When</h5>
-                                                <div>
-                                                    <span class="js-first-date">Add dates</span>
-                                                    <span class="js-last-date"></span>
+                                        {{-- WHEN DROPDOWN (calendar logic stays unchanged) --}}
+                                        <div class="searchFormItem js-select-control js-form-dd js-calendar">
+                                            <div class="searchFormItem__button" data-x-click="calendar">
+                                                <div class="searchFormItem__icon size-50 rounded-full border-1 flex-center">
+                                                    <i class="text-20 icon-calendar"></i>
+                                                </div>
+                                                <div class="searchFormItem__content">
+                                                    <h5>When</h5>
+                                                    <div>
+                                                        <span class="js-first-date">Add dates</span>
+                                                        <span class="js-last-date"></span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-
-                                        <div class="searchFormItemDropdown -calendar" data-x="calendar"
-                                            data-x-toggle="is-active">
-                                            <div class="searchFormItemDropdown__container">
-
-                                                <div class="searchMenu-date -searchForm js-form-dd js-calendar-el">
-                                                    <div class="searchMenu-date__field shadow-2" data-x-dd="searchMenu-date"
-                                                        data-x-dd-toggle="-is-active">
-                                                        <div class="bg-white rounded-4">
-                                                            <div class="elCalendar js-calendar-el-calendar"></div>
+                                            <div class="searchFormItemDropdown -calendar" data-x="calendar"
+                                                data-x-toggle="is-active">
+                                                <div class="searchFormItemDropdown__container">
+                                                    <div class="searchMenu-date -searchForm js-form-dd js-calendar-el">
+                                                        <div class="searchMenu-date__field shadow-2"
+                                                            data-x-dd="searchMenu-date" data-x-dd-toggle="-is-active">
+                                                            <div class="bg-white rounded-4">
+                                                                <div class="elCalendar js-calendar-el-calendar"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="searchFormItem js-select-control js-form-dd">
-                                        <div class="searchFormItem__button" data-x-click="tour-type">
-                                            <div class="searchFormItem__icon size-50 rounded-full border-1 flex-center">
-                                                <i class="text-20 icon-flag"></i>
-                                            </div>
-                                            <div class="searchFormItem__content">
-                                                <h5>Tour Type</h5>
-                                                <div class="js-select-control-chosen">All tour</div>
                                             </div>
                                         </div>
 
-                                        <div class="searchFormItemDropdown -tour-type" data-x="tour-type"
-                                            data-x-toggle="is-active">
-                                            <div class="searchFormItemDropdown__container">
-                                                <div class="searchFormItemDropdown__list sroll-bar-1">
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">City Tour</span>
-                                                        </button>
+                                        {{-- TOUR TYPE DROPDOWN --}}
+                                        <div class="searchFormItem js-select-control js-form-dd">
+                                            <div class="searchFormItem__button" data-x-click="tour-type">
+                                                <div class="searchFormItem__icon size-50 rounded-full border-1 flex-center">
+                                                    <i class="text-20 icon-flag"></i>
+                                                </div>
+                                                <div class="searchFormItem__content">
+                                                    <h5>Tour Type</h5>
+                                                    <div class="js-select-control-chosen">All tour</div>
+                                                </div>
+                                            </div>
+                                            <div class="searchFormItemDropdown -tour-type" data-x="tour-type"
+                                                data-x-toggle="is-active">
+                                                <div class="searchFormItemDropdown__container">
+                                                    <div class="searchFormItemDropdown__list scroll-bar-1">
+                                                        @foreach ($tourCategories as $category)
+                                                            <div class="searchFormItemDropdown__item">
+                                                                <button type="button" class="js-select-control-button"
+                                                                    data-slug="{{ $category->slug }}"
+                                                                    data-name="{{ $category->name }}">
+                                                                    <span
+                                                                        class="js-select-control-choice">{{ $category->name }}</span>
+                                                                </button>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Hiking</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Food Tour</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Cultural Tours</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Museums Tours</span>
-                                                        </button>
-                                                    </div>
-
-                                                    <div class="searchFormItemDropdown__item">
-                                                        <button class="js-select-control-button">
-                                                            <span class="js-select-control-choice">Beach Tours</span>
-                                                        </button>
-                                                    </div>
-
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
-                                </div>
 
-                                <div class="searchForm__button">
-                                    <button class="button -dark-1 bg-accent-2 size-60 rounded-200 text-white">
-                                        <i class="icon-search text-16"></i>
-                                    </button>
+                                    {{-- SEARCH BUTTON --}}
+                                    <div class="searchForm__button">
+                                        <button type="submit"
+                                            class="button -dark-1 bg-accent-2 size-60 rounded-200 text-white">
+                                            <i class="icon-search text-16"></i>
+                                        </button>
+                                    </div>
+
+                                    {{-- Hidden fields to store selected data --}}
+                                    <input type="hidden" name="location_slug" id="location_slug">
+                                    <input type="hidden" name="tour_category_slug" id="tour_category_slug">
+                                    <input type="hidden" name="start_date" id="start_date">
+                                    <input type="hidden" name="end_date" id="end_date">
                                 </div>
-                            </div>
+                            </form>
                         </div>
 
+                        {{-- TITLE & TEXT --}}
                         <div>
                             <h1 class="hero__title text-white">
                                 Find Next PlaceTo Visit
                             </h1>
-
                             <div class="hero__text text-white mt-10">
-                                Discover amzaing places at exclusive deals.Eat, Shop, Visit<br class="lg:d-none">
+                                Discover amzaing places at exclusive deals. Eat, Shop, Visit<br class="lg:d-none">
                                 interesting places around the world.
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="layout-pt-lg">
+  <div data-anim-wrap class="container">
+
+    {{-- ABOUT US SECTION TITLE --}}
+    <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10 mb-40">
+      <div class="col-auto">
+        <h2 class="text-30 md:text-24">About Us</h2>
+      </div>
+    </div>
+
+    <div class="row y-gap-20 justify-between">
+
+      <div data-anim-child="slide-up" class="col-lg-6">
+        <h2 class="text-30 fw-700">
+          Discover Authentic Morocco Adventures — Your Gateway to Authentic Moroccan Experiences
+        </h2>
+      </div>
+
+      <div data-anim-child="slide-up delay-2" class="col-lg-5">
+        <p>
+          At Authentic Morocco Adventures, we’re passionate about revealing Morocco’s vibrant spirit and hidden treasures.
+          From the blue streets of Chefchaouen to the golden dunes of the Sahara, our expertly crafted tours immerse you
+          in authentic culture, stunning landscapes, and unforgettable moments.
+          <br><br>
+          Let our local team guide you beyond the usual paths, creating memories that capture the true essence of Morocco.
+        </p>
+
+        <a href="{{ route('front.tours.index') }}" class="button -sm -dark-1 bg-accent-1 text-white mt-30">
+          Explore Our Tours
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
     <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
@@ -238,9 +200,13 @@
                 <div class="specialCardGrid row y-gap-30 md:y-gap-20 pt-40 sm:pt-20">
                     @foreach ($specialOffers as $offer)
                         <div data-anim-child="slide-up delay-{{ $loop->iteration }}" class="col-xl-4 col-lg-6 col-md-6">
-                            <a href="{{ $offer->link ?? '#' }}" class="specialCard">
+                            <a href="{{ $offer->link ?? '#' }}" class="specialCard"
+                                aria-label="{{ strip_tags($offer->title) }}">
                                 <div class="specialCard__image">
-                                    <img src="{{ $offer->getFirstMediaUrl('special_offers') }}" alt="{{ $offer->title }}">
+                                    <img src="{{ $offer->getFirstMediaUrl('special_offers') }}"
+                                        alt="{{ $offer->getFirstMedia('special_offers')?->getCustomProperty('alt') ?? $offer->title }}"
+                                        title="{{ $offer->getFirstMedia('special_offers')?->getCustomProperty('title') ?? $offer->title }}"
+                                        loading="lazy" width="600" height="400" class="rounded-12 w-100 h-auto">
                                 </div>
 
                                 <div class="specialCard__content">
@@ -257,7 +223,6 @@
                     <p>No special offers are available at the moment. Please check back later.</p>
                 </div>
             @endif
-
         </div>
     </section>
 
@@ -268,7 +233,7 @@
                     <h2 class="text-30">Trending Locations</h2>
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="buttonArrow d-flex items-center">
+                    <a href="{{ route('front.locations.index') }}" class="buttonArrow d-flex items-center">
                         <span>See all</span>
                         <i class="icon-arrow-top-right text-16 ml-10"></i>
                     </a>
@@ -276,20 +241,44 @@
             </div>
 
             <div data-anim-child="slide-up delay-2" class="row y-gap-30 md:y-gap-20 pt-40 sm:pt-20">
-                @foreach ($locations as $location)
+                @foreach ($locationsForSection as $location)
+                    @php
+                        $media = $location->getFirstMedia('locations');
+                        $imgUrl = $media?->getUrl() ?? asset('assets/images/aga1.jpg');
+                        $alt = $media?->getCustomProperty('alt') ?? $location->name;
+                        $title = $media?->getCustomProperty('title') ?? $location->name;
+                        $caption = $media?->getCustomProperty('caption') ?? '';
+                        $desc = $media?->getCustomProperty('description') ?? '';
+                    @endphp
+
                     <div class="w-1/5 lg:w-1/4 md:w-1/2">
-                        <a href="{{ route('locations.show', $location->id) }}"
-                            class="featureCard -type-7 -hover-image-scale">
+                        <a href="{{ route('front.locations.show', $location->slug) }}"
+                            class="featureCard -type-7 -hover-image-scale" title="{{ $title }}"
+                            aria-label="Explore {{ $location->name }}">
                             <div class="featureCard__image ratio ratio-23:30 -hover-image-scale__image rounded-12">
-                                @if ($location->hasMedia('locations'))
-                                    <img src="{{ $location->getFirstMediaUrl('locations') }}" alt="{{ $location->name }}"
-                                        class="img-ratio rounded-12">
-                                @endif
+                                <img src="{{ $imgUrl }}" alt="{{ $alt }}" title="{{ $title }}"
+                                    class="img-ratio rounded-12 w-100 h-auto" loading="lazy" width="460"
+                                    height="600">
                             </div>
 
+                            @if ($caption)
+                                <div class="mt-10 text-12 text-muted">
+                                    <em>{{ $caption }}</em>
+                                </div>
+                            @endif
+
+                            @if ($desc)
+                                <div class="mt-5 text-14 text-gray-700">
+                                    {{ \Illuminate\Support\Str::limit($desc, 80) }}
+                                </div>
+                            @endif
+
                             <div class="mt-20">
-                                <h4 class="text-18 fw-500">{{ $location->name }}</h4>
-                                <div class="text-14 lh-13 mt-5">100+ Tours</div> {{-- optional: dynamic count --}}
+                                <h3 class="text-18 fw-500">{{ $location->name }}</h3>
+                                <div class="text-14 lh-13 mt-5">
+                                    {{ $location->tours_count }}
+                                    {{ \Illuminate\Support\Str::plural('Tour', $location->tours_count) }}
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -299,8 +288,75 @@
     </section>
 
 
+    <section data-anim="slide-up" class="cta -type-4 -style-2">
+        <div class="container">
+            <div class="cta__content">
+                <div class="row justify-between">
+                    <div class="col-xl-7 col-lg-8">
+                        <h2 class="text-24 lh-13">
+                            Uncover the Magic of Marrakech with Authentic Morocco Adventures
+                        </h2>
 
-    <!-- Popular Tours Section -->
+                        <p class="mt-10" style="max-width: 500px;">
+                            Discover Marrakech’s vibrant souks filled with glowing lanterns, authentic Moroccan
+                            craftsmanship, and unforgettable cultural experiences with Authentic Morocco Adventures.
+                        </p>
+
+                        <button>
+                            <a href="{{ route('front.tours.index') }}"
+                                class="button -md -accent-1 bg-dark-1 text-white mt-10"
+                                aria-label="Explore tours in Marrakech with Authentic Morocco Adventures">
+                                Explore Tours
+                                <i class="icon-arrow-top-right ml-10" aria-hidden="true"></i>
+                            </a>
+                        </button>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="cta__image">
+                            <figure>
+                                <img src="{{ asset('assets/images/home/marrakech-souk-moroccan-brass-lanterns-market.webp') }}"
+                                    alt="Golden Moroccan brass lanterns glowing in a traditional Marrakech souk, showcasing Moroccan craftsmanship and vibrant culture."
+                                    title="Marrakech Souk Moroccan Brass Lanterns Market" loading="lazy"
+                                    style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                <figcaption style="display: none;">
+                                    Traditional brass lanterns fill the vibrant souks of Marrakech with shimmering light and
+                                    artistry.
+                                </figcaption>
+                            </figure>
+
+                            <img src="{{ asset('assets/img/cta/12/shape.svg') }}" alt="" role="presentation"
+                                loading="lazy">
+
+                            <img src="{{ asset('assets/img/cta/12/mobileShape.svg') }}" alt=""
+                                role="presentation" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  "name": "Marrakech Souk Moroccan Brass Lanterns Market",
+  "description": "A stunning view inside a traditional Moroccan souk in Marrakech, filled with intricately crafted brass lanterns and lamps. Each lantern reflects the rich artisan heritage of Morocco, creating a golden glow throughout the market alleys. Explore these magical sights with Authentic Morocco Adventures.",
+  "image": "https://www.authenticmoroccoadventures.com/assets/images/home/marrakech-souk-moroccan-brass-lanterns-market.webp",
+  "url": "https://www.authenticmoroccoadventures.com",
+  "provider": {
+    "@type": "TravelAgency",
+    "name": "Authentic Morocco Adventures",
+    "url": "https://www.authenticmoroccoadventures.com"
+  },
+  "copyrightNotice": "© 2025 Authentic Morocco Adventures"
+}
+</script>
+
+    <script></script>
+
+    <!-- Tours Section -->
     <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center y-gap-10">
@@ -322,33 +378,55 @@
 
                     <div class="swiper-wrapper">
                         @foreach ($tours as $tour)
+                            @php
+                                $cover = $tour->getFirstMedia('cover');
+                                $coverUrl = $cover?->getUrl() ?? null;
+
+                                if (!$coverUrl) {
+                                    $galleryImage = $tour->getFirstMedia('gallery');
+                                    $coverUrl = $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
+                                    $media = $galleryImage;
+                                } else {
+                                    $media = $cover;
+                                }
+
+                                $alt = $media?->getCustomProperty('alt') ?? $tour->title;
+                                $title = $media?->getCustomProperty('title') ?? $tour->title;
+                                $caption = $media?->getCustomProperty('caption') ?? '';
+                                $desc = $media?->getCustomProperty('description') ?? '';
+                            @endphp
+
                             <div class="swiper-slide">
                                 <div class="tourCard -type-1 d-block bg-white relative">
                                     <div class="tourCard__header">
                                         <div class="tourCard__image ratio ratio-28:20">
-                                            <img src="{{ $tour->getFirstMediaUrl('tours') ?: asset('assets/images/default-image.png') }}"
-                                                alt="{{ $tour->title }}" class="img-ratio rounded-12">
+                                            <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                                title="{{ $title }}" data-caption="{{ $caption }}"
+                                                data-description="{{ $desc }}" class="img-ratio rounded-12"
+                                                loading="lazy" width="560" height="400">
                                         </div>
 
-                                        <button class="tourCard__favorite js-favorite-btn" data-id="{{ $tour->id }}"
-                                            data-type="tour"
+                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping" data-id="{{ $tour->id }}"
+                                            data-type="tour" aria-label="Add {{ $tour->title }} to favorites"
                                             style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
                                             <i class="icon-heart"></i>
                                         </button>
 
                                         @if ($tour->bestseller_flag)
                                             <div class="tourCard__bestseller"
-                                                style="position: absolute; top: 10px; right: 10px; background: #ff5722; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
+                                                style="position: absolute; top: 10px; right: 10px; background: #f39903; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
                                                 <i class="icon-fire mr-5"></i> Popular
                                             </div>
                                         @endif
                                     </div>
 
                                     <div class="tourCard__content pt-10">
-                                        <div class="tourCard__location d-flex items-center text-13 text-light-2">
-                                            <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                                            {{ $tour->location->name ?? 'Unknown Location' }}
-                                        </div>
+                                        @if (!empty($tour->location?->name))
+                                            <div class="tourCard__location d-flex items-center text-13 text-light-2">
+                                                <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                                                {{ $tour->location->name }}
+                                            </div>
+                                        @endif
 
                                         <h3 class="tourCard__title text-16 fw-500 mt-5">
                                             <a href="{{ route('front.tours.show', $tour->slug) }}" class="text-dark-1">
@@ -356,33 +434,41 @@
                                             </a>
                                         </h3>
 
+                                        @php
+                                            $reviewsCount = (int) ($tour->reviews_count ?? 0);
+                                            $rating = $tour->avg_rating ?? 0;
+                                        @endphp
+
                                         <div class="tourCard__rating mt-5">
-                                            <div class="d-flex items-center">
-                                                <div class="d-flex x-gap-5 pr-10">
-                                                    @php
-                                                        $rating = $tour->avg_rating ?? 0;
-                                                        $fullStars = floor($rating);
-                                                        $halfStar = $rating - $fullStars >= 0.5;
-                                                        $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
-                                                    @endphp
+                                            @if ($reviewsCount > 0)
+                                                <div class="d-flex items-center">
+                                                    <div class="d-flex x-gap-5 pr-10">
+                                                        @php
+                                                            $fullStars = floor($rating);
+                                                            $halfStar = $rating - $fullStars >= 0.5;
+                                                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                        @endphp
 
-                                                    @for ($i = 0; $i < $fullStars; $i++)
-                                                        <i class="icon-star text-10 text-yellow-2"></i>
-                                                    @endfor
+                                                        @for ($i = 0; $i < $fullStars; $i++)
+                                                            <i class="icon-star text-10 text-yellow-2"></i>
+                                                        @endfor
 
-                                                    @if ($halfStar)
-                                                        <i class="icon-star-half text-10 text-yellow-2"></i>
-                                                    @endif
+                                                        @if ($halfStar)
+                                                            <i class="icon-star-half text-10 text-yellow-2"></i>
+                                                        @endif
 
-                                                    @for ($i = 0; $i < $emptyStars; $i++)
-                                                        <i class="icon-star text-10 text-light-2"></i>
-                                                    @endfor
+                                                        @for ($i = 0; $i < $emptyStars; $i++)
+                                                            <i class="icon-star text-10 text-light-2"></i>
+                                                        @endfor
+                                                    </div>
+
+                                                    <span class="text-dark-1 text-13">
+                                                        {{ number_format($rating, 1) }} ({{ $reviewsCount }})
+                                                    </span>
                                                 </div>
-
-                                                <span class="text-dark-1 text-13">
-                                                    {{ number_format($rating, 1) }} ({{ $tour->reviews_count }})
-                                                </span>
-                                            </div>
+                                            @else
+                                                <span class="text-accent-1 text-13 fw-500">New tour</span>
+                                            @endif
                                         </div>
 
                                         <div
@@ -407,11 +493,10 @@
                 </div>
 
                 <div class="navAbsolute">
-                    <button class="navAbsolute__button bg-white js-slider1-prev">
+                    <button class="navAbsolute__button bg-white js-slider1-prev" aria-label="Previous slide">
                         <i class="icon-arrow-left text-14"></i>
                     </button>
-
-                    <button class="navAbsolute__button bg-white js-slider1-next">
+                    <button class="navAbsolute__button bg-white js-slider1-next" aria-label="Next slide">
                         <i class="icon-arrow-right text-14"></i>
                     </button>
                 </div>
@@ -419,10 +504,10 @@
         </div>
     </section>
 
-
+    <!-- Activities Section -->
     <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center y-gap-10">
+            <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center">
                 <div class="col-auto">
                     <h2 class="text-30">Find Popular Activities</h2>
                 </div>
@@ -441,33 +526,55 @@
 
                     <div class="swiper-wrapper">
                         @foreach ($activities as $activity)
+                            @php
+                                $cover = $activity->getFirstMedia('cover');
+                                $coverUrl = $cover?->getUrl() ?? null;
+
+                                if (!$coverUrl) {
+                                    $galleryImage = $activity->getFirstMedia('gallery');
+                                    $coverUrl = $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
+                                    $media = $galleryImage;
+                                } else {
+                                    $media = $cover;
+                                }
+
+                                $alt = $media?->getCustomProperty('alt') ?? $activity->title;
+                                $title = $media?->getCustomProperty('title') ?? $activity->title;
+                                $caption = $media?->getCustomProperty('caption') ?? '';
+                                $desc = $media?->getCustomProperty('description') ?? '';
+                            @endphp
+
                             <div class="swiper-slide">
                                 <div class="tourCard -type-1 d-block bg-white relative">
                                     <div class="tourCard__header">
                                         <div class="tourCard__image ratio ratio-28:20">
-                                            <img src="{{ $activity->getFirstMediaUrl('activities') ?: asset('img/default-activity.jpg') }}"
-                                                alt="{{ $activity->title }}" class="img-ratio rounded-12">
+                                            <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                                title="{{ $title }}" loading="lazy" width="560"
+                                                height="400" data-caption="{{ $caption }}"
+                                                data-description="{{ $desc }}" class="img-ratio rounded-12">
                                         </div>
 
-                                        <button class="tourCard__favorite js-favorite-btn" data-id="{{ $activity->id }}"
-                                            data-type="activity"
+                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping" data-id="{{ $activity->id }}"
+                                            data-type="activity" aria-label="Add {{ $activity->title }} to favorites"
                                             style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
                                             <i class="icon-heart"></i>
                                         </button>
 
                                         @if ($activity->bestseller_flag)
                                             <div class="tourCard__bestseller"
-                                                style="position: absolute; top: 10px; right: 10px; background: #ff5722; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
+                                                style="position: absolute; top: 10px; right: 10px; background: #f39903; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
                                                 <i class="icon-fire mr-5"></i> Popular
                                             </div>
                                         @endif
                                     </div>
 
                                     <div class="tourCard__content pt-10">
-                                        <div class="tourCard__location d-flex items-center text-13 text-light-2">
-                                            <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                                            {{ $activity->location->name ?? 'Unknown Location' }}
-                                        </div>
+                                        @if (!empty($activity->location?->name))
+                                            <div class="tourCard__location d-flex items-center text-13 text-light-2">
+                                                <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                                                {{ $activity->location->name }}
+                                            </div>
+                                        @endif
 
                                         <h3 class="tourCard__title text-16 fw-500 mt-5">
                                             <a href="{{ route('front.activities.show', $activity->slug) }}"
@@ -476,19 +583,41 @@
                                             </a>
                                         </h3>
 
+                                        @php
+                                            $reviewsCount = (int) ($activity->reviews_count ?? 0);
+                                            $rating = $activity->avg_rating ?? 0;
+                                        @endphp
+
                                         <div class="tourCard__rating mt-5">
-                                            <div class="d-flex items-center">
-                                                <div class="d-flex x-gap-5 pr-10">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        <i
-                                                            class="icon-star text-10 {{ $i <= round($activity->avg_rating) ? 'text-yellow-2' : 'text-light-2' }}"></i>
-                                                    @endfor
+                                            @if ($reviewsCount > 0)
+                                                <div class="d-flex items-center">
+                                                    <div class="d-flex x-gap-5 pr-10">
+                                                        @php
+                                                            $fullStars = floor($rating);
+                                                            $halfStar = $rating - $fullStars >= 0.5;
+                                                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                        @endphp
+
+                                                        @for ($i = 0; $i < $fullStars; $i++)
+                                                            <i class="icon-star text-10 text-yellow-2"></i>
+                                                        @endfor
+
+                                                        @if ($halfStar)
+                                                            <i class="icon-star-half text-10 text-yellow-2"></i>
+                                                        @endif
+
+                                                        @for ($i = 0; $i < $emptyStars; $i++)
+                                                            <i class="icon-star text-10 text-light-2"></i>
+                                                        @endfor
+                                                    </div>
+
+                                                    <span class="text-dark-1 text-13">
+                                                        {{ number_format($rating, 1) }} ({{ $reviewsCount }})
+                                                    </span>
                                                 </div>
-                                                <span class="text-dark-1 text-13">
-                                                    {{ number_format($activity->avg_rating, 1) }}
-                                                    ({{ $activity->reviews_count }})
-                                                </span>
-                                            </div>
+                                            @else
+                                                <span class="text-accent-1 text-13 fw-500">New activity</span>
+                                            @endif
                                         </div>
 
                                         <div
@@ -513,11 +642,10 @@
                 </div>
 
                 <div class="navAbsolute">
-                    <button class="navAbsolute__button bg-white js-slider2-prev">
+                    <button class="navAbsolute__button bg-white js-slider2-prev" aria-label="Previous slide">
                         <i class="icon-arrow-left text-14"></i>
                     </button>
-
-                    <button class="navAbsolute__button bg-white js-slider2-next">
+                    <button class="navAbsolute__button bg-white js-slider2-next" aria-label="Next slide">
                         <i class="icon-arrow-right text-14"></i>
                     </button>
                 </div>
@@ -525,11 +653,10 @@
         </div>
     </section>
 
-
-
+    <!-- Trekking Section -->
     <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center y-gap-10">
+            <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center">
                 <div class="col-auto">
                     <h2 class="text-30">Find Popular Trekking</h2>
                 </div>
@@ -548,33 +675,54 @@
 
                     <div class="swiper-wrapper">
                         @foreach ($trekking as $trek)
+                            @php
+                                $cover = $trek->getFirstMedia('cover');
+                                $coverUrl = $cover?->getUrl() ?? null;
+
+                                if (!$coverUrl) {
+                                    $galleryImage = $trek->getFirstMedia('gallery');
+                                    $coverUrl = $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
+                                } else {
+                                    $media = $cover;
+                                }
+
+                                $alt = $media?->getCustomProperty('alt') ?? $trek->title;
+                                $title = $media?->getCustomProperty('title') ?? $trek->title;
+                                $caption = $media?->getCustomProperty('caption') ?? '';
+                                $desc = $media?->getCustomProperty('description') ?? '';
+                            @endphp
+
                             <div class="swiper-slide">
                                 <div class="tourCard -type-1 d-block bg-white relative">
                                     <div class="tourCard__header">
                                         <div class="tourCard__image ratio ratio-28:20">
-                                            <img src="{{ $trek->getFirstMediaUrl('trekking') ?: asset('img/default-trekking.jpg') }}"
-                                                alt="{{ $trek->title }}" class="img-ratio rounded-12">
+                                            <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                                title="{{ $title }}" loading="lazy" width="560"
+                                                height="400" data-caption="{{ $caption }}"
+                                                data-description="{{ $desc }}" class="img-ratio rounded-12">
                                         </div>
 
-                                        <button class="tourCard__favorite js-favorite-btn" data-id="{{ $trek->id }}"
-                                            data-type="trekking"
+                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping" data-id="{{ $trek->id }}"
+                                            data-type="trekking" aria-label="Add {{ $trek->title }} to favorites"
                                             style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
                                             <i class="icon-heart"></i>
                                         </button>
 
                                         @if ($trek->bestseller_flag)
                                             <div class="tourCard__bestseller"
-                                                style="position: absolute; top: 10px; right: 10px; background: #ff5722; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
+                                                style="position: absolute; top: 10px; right: 10px; background: #f39903; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
                                                 <i class="icon-fire mr-5"></i> Popular
                                             </div>
                                         @endif
                                     </div>
 
                                     <div class="tourCard__content pt-10">
-                                        <div class="tourCard__location d-flex items-center text-13 text-light-2">
-                                            <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                                            {{ $trek->location->name ?? 'Unknown Location' }}
-                                        </div>
+                                        @if (!empty($trek->location?->name))
+                                            <div class="tourCard__location d-flex items-center text-13 text-light-2">
+                                                <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                                                {{ $trek->location->name }}
+                                            </div>
+                                        @endif
 
                                         <h3 class="tourCard__title text-16 fw-500 mt-5">
                                             <a href="{{ route('front.trekking.show', $trek->slug) }}"
@@ -583,18 +731,41 @@
                                             </a>
                                         </h3>
 
+                                        @php
+                                            $reviewsCount = (int) ($trek->reviews_count ?? 0);
+                                            $rating = $trek->avg_rating ?? 0;
+                                        @endphp
+
                                         <div class="tourCard__rating mt-5">
-                                            <div class="d-flex items-center">
-                                                <div class="d-flex x-gap-5 pr-10">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        <i
-                                                            class="icon-star text-10 {{ $i <= round($trek->avg_rating) ? 'text-yellow-2' : 'text-light-2' }}"></i>
-                                                    @endfor
+                                            @if ($reviewsCount > 0)
+                                                <div class="d-flex items-center">
+                                                    <div class="d-flex x-gap-5 pr-10">
+                                                        @php
+                                                            $fullStars = floor($rating);
+                                                            $halfStar = $rating - $fullStars >= 0.5;
+                                                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                        @endphp
+
+                                                        @for ($i = 0; $i < $fullStars; $i++)
+                                                            <i class="icon-star text-10 text-yellow-2"></i>
+                                                        @endfor
+
+                                                        @if ($halfStar)
+                                                            <i class="icon-star-half text-10 text-yellow-2"></i>
+                                                        @endif
+
+                                                        @for ($i = 0; $i < $emptyStars; $i++)
+                                                            <i class="icon-star text-10 text-light-2"></i>
+                                                        @endfor
+                                                    </div>
+
+                                                    <span class="text-dark-1 text-13">
+                                                        {{ number_format($rating, 1) }} ({{ $reviewsCount }})
+                                                    </span>
                                                 </div>
-                                                <span class="text-dark-1 text-13">
-                                                    {{ number_format($trek->avg_rating, 1) }} ({{ $trek->reviews_count }})
-                                                </span>
-                                            </div>
+                                            @else
+                                                <span class="text-accent-1 text-13 fw-500">New trek</span>
+                                            @endif
                                         </div>
 
                                         <div
@@ -603,7 +774,6 @@
                                                 <i class="icon-clock text-16 mr-5"></i>
                                                 {{ $trek->duration }}
                                             </div>
-
                                             <div>
                                                 From
                                                 <span class="text-16 fw-500">
@@ -619,11 +789,10 @@
                 </div>
 
                 <div class="navAbsolute">
-                    <button class="navAbsolute__button bg-white js-slider3-prev">
+                    <button class="navAbsolute__button bg-white js-slider3-prev" aria-label="Previous slide">
                         <i class="icon-arrow-left text-14"></i>
                     </button>
-
-                    <button class="navAbsolute__button bg-white js-slider3-next">
+                    <button class="navAbsolute__button bg-white js-slider3-next" aria-label="Next slide">
                         <i class="icon-arrow-right text-14"></i>
                     </button>
                 </div>
@@ -631,57 +800,17 @@
         </div>
     </section>
 
-
     <style>
-        .js-favorite-btn.is-favorited {
-            background-color: #ff4d4d;
-            color: white;
-        }
-
-        .js-favorite-btn.is-favorited i {
-            color: #ff4d4d;
+        .swiper-slide {
+            pointer-events: auto;
         }
     </style>
-
-    </style>
-
-
-    <section data-anim="slide-up" class="cta -type-4 -style-2">
-        <div class="container">
-            <div class="cta__content">
-                <div class="row justify-between">
-                    <div class="col-xl-7 col-lg-8">
-                        <h2 class="text-24 lh-13">
-                            Keep on Planning
-                        </h2>
-
-                        <p class="mt-10">
-                            What to do, where to eat & more trip inspo.
-                        </p>
-
-                        <button class="button -md -accent-1 bg-dark-1 text-white mt-10">
-                            See More
-                            <i class="icon-arrow-top-right ml-10"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="cta__image">
-                        <img src="img/cta/12/1.jpg" alt="image">
-                        <img src="img/cta/12/shape.svg" alt="image">
-                        <img src="img/cta/12/mobileShape.svg" alt="image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="layout-pt-xl">
+    <script></script>
+    <section class="layout-pt-xl" style="margin-bottom: 120px">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row">
                 <div class="col-auto">
-                    <h2 class="text-30 md:text-24">Why choose Tourz</h2>
+                    <h2 class="text-30 md:text-24">Why Choose Authentic Morocco Adventures</h2>
                 </div>
             </div>
 
@@ -690,35 +819,14 @@
                 <div class="col-lg-3 col-sm-6">
                     <div class="featureIcon -type-1 pr-40 md:pr-0">
                         <div class="featureIcon__icon">
-                            <img src="img/icons/1/ticket.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/1/ticket.svg') }}"
+                                alt="Ticket icon representing flexible booking" loading="lazy" width="64"
+                                height="64">
                         </div>
-
-                        <h3 class="featureIcon__title text-18 fw-500 mt-30">Ultimate flexibility</h3>
-                        <p class="featureIcon__text mt-10">You&#39;re in control, with free cancellation and payment
-                            options to satisfy any plan or budget.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-sm-6">
-                    <div class="featureIcon -type-1 pr-40 md:pr-0">
-                        <div class="featureIcon__icon">
-                            <img src="img/icons/1/hot-air-balloon.svg" alt="icon">
-                        </div>
-
-                        <h3 class="featureIcon__title text-18 fw-500 mt-30">Memorable experiences</h3>
-                        <p class="featureIcon__text mt-10">Browse and book tours and activities so incredible, you&#39;ll
-                            want to tell your friends.</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-sm-6">
-                    <div class="featureIcon -type-1 pr-40 md:pr-0">
-                        <div class="featureIcon__icon">
-                            <img src="img/icons/1/diamond.svg" alt="icon">
-                        </div>
-
-                        <h3 class="featureIcon__title text-18 fw-500 mt-30">Quality at our core</h3>
-                        <p class="featureIcon__text mt-10">High quality standards. Millions of reviews. A tourz company.
+                        <h3 class="featureIcon__title text-18 fw-500 mt-30">Ultimate Flexibility</h3>
+                        <p class="featureIcon__text mt-10">
+                            Explore Morocco your way. With Authentic Morocco Adventures, enjoy free cancellation and payment options
+                            to suit your plans and budget.
                         </p>
                     </div>
                 </div>
@@ -726,11 +834,44 @@
                 <div class="col-lg-3 col-sm-6">
                     <div class="featureIcon -type-1 pr-40 md:pr-0">
                         <div class="featureIcon__icon">
-                            <img src="img/icons/1/medal.svg" alt="icon">
+                            <img src="{{ asset('assets/img/icons/1/hot-air-balloon.svg') }}"
+                                alt="Hot air balloon icon representing memorable experiences" loading="lazy"
+                                width="64" height="64">
                         </div>
+                        <h3 class="featureIcon__title text-18 fw-500 mt-30">Memorable Experiences</h3>
+                        <p class="featureIcon__text mt-10">
+                            Discover unique tours, cultural treasures, and hidden gems across Morocco that you’ll love
+                            sharing with friends.
+                        </p>
+                    </div>
+                </div>
 
-                        <h3 class="featureIcon__title text-18 fw-500 mt-30">Award-winning support</h3>
-                        <p class="featureIcon__text mt-10">New price? New plan? No problem. We&#39;re here to help, 24/7.
+                <div class="col-lg-3 col-sm-6">
+                    <div class="featureIcon -type-1 pr-40 md:pr-0">
+                        <div class="featureIcon__icon">
+                            <img src="{{ asset('assets/img/icons/1/diamond.svg') }}"
+                                alt="Diamond icon representing quality service" loading="lazy" width="64"
+                                height="64">
+                        </div>
+                        <h3 class="featureIcon__title text-18 fw-500 mt-30">Quality at Our Core</h3>
+                        <p class="featureIcon__text mt-10">
+                            Authentic Morocco Adventures is committed to quality. Exceptional guides, authentic experiences, and
+                            glowing reviews ensure your trip exceeds expectations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-6">
+                    <div class="featureIcon -type-1 pr-40 md:pr-0">
+                        <div class="featureIcon__icon">
+                            <img src="{{ asset('assets/img/icons/1/medal.svg') }}"
+                                alt="Medal icon representing award-winning support" loading="lazy" width="64"
+                                height="64">
+                        </div>
+                        <h3 class="featureIcon__title text-18 fw-500 mt-30">Award-Winning Support</h3>
+                        <p class="featureIcon__text mt-10">
+                            New plans? New adventures? No problem. Our Authentic Morocco Adventures team is here to support your
+                            Morocco journey 24/7.
                         </p>
                     </div>
                 </div>
@@ -743,28 +884,33 @@
     <div class="bg-accent-1-05">
         <section data-anim-wrap class="relative layout-pt-xl layout-pb-xl">
             <div data-anim-child="slide-up delay-1" class="sectionBg md:d-none">
-                <img src="img/testimonials/1/1.png" alt="image">
+                <img src="{{ asset('assets/img/testimonials/1/1.png') }}"
+                    alt="Background graphic featuring Authentic Morocco Adventures theme" loading="lazy" role="presentation">
             </div>
 
             <div data-anim-child="slide-up delay-3" class="container">
                 <div class="row justify-center text-center">
                     <div class="col-auto">
-                        <h2 class="text-30 md:text-24">Customer Reviews</h2>
+                        <h2 class="text-30 md:text-24">
+                            What Travelers Say About Authentic Morocco Adventures
+                        </h2>
                     </div>
                 </div>
 
                 <div class="row justify-center pt-60 md:pt-20">
                     <div class="col-xl-6 col-md-8 col-sm-10">
-                        <div class="overflow-hidden js-section-slider" data-slider-cols="xl-1 lg-1 md-1 sm-1 base-1"
+                        <div class="overflow-hidden js-testimonials-slider" data-slider-cols="xl-1 lg-1 md-1 sm-1 base-1"
                             data-pagination="js-testimonials-pagination">
                             <div class="swiper-wrapper">
 
+                                {{-- Review 1 --}}
                                 <div class="swiper-slide">
                                     <div class="testimonials -type-1 pt-10 text-center">
                                         <div class="testimonials__image size-100 rounded-full">
-                                            <img src="img/testimonials/1/2.png" alt="image">
-
-                                            <div class="testimonials__icon">
+                                            <img src="{{ asset('assets/images/reviews/testimonial-matteo-italy_isnet-general-use.webp') }}"
+                                                alt="Matteo Rossi, traveler from Italy enjoying Morocco desert tour with camel rides and sunset views"
+                                                loading="lazy">
+                                            <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -773,26 +919,32 @@
                                                 </svg>
                                             </div>
                                         </div>
-
-                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">Great quality!</div>
-
-                                        <div class="text-20 fw-500 mt-20">The tours in this website are great. I had been
-                                            really enjoy with my family! The team is very professional and taking care of
-                                            the customers. Will surely recommend to my freind to join this company!</div>
-
+                                        <div class="visually-hidden">
+                                            Matteo Rossi loved the desert tour with camel rides and sunset views in Morocco.
+                                        </div>
+                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">
+                                            Incredible Desert Tour!
+                                        </div>
+                                        <div class="text-20 fw-500 mt-20">
+                                            My family and I booked a desert adventure with Authentic Morocco Adventures. Riding
+                                            camels through the dunes at sunset was magical. Truly the best way to see
+                                            Morocco!
+                                        </div>
                                         <div class="mt-20 md:mt-40">
-                                            <div class="lh-16 text-16 fw-500">Brooklyn Simmons</div>
-                                            <div class="lh-16">Web Developer</div>
+                                            <div class="lh-16 text-16 fw-500">Matteo Rossi</div>
+                                            <div class="lh-16">Traveler from Italy</div>
                                         </div>
                                     </div>
                                 </div>
 
+                                {{-- Review 2 --}}
                                 <div class="swiper-slide">
                                     <div class="testimonials -type-1 pt-10 text-center">
                                         <div class="testimonials__image size-100 rounded-full">
-                                            <img src="img/testimonials/1/2.png" alt="image">
-
-                                            <div class="testimonials__icon">
+                                            <img src="{{ asset('assets/images/reviews/testimonial-carlos-brazil_bria.webp') }}"
+                                                alt="Carlos Almeida, traveler from Brazil discovering Moroccan culture with Authentic Morocco Adventures"
+                                                loading="lazy">
+                                            <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -801,26 +953,32 @@
                                                 </svg>
                                             </div>
                                         </div>
-
-                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">Great quality!</div>
-
-                                        <div class="text-20 fw-500 mt-20">The tours in this website are great. I had been
-                                            really enjoy with my family! The team is very professional and taking care of
-                                            the customers. Will surely recommend to my freind to join this company!</div>
-
+                                        <div class="visually-hidden">
+                                            Carlos Almeida discovered authentic Moroccan culture and hidden gems with Local
+                                            Morocco Tours.
+                                        </div>
+                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">
+                                            Authentic Moroccan Culture
+                                        </div>
+                                        <div class="text-20 fw-500 mt-20">
+                                            Thanks to Authentic Morocco Adventures, I discovered hidden spots in Marrakech. The
+                                            guides were knowledgeable and passionate about sharing Moroccan culture.
+                                        </div>
                                         <div class="mt-20 md:mt-40">
-                                            <div class="lh-16 text-16 fw-500">Brooklyn Simmons</div>
-                                            <div class="lh-16">Web Developer</div>
+                                            <div class="lh-16 text-16 fw-500">Carlos Almeida</div>
+                                            <div class="lh-16">Traveler from Brazil</div>
                                         </div>
                                     </div>
                                 </div>
 
+                                {{-- Review 3 --}}
                                 <div class="swiper-slide">
                                     <div class="testimonials -type-1 pt-10 text-center">
                                         <div class="testimonials__image size-100 rounded-full">
-                                            <img src="img/testimonials/1/2.png" alt="image">
-
-                                            <div class="testimonials__icon">
+                                            <img src="{{ asset('assets/images/reviews/testimonial-james-usa_bria.webp') }}"
+                                                alt="James Peterson, traveler from USA praising seamless Morocco trip planning with Authentic Morocco Adventures"
+                                                loading="lazy">
+                                            <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -829,26 +987,32 @@
                                                 </svg>
                                             </div>
                                         </div>
-
-                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">Great quality!</div>
-
-                                        <div class="text-20 fw-500 mt-20">The tours in this website are great. I had been
-                                            really enjoy with my family! The team is very professional and taking care of
-                                            the customers. Will surely recommend to my freind to join this company!</div>
-
+                                        <div class="visually-hidden">
+                                            James Peterson appreciated the easy planning and professional arrangements for
+                                            his Morocco trip.
+                                        </div>
+                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">
+                                            Seamless Planning
+                                        </div>
+                                        <div class="text-20 fw-500 mt-20">
+                                            I was worried about planning my trip to Morocco, but Authentic Morocco Adventures made it
+                                            so easy. From transport to accommodations, everything was perfectly arranged.
+                                        </div>
                                         <div class="mt-20 md:mt-40">
-                                            <div class="lh-16 text-16 fw-500">Brooklyn Simmons</div>
-                                            <div class="lh-16">Web Developer</div>
+                                            <div class="lh-16 text-16 fw-500">James Peterson</div>
+                                            <div class="lh-16">Traveler from USA</div>
                                         </div>
                                     </div>
                                 </div>
 
+                                {{-- Review 4 --}}
                                 <div class="swiper-slide">
                                     <div class="testimonials -type-1 pt-10 text-center">
                                         <div class="testimonials__image size-100 rounded-full">
-                                            <img src="img/testimonials/1/2.png" alt="image">
-
-                                            <div class="testimonials__icon">
+                                            <img src="{{ asset('assets/images/reviews/testimonial-aysha-morocco_bria.webp') }}"
+                                                alt="Aysha El Fassi, Moroccan traveler exploring hidden gems with Authentic Morocco Adventures"
+                                                loading="lazy">
+                                            <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -857,26 +1021,32 @@
                                                 </svg>
                                             </div>
                                         </div>
-
-                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">Great quality!</div>
-
-                                        <div class="text-20 fw-500 mt-20">The tours in this website are great. I had been
-                                            really enjoy with my family! The team is very professional and taking care of
-                                            the customers. Will surely recommend to my freind to join this company!</div>
-
+                                        <div class="visually-hidden">
+                                            Aysha El Fassi explored hidden gems and local secrets in Morocco with Local
+                                            Morocco Tours.
+                                        </div>
+                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">
+                                            Hidden Gems
+                                        </div>
+                                        <div class="text-20 fw-500 mt-20">
+                                            I’ve visited Morocco before, but Authentic Morocco Adventures showed me places I’d never
+                                            seen. A truly authentic experience that felt personalized and unique.
+                                        </div>
                                         <div class="mt-20 md:mt-40">
-                                            <div class="lh-16 text-16 fw-500">Brooklyn Simmons</div>
-                                            <div class="lh-16">Web Developer</div>
+                                            <div class="lh-16 text-16 fw-500">Aysha El Fassi</div>
+                                            <div class="lh-16">Traveler from Morocco</div>
                                         </div>
                                     </div>
                                 </div>
 
+                                {{-- Review 5 --}}
                                 <div class="swiper-slide">
                                     <div class="testimonials -type-1 pt-10 text-center">
                                         <div class="testimonials__image size-100 rounded-full">
-                                            <img src="img/testimonials/1/2.png" alt="image">
-
-                                            <div class="testimonials__icon">
+                                            <img src="{{ asset('assets/images/reviews/testimonial-anastasia-russia_bria.webp') }}"
+                                                alt="Anastasia Ivanova, traveler from Russia sharing a professional and safe experience with Authentic Morocco Adventures"
+                                                loading="lazy">
+                                            <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -885,16 +1055,20 @@
                                                 </svg>
                                             </div>
                                         </div>
-
-                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">Great quality!</div>
-
-                                        <div class="text-20 fw-500 mt-20">The tours in this website are great. I had been
-                                            really enjoy with my family! The team is very professional and taking care of
-                                            the customers. Will surely recommend to my freind to join this company!</div>
-
+                                        <div class="visually-hidden">
+                                            Anastasia Ivanova shared a professional and safe experience traveling with Local
+                                            Morocco Tours.
+                                        </div>
+                                        <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">
+                                            Professional Team
+                                        </div>
+                                        <div class="text-20 fw-500 mt-20">
+                                            The team at Authentic Morocco Adventures was so professional and friendly. They answered
+                                            all my questions and made me feel safe and excited about exploring Morocco.
+                                        </div>
                                         <div class="mt-20 md:mt-40">
-                                            <div class="lh-16 text-16 fw-500">Brooklyn Simmons</div>
-                                            <div class="lh-16">Web Developer</div>
+                                            <div class="lh-16 text-16 fw-500">Anastasia Ivanova</div>
+                                            <div class="lh-16">Traveler from Russia</div>
                                         </div>
                                     </div>
                                 </div>
@@ -909,7 +1083,6 @@
                 </div>
             </div>
         </section>
-
     </div>
 
     <section class="layout-pt-xl layout-pb-xl">
@@ -931,18 +1104,23 @@
                     <div class="col-lg-4 col-md-6">
                         <a href="{{ route('blog.show', $post->slug) }}" class="blogCard -type-1">
                             <div class="blogCard__image ratio ratio-41:30">
-                                <img src="{{ $post->featured_image_url }}" alt="{{ $post->title }}"
-                                    class="img-ratio rounded-12">
+                                <img src="{{ $post->featured_image_url }}" alt="{{ $post->title }}" loading="lazy"
+                                    width="410" height="300" class="img-ratio rounded-12">
                                 @if ($post->category)
-                                    <div class="blogCard__badge">{{ $post->category->name }}</div>
+                                    <div class="blogCard__badge">
+                                        {{ $post->category->name }}
+                                    </div>
                                 @endif
                             </div>
                             <div class="blogCard__content mt-30">
                                 <div class="blogCard__info text-14">
                                     <div class="lh-13">
-                                        {{ $post->published_at ? $post->published_at->format('F d, Y') : 'N/A' }}</div>
+                                        {{ $post->published_at ? $post->published_at->format('F d, Y') : 'N/A' }}
+                                    </div>
                                     <div class="blogCard__line"></div>
-                                    <div class="lh-13">By {{ $post->author->name ?? 'N/A' }}</div>
+                                    <div class="lh-13">
+                                        By {{ $post->author->name ?? 'N/A' }}
+                                    </div>
                                 </div>
                                 <h3 class="blogCard__title text-18 fw-500 mt-10">
                                     {{ $post->title }}

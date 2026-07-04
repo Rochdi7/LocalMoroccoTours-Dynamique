@@ -39,9 +39,10 @@
 
             <div class="card-body pt-3">
                 <div class="table-responsive">
-                    <table class="table table-hover" id="pc-dt-simple">
+                    <table class="table table-hover align-middle" id="pc-dt-simple">
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Title</th>
                                 <th>Category</th>
                                 <th>Duration</th>
@@ -52,26 +53,33 @@
                         </thead>
                         <tbody>
                             @foreach($activities as $index => $activity)
-                            <tr class="animate__animated animate__fadeIn" style="animation-delay: {{ $index * 0.1 }}s; animation-duration: 0.6s; animation-fill-mode: both;">
-                                <td>{{ $activity->title }}</td>
-                                <td>{{ $activity->category->name ?? '-' }}</td>
-                                <td>{{ $activity->duration }}</td>
-                                <td>{{ $activity->group_size }}</td>
-                                <td>{{ number_format($activity->base_price, 2) }} MAD</td>
-                                <td>
-                                    <a href="{{ route('admin.activities.edit', $activity) }}"
-                                       class="avtar avtar-xs btn-link-secondary me-2" title="Edit">
-                                        <i class="ti ti-edit f-20"></i>
-                                    </a>
-                                    <form action="{{ route('admin.activities.destroy', $activity) }}" method="POST" style="display:inline-block;">
-                                        @csrf @method('DELETE')
-                                        <button class="avtar avtar-xs btn-link-secondary border-0 bg-transparent p-0"
-                                                onclick="return confirm('Delete this activity?')" title="Delete">
-                                            <i class="ti ti-trash f-20"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                                @php
+    $imageUrl = $activity->getFirstMediaUrl('cover', 'thumb') ?: asset('images/placeholder.png');
+@endphp
+
+                                <tr class="animate__animated animate__fadeIn" style="animation-delay: {{ $index * 0.1 }}s; animation-duration: 0.6s; animation-fill-mode: both;">
+                                    <td>
+                                        <img src="{{ $imageUrl }}" alt="Activity Image" width="60" class="rounded">
+                                    </td>
+                                    <td>{{ $activity->title }}</td>
+                                    <td>{{ $activity->category->name ?? '-' }}</td>
+                                    <td>{{ $activity->duration }}</td>
+                                    <td>{{ $activity->group_size }}</td>
+                                    <td>{{ number_format($activity->base_price, 2) }} MAD</td>
+                                    <td>
+                                        <a href="{{ route('admin.activities.edit', $activity) }}"
+                                           class="avtar avtar-xs btn-link-secondary me-2" title="Edit">
+                                            <i class="ti ti-edit f-20"></i>
+                                        </a>
+                                        <form action="{{ route('admin.activities.destroy', $activity) }}" method="POST" style="display:inline-block;">
+                                            @csrf @method('DELETE')
+                                            <button class="avtar avtar-xs btn-link-secondary border-0 bg-transparent p-0"
+                                                    onclick="return confirm('Delete this activity?')" title="Delete">
+                                                <i class="ti ti-trash f-20"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

@@ -178,6 +178,14 @@
 .icon-twitter:before {
   content: "\e903";
 }
+.icon-pinterest:before {
+  content: '\ead2';
+}
+
+.icon-youtube:before {
+  content: '\ea9d';
+}
+
 .icon-android:before {
   content: "\e907";
 }
@@ -219,4 +227,7 @@
 }
 .icon-search:before {
   content: "\e926";
+}
+.icon-teamwork:before {
+  content: "\e934";
 }

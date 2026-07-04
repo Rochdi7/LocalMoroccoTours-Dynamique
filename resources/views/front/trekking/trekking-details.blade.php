@@ -55,17 +55,36 @@
                                  <div class="row x-gap-20 y-gap-20 items-center">
                                      <div class="col-auto">
                                          <div class="d-flex items-center">
-                                             <div class="d-flex x-gap-5 pr-10">
-                                                 @for ($i = 1; $i <= 5; $i++)
-                                                     <i
-                                                         class="flex-center icon-star text-12 
-                    {{ $i <= round($trekking->rating) ? 'text-yellow-2' : 'text-light-2' }}"></i>
-                                                 @endfor
+                                             @php
+                                                 $rating = $trekking->avg_rating ?? 0;
+
+                                                 $fullStars = floor($rating);
+                                                 $halfStar = $rating - $fullStars >= 0.5;
+                                                 $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                             @endphp
+
+                                             <div class="d-flex items-center">
+                                                 <div class="d-flex x-gap-5 pr-10">
+                                                     @for ($i = 0; $i < $fullStars; $i++)
+                                                         <i class="flex-center icon-star text-12 text-yellow-2"></i>
+                                                     @endfor
+
+                                                     @if ($halfStar)
+                                                         <i class="flex-center icon-star-half text-12 text-yellow-2"></i>
+                                                     @endif
+
+                                                     @for ($i = 0; $i < $emptyStars; $i++)
+                                                         <i class="flex-center icon-star text-12 text-light-2"></i>
+                                                     @endfor
+                                                 </div>
+
                                              </div>
-                                             <span>
-                                                 {{ number_format($trekking->rating, 1) }}
-                                                 ({{ number_format($trekking->reviews_count) }} reviews)
+
+                                             <span class="text-dark-1 ml-10">
+                                                 {{ number_format($trekking->avg_rating ?? 0, 1) }}
+                                                 ({{ number_format($trekking->reviews_count ?? 0) }} reviews)
                                              </span>
+
                                          </div>
                                      </div>
 
@@ -106,17 +125,32 @@
                          </div>
                      </div>
 
-                     {{-- === TOUR GALLERY SLIDER === --}}
+                     {{-- === Treeking GALLERY SLIDER === --}}
                      <div class="row justify-center pt-30">
                          <div class="col-12">
                              <div class="relative overflow-hidden js-section-slider" data-gap="10"
                                  data-slider-cols="xl-1 lg-1 md-1 sm-1 base-1" data-nav-prev="js-sliderMain-prev"
                                  data-nav-next="js-sliderMain-next" data-loop>
                                  <div class="swiper-wrapper">
-                                     @forelse ($trekking->gallery ?? [] as $image)
+                                     @php
+                                         $galleryImages = $trekking->getMedia('gallery');
+                                     @endphp
+
+                                     @forelse ($galleryImages as $image)
+                                         @php
+                                             $url = $image->hasGeneratedConversion('slider')
+                                                 ? $image->getUrl('slider')
+                                                 : $image->getUrl();
+
+                                             $alt = $image->getCustomProperty('alt') ?? $trekking->title;
+                                             $title = $image->getCustomProperty('title') ?? $trekking->title;
+                                             $caption = $image->getCustomProperty('caption') ?? '';
+                                             $desc = $image->getCustomProperty('description') ?? '';
+                                         @endphp
                                          <div class="swiper-slide">
-                                             <img src="{{ $image }}" alt="{{ $trekking->title }}"
-                                                 class="img-cover rounded-12">
+                                             <img src="{{ $url }}" alt="{{ $alt }}"
+                                                 title="{{ $title }}" data-caption="{{ $caption }}"
+                                                 data-description="{{ $desc }}" class="img-cover rounded-12">
                                          </div>
                                      @empty
                                          <div class="swiper-slide">
@@ -137,7 +171,6 @@
                              </div>
                          </div>
                      </div>
-
 
                      {{-- === TOUR DETAILS BOXES === --}}
                      <div class="row y-gap-20 justify-between items-center layout-pb-md pt-60 md:pt-30">
@@ -316,11 +349,22 @@
                          @endif
                      @endif
 
+                     @if (!empty($trekking->map_frame))
+                         <h2 class="text-30 mt-60 mb-30">Trekking Map</h2>
+                         <div class="mapTourSingle">
+                             <div class="map__content rounded-12 js-map-tour" style="height: 600px;">
+                                 {!! $trekking->map_frame !!}
+                             </div>
+                         </div>
+                     @endif
 
-                     <h2 class="text-30 mt-60 mb-30">Tour Map</h2>
-                     <div class="mapTourSingle">
-                         <div class="map__content rounded-12 js-map-tour"></div>
-                     </div>
+                     <style>
+                         .mapTourSingle iframe {
+                             width: 100%;
+                             height: 100%;
+                             border: 0;
+                         }
+                     </style>
 
 
                      <div class="line mt-60 mb-60"></div>
@@ -332,7 +376,7 @@
                          <div class="col-12">
                              <div class="accordion__item px-20 py-15 border-1 rounded-12">
                                  <div class="accordion__button d-flex items-center justify-between">
-                                     <div class="button text-16 text-dark-1">Can I get the refund?</div>
+                                     <div class="button text-16 text-dark-1">Can I get a refund if I cancel my tour?</div>
 
                                      <div class="accordion__icon size-30 flex-center bg-light-2 rounded-full">
                                          <i class="icon-plus"></i>
@@ -342,10 +386,9 @@
 
                                  <div class="accordion__content">
                                      <div class="pt-20">
-                                         <p>Phang Nga Bay Sea Cave Canoeing & James Bond Island w/ Buffet Lunch by Big Boat
-                                             cancellation policy: For a full refund, cancel at least 24 hours in advance of
-                                             the start date of the experience. Discover and book Phang Nga Bay Sea Cave
-                                             Canoeing & James Bond Island w/ Buffet Lunch by Big Boat</p>
+                                         <p>Yes! For most tours, you can receive a full refund if you cancel at least 48
+                                             hours before the scheduled start time. Please check the specific cancellation
+                                             policy for your tour when booking.</p>
                                      </div>
                                  </div>
                              </div>
@@ -354,7 +397,8 @@
                          <div class="col-12">
                              <div class="accordion__item px-20 py-15 border-1 rounded-12">
                                  <div class="accordion__button d-flex items-center justify-between">
-                                     <div class="button text-16 text-dark-1">Can I change the travel date?</div>
+                                     <div class="button text-16 text-dark-1">Can I change my travel dates after booking?
+                                     </div>
 
                                      <div class="accordion__icon size-30 flex-center bg-light-2 rounded-full">
                                          <i class="icon-plus"></i>
@@ -364,10 +408,9 @@
 
                                  <div class="accordion__content">
                                      <div class="pt-20">
-                                         <p>Phang Nga Bay Sea Cave Canoeing & James Bond Island w/ Buffet Lunch by Big Boat
-                                             cancellation policy: For a full refund, cancel at least 24 hours in advance of
-                                             the start date of the experience. Discover and book Phang Nga Bay Sea Cave
-                                             Canoeing & James Bond Island w/ Buffet Lunch by Big Boat</p>
+                                         <p>Absolutely! I understand travel plans may change. You can reschedule your tour
+                                             free of charge, depending on availability. Please contact me as early as
+                                             possible to adjust your dates.</p>
                                      </div>
                                  </div>
                              </div>
@@ -386,10 +429,10 @@
 
                                  <div class="accordion__content">
                                      <div class="pt-20">
-                                         <p>Phang Nga Bay Sea Cave Canoeing & James Bond Island w/ Buffet Lunch by Big Boat
-                                             cancellation policy: For a full refund, cancel at least 24 hours in advance of
-                                             the start date of the experience. Discover and book Phang Nga Bay Sea Cave
-                                             Canoeing & James Bond Island w/ Buffet Lunch by Big Boat</p>
+                                         <p>Each tour has its own itinerary, but most tours end in the same city where they
+                                             started, either in Marrakech, Casablanca, or Fes. I’ll provide all details
+                                             about drop-off points and timing during booking and before your tour starts.
+                                         </p>
                                      </div>
                                  </div>
                              </div>
@@ -398,7 +441,8 @@
                          <div class="col-12">
                              <div class="accordion__item px-20 py-15 border-1 rounded-12">
                                  <div class="accordion__button d-flex items-center justify-between">
-                                     <div class="button text-16 text-dark-1">Do you arrange airport transfers?</div>
+                                     <div class="button text-16 text-dark-1">Do you arrange airport transfers in Morocco?
+                                     </div>
 
                                      <div class="accordion__icon size-30 flex-center bg-light-2 rounded-full">
                                          <i class="icon-plus"></i>
@@ -408,10 +452,95 @@
 
                                  <div class="accordion__content">
                                      <div class="pt-20">
-                                         <p>Phang Nga Bay Sea Cave Canoeing & James Bond Island w/ Buffet Lunch by Big Boat
-                                             cancellation policy: For a full refund, cancel at least 24 hours in advance of
-                                             the start date of the experience. Discover and book Phang Nga Bay Sea Cave
-                                             Canoeing & James Bond Island w/ Buffet Lunch by Big Boat</p>
+                                         <p>Yes, airport transfers can be arranged for you in any major Moroccan city. Let
+                                             me know your arrival or departure details, and I’ll ensure a safe and
+                                             comfortable transfer.</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="col-12">
+                             <div class="accordion__item px-20 py-15 border-1 rounded-12">
+                                 <div class="accordion__button d-flex items-center justify-between">
+                                     <div class="button text-16 text-dark-1">What should I pack for a Morocco tour?</div>
+
+                                     <div class="accordion__icon size-30 flex-center bg-light-2 rounded-full">
+                                         <i class="icon-plus"></i>
+                                         <i class="icon-minus"></i>
+                                     </div>
+                                 </div>
+
+                                 <div class="accordion__content">
+                                     <div class="pt-20">
+                                         <p>Pack comfortable clothing for warm days and cooler evenings, especially if
+                                             traveling to the desert. Bring sunscreen, a hat, sunglasses, good walking
+                                             shoes, and modest attire for visiting religious sites. Don’t forget your
+                                             camera!</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="col-12">
+                             <div class="accordion__item px-20 py-15 border-1 rounded-12">
+                                 <div class="accordion__button d-flex items-center justify-between">
+                                     <div class="button text-16 text-dark-1">Is Morocco safe for solo travelers?</div>
+
+                                     <div class="accordion__icon size-30 flex-center bg-light-2 rounded-full">
+                                         <i class="icon-plus"></i>
+                                         <i class="icon-minus"></i>
+                                     </div>
+                                 </div>
+
+                                 <div class="accordion__content">
+                                     <div class="pt-20">
+                                         <p>Yes, Morocco is generally safe for solo travelers, including women. However,
+                                             like in any country, it’s best to stay aware of your surroundings and avoid
+                                             isolated areas at night. Traveling with a local guide provides extra security
+                                             and insider knowledge.</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="col-12">
+                             <div class="accordion__item px-20 py-15 border-1 rounded-12">
+                                 <div class="accordion__button d-flex items-center justify-between">
+                                     <div class="button text-16 text-dark-1">Do your tours include meals?</div>
+
+                                     <div class="accordion__icon size-30 flex-center bg-light-2 rounded-full">
+                                         <i class="icon-plus"></i>
+                                         <i class="icon-minus"></i>
+                                     </div>
+                                 </div>
+
+                                 <div class="accordion__content">
+                                     <div class="pt-20">
+                                         <p>Most tours include breakfast, and many also include lunch or dinner depending on
+                                             the itinerary. I’ll always confirm which meals are covered before you book so
+                                             you know exactly what to expect.</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="col-12">
+                             <div class="accordion__item px-20 py-15 border-1 rounded-12">
+                                 <div class="accordion__button d-flex items-center justify-between">
+                                     <div class="button text-16 text-dark-1">Can you customize private tours?</div>
+
+                                     <div class="accordion__icon size-30 flex-center bg-light-2 rounded-full">
+                                         <i class="icon-plus"></i>
+                                         <i class="icon-minus"></i>
+                                     </div>
+                                 </div>
+
+                                 <div class="accordion__content">
+                                     <div class="pt-20">
+                                         <p>Absolutely! I specialize in tailor-made private tours. Let me know your
+                                             interests, travel dates, and preferred destinations, and I’ll create a unique
+                                             itinerary just for you.</p>
                                      </div>
                                  </div>
                              </div>
@@ -436,81 +565,130 @@
                              </div>
                          </div>
 
-                         {{-- Begin Reservation Form --}}
-                         <form action="{{ route('front.trekking.reserve', $trekking->slug) }}" method="POST">
+                         {{-- Include SweetAlert2 via CDN --}}
+                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                         <script>
+                             @if (session('success'))
+                                 @php
+                                     $success = session('success');
+                                     $message = is_array($success) ? $success['message'] : $success;
+                                     $context = is_array($success) && isset($success['context']) ? $success['context'] : 'general';
+                                     $title = $context === 'review' ? 'Review Complete!' : 'Reservation Complete!';
+                                 @endphp
+
+                                 Swal.fire({
+                                     icon: 'success',
+                                     title: @json($title),
+                                     text: @json($message),
+                                     confirmButtonColor: '#3085d6',
+                                 });
+                             @endif
+
+                             @if (session('error'))
+                                 Swal.fire({
+                                     icon: 'error',
+                                     title: 'Something went wrong!',
+                                     text: @json(session('error')),
+                                     confirmButtonColor: '#d33',
+                                 });
+                             @endif
+                         </script>
+
+
+                         {{-- Validation Errors stay inline --}}
+                         @if ($errors->any())
+                             <div class="alert alert-danger mt-20">
+                                 <ul class="mb-0">
+                                     @foreach ($errors->all() as $error)
+                                         <li>{{ $error }}</li>
+                                     @endforeach
+                                 </ul>
+                             </div>
+                         @endif
+
+                         <form id="reservationForm" action="{{ route('front.trekking.reserve', $trekking->slug) }}"
+                             method="POST">
                              <div class="row y-gap-30 contactForm pt-30">
                                  @csrf
 
-                                 {{-- Hidden Tour ID --}}
-                                 <input type="hidden" name="tour_id" value="{{ $trekking->id }}">
+                                 {{-- Hidden Trekking ID --}}
+                                 <input type="hidden" name="trekking_id" value="{{ $trekking->id }}">
 
                                  <div class="col-12">
                                      <div class="form-input">
                                          <input type="text" name="full_name" required value="{{ old('full_name') }}">
-                                         <label class="lh-1 text-16 text-light-1">Full Name</label>
+                                         <label class="lh-1 text-16 text-light-1">Your Name *</label>
                                      </div>
                                  </div>
 
                                  <div class="col-md-6">
                                      <div class="form-input">
                                          <input type="email" name="email" required value="{{ old('email') }}">
-                                         <label class="lh-1 text-16 text-light-1">Email</label>
+                                         <label class="lh-1 text-16 text-light-1">Your Email *</label>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-md-6">
+                                     <div class="form-input">
+                                         <input type="text" name="nationality" required
+                                             value="{{ old('nationality') }}">
+                                         <label class="lh-1 text-16 text-light-1">Nationality *</label>
                                      </div>
                                  </div>
 
                                  <div class="col-md-6">
                                      <div class="form-input">
                                          <input type="text" name="phone" required value="{{ old('phone') }}">
-                                         <label class="lh-1 text-16 text-light-1">Phone Number</label>
+                                         <label class="lh-1 text-16 text-light-1">Contact Number *</label>
                                      </div>
                                  </div>
 
                                  <div class="col-md-6">
                                      <div class="form-input">
-                                         <input type="text" name="country" required value="{{ old('country') }}">
-                                         <label class="lh-1 text-16 text-light-1">Country</label>
+                                         <input type="date" name="arrival_date" required
+                                             value="{{ old('arrival_date') }}">
+                                         <label class="lh-1 text-16 text-light-1">Preferred Arrival Date *</label>
                                      </div>
                                  </div>
 
                                  <div class="col-md-6">
                                      <div class="form-input">
-                                         <input type="text" name="city" required value="{{ old('city') }}">
-                                         <label class="lh-1 text-16 text-light-1">City</label>
+                                         <input type="date" name="departure_date" required
+                                             value="{{ old('departure_date') }}">
+                                         <label class="lh-1 text-16 text-light-1">Departure Date *</label>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-md-6">
+                                     <div class="form-input">
+                                         <input type="number" name="duration_days" required min="1"
+                                             value="{{ old('duration_days', 5) }}">
+                                         <label class="lh-1 text-16 text-light-1">Preferred Duration (Days) *</label>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-md-6">
+                                     <div class="form-input">
+                                         <input type="number" name="adults" required min="1"
+                                             value="{{ old('adults', 1) }}">
+                                         <label class="lh-1 text-16 text-light-1">No. of Adults *</label>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-md-6">
+                                     <div class="form-input">
+                                         <input type="number" name="children" min="0"
+                                             value="{{ old('children', 0) }}">
+                                         <label class="lh-1 text-16 text-light-1">No. of Children</label>
                                      </div>
                                  </div>
 
                                  <div class="col-12">
                                      <div class="form-input">
-                                         <input type="text" name="address1" required value="{{ old('address1') }}">
-                                         <label class="lh-1 text-16 text-light-1">Address 1</label>
-                                     </div>
-                                 </div>
-
-                                 <div class="col-12">
-                                     <div class="form-input">
-                                         <input type="text" name="address2" value="{{ old('address2') }}">
-                                         <label class="lh-1 text-16 text-light-1">Address 2</label>
-                                     </div>
-                                 </div>
-
-                                 <div class="col-lg-6">
-                                     <div class="form-input">
-                                         <input type="text" name="state" required value="{{ old('state') }}">
-                                         <label class="lh-1 text-16 text-light-1">State/Province/Region</label>
-                                     </div>
-                                 </div>
-
-                                 <div class="col-lg-6">
-                                     <div class="form-input">
-                                         <input type="text" name="zip" required value="{{ old('zip') }}">
-                                         <label class="lh-1 text-16 text-light-1">ZIP code/Postal code</label>
-                                     </div>
-                                 </div>
-
-                                 <div class="col-12">
-                                     <div class="form-input">
-                                         <textarea name="tour_content" required rows="8">{{ old('tour_content') }}</textarea>
-                                         <label class="lh-1 text-16 text-light-1">Tour Content</label>
+                                         <textarea name="message" required rows="6">{{ old('message') }}</textarea>
+                                         <label class="lh-1 text-16 text-light-1">Your Message / Specific Requests
+                                             *</label>
                                      </div>
                                  </div>
 
@@ -533,7 +711,8 @@
                                  </div>
                              </div>
                          </form>
-                         {{-- End Reservation Form --}}
+
+
                      </div>
 
 
@@ -543,13 +722,31 @@
                      <h2 class="text-30">Customer Reviews</h2>
 
                      {{-- Overall Ratings --}}
+                     @php
+                         // Map trekking rating labels to real IcoMoon icon classes
+                         $iconMap = [
+                             'Location' => 'icon-pin-2',
+                             'Trail Difficulty' => 'icon-mountain',
+                             'Guide' => 'icon-online-support-2',
+                             'Food' => 'icon-utensils',
+                             'Accommodation' => 'icon-bed-2',
+                             'Equipment' => 'icon-bus',
+                             'Price' => 'icon-price-tag',
+                             'Safety' => 'icon-application',
+                         ];
+                     @endphp
+
                      <div class="overallRating mt-30">
                          <div class="overallRating__list">
                              @foreach ($overallRatings as $rating)
+                                 @php
+                                     $iconClass = $iconMap[$rating['label']] ?? 'icon-star-2';
+                                 @endphp
+
                                  <div class="overallRating__item">
                                      <div class="overallRating__content">
                                          <div class="overallRating__icon">
-                                             <i class="{{ $rating['icon'] }} text-30 text-accent-1"></i>
+                                             <i class="{{ $iconClass }} text-30 text-accent-1"></i>
                                          </div>
 
                                          <div class="overallRating__info">
@@ -567,6 +764,7 @@
                          </div>
                      </div>
 
+
                      {{-- Individual Reviews --}}
                      @if ($reviews->count())
                          @foreach ($reviews as $review)
@@ -575,8 +773,8 @@
                                      <div class="col-auto">
                                          <div class="d-flex items-center">
                                              <div class="size-40 rounded-full">
-                                                 <img src="{{ $review->avatar ?? asset('img/reviews/avatars/default.png') }}"
-                                                     alt="avatar" class="img-cover">
+                                                 <img src="{{ asset('assets/images/icon/avatar.webp') }}" alt="avatar"
+                                                     class="img-cover">
                                              </div>
                                              <div class="text-16 fw-500 ml-20">{{ $review->name }}</div>
                                          </div>
@@ -587,12 +785,26 @@
                                      </div>
                                  </div>
 
+                                 @php
+                                     $rating = $review->rating ?? 0;
+
+                                     $fullStars = floor($rating);
+                                     $halfStar = $rating - $fullStars >= 0.5;
+                                     $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                 @endphp
+
                                  <div class="d-flex items-center mt-15">
                                      <div class="d-flex x-gap-5">
-                                         @php $rating = floor($review->rating); @endphp
-                                         @for ($i = 1; $i <= 5; $i++)
-                                             <i
-                                                 class="icon-star text-yellow-2 text-10 {{ $i <= $rating ? '' : 'opacity-30' }}"></i>
+                                         @for ($i = 0; $i < $fullStars; $i++)
+                                             <i class="icon-star text-yellow-2 text-10"></i>
+                                         @endfor
+
+                                         @if ($halfStar)
+                                             <i class="icon-star-half text-yellow-2 text-10"></i>
+                                         @endif
+
+                                         @for ($i = 0; $i < $emptyStars; $i++)
+                                             <i class="icon-star text-yellow-2 text-10 opacity-30"></i>
                                          @endfor
                                      </div>
                                      <div class="text-16 fw-500 ml-10">{{ $review->title }}</div>
@@ -638,29 +850,28 @@
                      @else
                          <p class="pt-30">No reviews yet. Be the first to share your experience!</p>
                      @endif
-
-
-
-
-
                      @if (session('success'))
+                         @php
+                             $success = session('success');
+                             $message = is_array($success) ? $success['message'] : $success;
+                         @endphp
                          <div class="alert alert-success mt-30"
                              style="
-        background-color: #d1e7dd;
-        color: #0f5132;
-        padding: 15px;
-        border-radius: 5px;">
-                             {{ session('success') }}
+            background-color: #d1e7dd;
+            color: #0f5132;
+            padding: 15px;
+            border-radius: 5px;">
+                             {{ $message }}
                          </div>
                      @endif
 
                      @if ($errors->any())
                          <div class="alert alert-danger mt-30"
                              style="
-        background-color: #f8d7da;
-        color: #842029;
-        padding: 15px;
-        border-radius: 5px;">
+            background-color: #f8d7da;
+            color: #842029;
+            padding: 15px;
+            border-radius: 5px;">
                              <ul class="mb-0">
                                  @foreach ($errors->all() as $error)
                                      <li>{{ $error }}</li>
@@ -668,6 +879,7 @@
                              </ul>
                          </div>
                      @endif
+
 
                      <h2 class="text-30 pt-60">Leave a Reply</h2>
                      <p class="mt-30">Your email address will not be published. Required fields are marked *</p>
@@ -911,15 +1123,15 @@
          </div>
      </section>
 
-     <section class="layout-pt-xl layout-pb-xl">
-         <div class="container">
-             <div class="row">
-                 <div class="col-auto">
-                     <h2 class="text-30">You might also like...</h2>
+     @if ($similarTrekkings->count())
+         <section class="layout-pt-xl layout-pb-xl">
+             <div class="container">
+                 <div class="row">
+                     <div class="col-auto">
+                         <h2 class="text-30">You might also like...</h2>
+                     </div>
                  </div>
-             </div>
 
-             @if ($similarTrekkings->count())
                  <div class="relative pt-40 sm:pt-20">
                      <div class="overflow-hidden pb-5 js-section-slider" data-gap="30"
                          data-slider-cols="xl-4 lg-3 md-2 sm-1 base-1" data-nav-prev="js-slider1-prev"
@@ -927,6 +1139,14 @@
 
                          <div class="swiper-wrapper">
                              @foreach ($similarTrekkings as $similarTrekking)
+                                 @php
+                                     $rating = $similarTrekking->avg_rating ?? 0;
+
+                                     $fullStars = floor($rating);
+                                     $halfStar = $rating - $fullStars >= 0.5;
+                                     $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                 @endphp
+
                                  <div class="swiper-slide">
                                      <a href="{{ route('front.trekking.show', $similarTrekking->slug) }}"
                                          class="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow">
@@ -936,9 +1156,6 @@
                                                      alt="{{ $similarTrekking->title }}" class="img-ratio rounded-12">
                                              </div>
 
-                                             <button class="tourCard__favorite">
-                                                 <i class="icon-heart"></i>
-                                             </button>
                                          </div>
 
                                          <div class="tourCard__content px-10 pt-10">
@@ -953,13 +1170,21 @@
 
                                              <div class="tourCard__rating d-flex items-center text-13 mt-5">
                                                  <div class="d-flex x-gap-5">
-                                                     @for ($i = 0; $i < 5; $i++)
+                                                     @for ($i = 0; $i < $fullStars; $i++)
                                                          <div><i class="icon-star text-10 text-yellow-2"></i></div>
+                                                     @endfor
+
+                                                     @if ($halfStar)
+                                                         <div><i class="icon-star-half text-10 text-yellow-2"></i></div>
+                                                     @endif
+
+                                                     @for ($i = 0; $i < $emptyStars; $i++)
+                                                         <div><i class="icon-star text-10 text-light-2"></i></div>
                                                      @endfor
                                                  </div>
                                                  <span class="text-dark-1 ml-10">
-                                                     {{ number_format($similarTrekking->rating ?? 4.8, 1) }}
-                                                     ({{ $similarTrekking->booked_count }})
+                                                     {{ number_format($rating, 1) }}
+                                                     ({{ number_format($similarTrekking->reviews_count ?? 0) }} reviews)
                                                  </span>
                                              </div>
 
@@ -993,8 +1218,18 @@
                          </button>
                      </div>
                  </div>
-             @endif
-         </div>
-     </section>
+             </div>
+         </section>
+     @endif
 
+     <script>
+         function scrollToReservationForm() {
+             const form = document.getElementById('reservationForm');
+             if (form) {
+                 form.scrollIntoView({
+                     behavior: 'smooth'
+                 });
+             }
+         }
+     </script>
  @endsection

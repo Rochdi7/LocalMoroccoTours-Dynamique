@@ -24,6 +24,13 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\SpecialOfferController;
 use App\Http\Controllers\Admin\RatingCategoryController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\TourReservationController;
+use App\Http\Controllers\ActivityReservationController;
+use App\Http\Controllers\TrekkingReservationController;
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\FrontLocationController;
 
 Auth::routes();
 
@@ -33,44 +40,60 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('tours')->name('front.tours.')->group(function () {
     Route::get('/', [FrontTourController::class, 'index'])->name('index');
     Route::get('/{slug}', [FrontTourController::class, 'show'])->name('show');
-    Route::post('/{slug}/reserve', [FrontTourController::class, 'reserve'])->name('reserve');
     Route::post('/{slug}/leave-review', [FrontTourController::class, 'leaveReview'])->name('leaveReview');
+    Route::post('/{slug}/reserve', [TourReservationController::class, 'store'])->name('reserve');
 });
 
 // Activities
 Route::prefix('activities')->name('front.activities.')->group(function () {
     Route::get('/', [FrontActivityController::class, 'index'])->name('index');
     Route::get('/{slug}', [FrontActivityController::class, 'show'])->name('show');
-    Route::post('/{slug}/reserve', [FrontActivityController::class, 'reserve'])->name('reserve');
     Route::post('/{slug}/leave-review', [FrontActivityController::class, 'leaveReview'])->name('leaveReview');
+    Route::post('/{slug}/reserve', [ActivityReservationController::class, 'store'])->name('reserve');
 });
 
 // Trekking
 Route::prefix('trekking')->name('front.trekking.')->group(function () {
     Route::get('/', [FrontTrekkingController::class, 'index'])->name('index');
     Route::get('/{slug}', [FrontTrekkingController::class, 'show'])->name('show');
-    Route::post('/{slug}/reserve', [FrontTrekkingController::class, 'reserve'])->name('reserve');
     Route::post('/{slug}/leave-review', [FrontTrekkingController::class, 'leaveReview'])->name('leaveReview');
+    Route::post('/{slug}/reserve', [TrekkingReservationController::class, 'store'])->name('reserve');
 });
 
+// Blog
+Route::prefix('blog')->name('blog.')->group(function () {
+    Route::get('/', [FrontPostController::class, 'index'])->name('index');
+    Route::get('/search', [FrontPostController::class, 'search'])->name('search');
+    Route::get('/category/{slug}', [FrontPostController::class, 'category'])->name('category');
+    Route::get('/tag/{slug}', [FrontPostController::class, 'tag'])->name('tag');
+    Route::get('/{slug}', [FrontPostController::class, 'show'])->name('show');
+    Route::post('/{slug}/leave-review', [FrontPostController::class, 'leaveReview'])->name('leaveReview');
+});
 
+// Locations (frontend)
+Route::prefix('locations')->name('front.locations.')->group(function () {
+    Route::get('/', [FrontLocationController::class, 'index'])->name('index');
+    Route::get('/{slug}', [FrontLocationController::class, 'show'])->name('show');
+});
+
+// Reviews
 Route::post('/review/{review}/helpful', [ReviewController::class, 'markHelpful'])->name('review.helpful');
 Route::post('/review/{review}/not-helpful', [ReviewController::class, 'markNotHelpful'])->name('review.notHelpful');
 
+// Static Pages
 Route::view('/contact', 'front.contact')->name('front.contact');
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
-Route::get('/{page}', [HomeController::class, 'pageView'])
-    ->where('page', 'about|terms|privacy');
+Route::view('/about', 'front.about')->name('front.about');
+Route::view('/terms', 'front.terms')->name('front.terms');
+Route::view('/privacy', 'front.privacy')->name('front.privacy');
 
-Route::prefix('blog')->name('blog.')->group(function () {
-    Route::get('/', [FrontPostController::class, 'index'])->name('index');
-    Route::get('/{slug}', [FrontPostController::class, 'show'])->name('show');
-});
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
-Route::resource('rating-categories', RatingCategoryController::class)
-    ->middleware('auth')
-    ->names('admin.rating-categories');
+Route::view('/404', 'errors.404')->name('error.404');
+Route::view('/help-center', 'front.help-center')->name('front.help-center');
 
+// Authenticated user profile routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -78,8 +101,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/locations/{location}', [LocationController::class, 'show'])->name('locations.show');
 });
 
+
+Route::get('/test-mail', function () {
+    \Illuminate\Support\Facades\Mail::raw('Test email from Laravel.', function ($message) {
+        $message->to('localmoroccotour@gmail.com')
+                ->subject('Test Email');
+    });
+
+    return 'Mail sent!';
+});
+
+// Admin routes
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::post('/posts/upload-image', [AdminPostController::class, 'uploadImage'])->name('posts.upload-image');
+
     Route::resources([
         'tour-categories' => TourCategoryController::class,
         'tours' => AdminTourController::class,
@@ -92,5 +129,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         'posts' => AdminPostController::class,
         'tags' => TagController::class,
         'special-offers' => SpecialOfferController::class,
+        'rating-categories' => RatingCategoryController::class,
     ]);
+});
+
+// Optional: Fallback route for unmatched URLs
+Route::fallback(function () {
+    return redirect()->route('error.404');
 });

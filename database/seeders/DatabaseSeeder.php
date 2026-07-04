@@ -5,8 +5,18 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str; // Import the Str class
+use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Location;
+use App\Models\TourCategory;
+use App\Models\ActivityCategory;
+use App\Models\TrekkingCategory;
+use App\Models\BlogCategory;
+use App\Models\Tour;
+use App\Models\Activity;
+use App\Models\Trekking;
+use App\Models\Post;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,35 +45,70 @@ class DatabaseSeeder extends Seeder
         DB::table('post_comments')->truncate();
         DB::table('post_tag')->truncate();
         DB::table('special_offers')->truncate();
-
+        DB::table('review_ratings')->truncate();
+        DB::table('rating_categories')->truncate();
+        DB::table('media')->truncate();
 
         // --- CATEGORIES & LOCATIONS ---
 
-        DB::table('tour_categories')->insert([
+        $tourCategories = DB::table('tour_categories')->insert([
             ['name' => 'Cultural Tours', 'slug' => 'cultural-tours', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'Desert Safaris', 'slug' => 'desert-safaris', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'City Breaks', 'slug' => 'city-breaks', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
 
-        DB::table('locations')->insert([
-            ['name' => 'Marrakech', 'parent_id' => null, 'description' => 'The vibrant heart of Morocco.', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['name' => 'Fes', 'parent_id' => null, 'description' => 'The cultural and spiritual center of Morocco.', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['name' => 'Atlas Mountains', 'parent_id' => 1, 'description' => 'Majestic mountain range near Marrakech.', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+        User::create([
+            'name' => 'Admin',
+            'email' => 'Localmoroccotour@gmail.com',
+            'password' => Hash::make('password'),
         ]);
 
-        DB::table('activity_categories')->insert([
+        $locations = DB::table('locations')->insert([
+            [
+                'name' => 'Marrakech',
+                'slug' => Str::slug('Marrakech'),
+                'description' => 'The vibrant heart of Morocco.',
+                'seo_alt' => 'Marrakech City',
+                'seo_caption' => 'Sunset over Marrakech skyline',
+                'seo_description' => 'Marrakech, the vibrant heart of Morocco, famous for its markets and culture.',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Fes',
+                'slug' => Str::slug('Fes'),
+                'description' => 'The cultural and spiritual center of Morocco.',
+                'seo_alt' => 'Fes Medina',
+                'seo_caption' => 'Old medina streets of Fes',
+                'seo_description' => 'Explore the spiritual and cultural heritage of Morocco in Fes.',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Atlas Mountains',
+                'slug' => Str::slug('Atlas Mountains'),
+                'description' => 'Majestic mountain range near Marrakech.',
+                'seo_alt' => 'Atlas Mountains Range',
+                'seo_caption' => 'Snow-capped Atlas peaks',
+                'seo_description' => 'Experience trekking adventures and nature in the Atlas Mountains.',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ]);
+
+        $activityCategories = DB::table('activity_categories')->insert([
             ['name' => 'Hot Air Balloon', 'slug' => 'hot-air-balloon', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'Cooking Class', 'slug' => 'cooking-class', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'Quad Biking', 'slug' => 'quad-biking', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
 
-        DB::table('trekking_categories')->insert([
+        $trekkingCategories = DB::table('trekking_categories')->insert([
             ['name' => 'Mountain Treks', 'slug' => 'mountain-treks', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'Coastal Hikes', 'slug' => 'coastal-hikes', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'Desert Treks', 'slug' => 'desert-treks', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
 
-        DB::table('blog_categories')->insert([
+        $blogCategories = DB::table('blog_categories')->insert([
             ['name' => 'Travel Guides', 'slug' => 'travel-guides', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'Cultural Insights', 'slug' => 'cultural-insights', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
             ['name' => 'Food & Drink', 'slug' => 'food-drink', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
@@ -82,10 +127,9 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Jane Smith', 'email' => 'jane.smith@example.com', 'password' => Hash::make('password'), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
 
-
         // --- CORE CONTENT: TOURS, ACTIVITIES, TREKKING ---
 
-        DB::table('tours')->insert([
+        $tours = DB::table('tours')->insert([
             [
                 'title' => 'Imperial Cities Discovery',
                 'slug' => 'imperial-cities-discovery',
@@ -105,10 +149,6 @@ class DatabaseSeeder extends Seeder
                 'map_frame' => '31.6295,-7.9811',
                 'category_id' => 1,
                 'location_id' => 1,
-                'gallery' => json_encode([
-                    '/img/tourSingle/2/1.png',
-                    '/img/tourSingle/2/2.png',
-                ]),
                 'included' => json_encode([
                     'Hotel pickup and drop-off',
                     'English-speaking guide',
@@ -136,7 +176,11 @@ class DatabaseSeeder extends Seeder
                 'title' => 'Sahara Desert Luxury Camp',
                 'slug' => 'sahara-desert-luxury-camp',
                 'overview' => 'Experience the magic of the Sahara with a 3-day tour from Marrakech to Merzouga, staying in a luxury desert camp.',
-                'highlights' => "Camel ride at sunset\nStargazing in the desert\nTraditional Berber music",
+                'highlights' => json_encode([
+                    "Camel ride at sunset",
+                    "Stargazing in the desert",
+                    "Traditional Berber music"
+                ]),
                 'duration' => '3 Days',
                 'group_size' => 8,
                 'age_range' => '10-65',
@@ -147,11 +191,6 @@ class DatabaseSeeder extends Seeder
                 'map_frame' => '31.0931,-4.0116',
                 'category_id' => 2,
                 'location_id' => 1,
-                'gallery' => json_encode([
-                    '/img/tourSingle/2/1.png',
-                    '/img/tourSingle/2/2.png',
-                    '/img/tourSingle/2/3.png',
-                ]),
                 'included' => json_encode([
                     'Luxury desert camp accommodation',
                     'Camel trek through dunes',
@@ -174,7 +213,11 @@ class DatabaseSeeder extends Seeder
                 'title' => 'Fes Medina Guided Tour',
                 'slug' => 'fes-medina-guided-tour',
                 'overview' => 'A full-day guided tour exploring the labyrinthine streets of the ancient Fes medina, a UNESCO World Heritage site.',
-                'highlights' => "Visit Bou Inania Madrasa\nSee the Chouara Tannery\nExplore the souks",
+                'highlights' => json_encode([
+                    "Visit Bou Inania Madrasa",
+                    "See the Chouara Tannery",
+                    "Explore the souks"
+                ]),
                 'duration' => '1 Day',
                 'group_size' => 6,
                 'age_range' => 'All ages',
@@ -185,9 +228,6 @@ class DatabaseSeeder extends Seeder
                 'map_frame' => '34.0637,-5.0033',
                 'category_id' => 3,
                 'location_id' => 2,
-                'gallery' => json_encode([
-                    '/img/tourSingle/2/1.png',
-                ]),
                 'included' => json_encode([
                     'Official guide',
                     'Entrance to monuments',
@@ -205,8 +245,7 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
-
-        DB::table('activities')->insert([
+        $activities = DB::table('activities')->insert([
             [
                 'title' => 'Sunrise Hot Air Balloon Over Marrakech',
                 'slug' => Str::slug('Sunrise Hot Air Balloon Over Marrakech'),
@@ -220,7 +259,7 @@ class DatabaseSeeder extends Seeder
                 'free_cancellation_flag' => true,
                 'booked_count' => 300,
                 'map_frame' => '31.6295,-7.9811',
-                'category_id' => 1, // Hot Air Balloon
+                'category_id' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -237,7 +276,7 @@ class DatabaseSeeder extends Seeder
                 'free_cancellation_flag' => true,
                 'booked_count' => 120,
                 'map_frame' => '31.6258,-7.9945',
-                'category_id' => 2, // Cooking Class
+                'category_id' => 2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -254,13 +293,13 @@ class DatabaseSeeder extends Seeder
                 'free_cancellation_flag' => false,
                 'booked_count' => 180,
                 'map_frame' => '31.4725,-8.1211',
-                'category_id' => 3, // Quad Biking
+                'category_id' => 3,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
         ]);
 
-        DB::table('trekking')->insert([
+        $trekkings = DB::table('trekking')->insert([
             [
                 'title' => 'Mount Toubkal Ascent (2 Days)',
                 'slug' => Str::slug('Mount Toubkal Ascent (2 Days)'),
@@ -276,7 +315,7 @@ class DatabaseSeeder extends Seeder
                 'free_cancellation_flag' => false,
                 'booked_count' => 115,
                 'map_frame' => '31.0596,-7.9155',
-                'category_id' => 1, // Mountain Treks
+                'category_id' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -295,7 +334,7 @@ class DatabaseSeeder extends Seeder
                 'free_cancellation_flag' => true,
                 'booked_count' => 85,
                 'map_frame' => '31.2000,-7.9833',
-                'category_id' => 1, // Mountain Treks
+                'category_id' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -314,7 +353,7 @@ class DatabaseSeeder extends Seeder
                 'free_cancellation_flag' => true,
                 'booked_count' => 45,
                 'map_frame' => '31.5085,-9.7595',
-                'category_id' => 2, // Coastal Hikes
+                'category_id' => 2,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -322,15 +361,15 @@ class DatabaseSeeder extends Seeder
 
         // --- BLOG CONTENT: POSTS, COMMENTS, TAGS ---
 
-        DB::table('posts')->insert([
+        $posts = DB::table('posts')->insert([
             [
                 'title' => 'A First-Timer\'s Guide to Marrakech',
                 'slug' => 'first-timers-guide-to-marrakech',
                 'excerpt' => 'Navigating the Red City can be daunting. Here are our top tips for making the most of your first visit.',
-                'content' => '<h1>Welcome to Marrakech!</h1><p>Marrakech is a city of sensory overload... (full content here)</p>',
+                'content' => '<h1>Welcome to Marrakech!</h1><p>Marrakech is a city of sensory overload...</p>',
                 'status' => 'published',
-                'author_id' => 1, // Admin User
-                'category_id' => 1, // Travel Guides
+                'author_id' => 1,
+                'category_id' => 1,
                 'published_at' => Carbon::now()->subDays(10),
                 'created_at' => Carbon::now()->subDays(10),
                 'updated_at' => Carbon::now()->subDays(10)
@@ -339,10 +378,10 @@ class DatabaseSeeder extends Seeder
                 'title' => 'The Art of Moroccan Mint Tea',
                 'slug' => 'art-of-moroccan-mint-tea',
                 'excerpt' => 'More than just a drink, Moroccan mint tea is a symbol of hospitality and culture. Learn how it\'s made.',
-                'content' => '<h1>The Ceremony of Tea</h1><p>In Morocco, tea is a way of life... (full content here)</p>',
+                'content' => '<h1>The Ceremony of Tea</h1><p>In Morocco, tea is a way of life...</p>',
                 'status' => 'published',
-                'author_id' => 2, // John Doe
-                'category_id' => 2, // Cultural Insights
+                'author_id' => 2,
+                'category_id' => 2,
                 'published_at' => Carbon::now()->subDays(5),
                 'created_at' => Carbon::now()->subDays(5),
                 'updated_at' => Carbon::now()->subDays(5)
@@ -351,10 +390,10 @@ class DatabaseSeeder extends Seeder
                 'title' => 'Tasting Tagine: A Culinary Journey',
                 'slug' => 'tasting-tagine-culinary-journey',
                 'excerpt' => 'From lamb with prunes to chicken with lemons, we explore the delicious world of the Moroccan tagine.',
-                'content' => '<h1>What is a Tagine?</h1><p>The tagine is both the pot and the stew... (full content here)</p>',
+                'content' => '<h1>What is a Tagine?</h1><p>The tagine is both the pot and the stew...</p>',
                 'status' => 'draft',
-                'author_id' => 1, // Admin User
-                'category_id' => 3, // Food & Drink
+                'author_id' => 1,
+                'category_id' => 3,
                 'published_at' => null,
                 'created_at' => Carbon::now()->subDays(2),
                 'updated_at' => Carbon::now()->subDays(2)
@@ -364,7 +403,7 @@ class DatabaseSeeder extends Seeder
         DB::table('post_comments')->insert([
             [
                 'post_id' => 1,
-                'user_id' => 2, // John Doe
+                'user_id' => 2,
                 'parent_id' => null,
                 'guest_name' => null,
                 'guest_email' => null,
@@ -375,7 +414,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'post_id' => 1,
-                'user_id' => 1, // Admin User
+                'user_id' => 1,
                 'parent_id' => 1,
                 'guest_name' => null,
                 'guest_email' => null,
@@ -399,9 +438,9 @@ class DatabaseSeeder extends Seeder
 
         // Junction table for post_tag
         DB::table('post_tag')->insert([
-            ['post_id' => 1, 'tag_id' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], // Post 1 -> Adventure
-            ['post_id' => 1, 'tag_id' => 2, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], // Post 1 -> History
-            ['post_id' => 2, 'tag_id' => 2, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()], // Post 2 -> History
+            ['post_id' => 1, 'tag_id' => 1, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['post_id' => 1, 'tag_id' => 2, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['post_id' => 2, 'tag_id' => 2, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
         ]);
 
         // --- MISC ---
@@ -437,13 +476,6 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
         ]);
-
-        // Disable FK checks to allow truncation
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
-        // Truncate tables in dependency order
-        DB::table('review_ratings')->truncate();
-        DB::table('rating_categories')->truncate();
 
         // Insert predefined rating categories
         DB::table('rating_categories')->insert([
@@ -490,6 +522,58 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => Carbon::now(),
             ],
         ]);
+
+        // Add media to models using Spatie Media Library
+        // Note: Actual file paths must exist on the server
+        $imagePaths = [
+            'destinations' => base_path('public/assets/images/seeder/destinations.jpg'),
+            'tours' => base_path('public/assets/images/seeder/tours.jpg'),
+            'activities' => base_path('public/assets/images/seeder/activities.jpg'),
+            'trekking' => base_path('public/assets/images/seeder/trekking.jpg'),
+            'blog' => base_path('public/assets/images/seeder/blog.jpg'),
+        ];
+
+       
+
+        // Associate images with locations
+        Location::all()->each(function ($location, $index) use ($imagePaths) {
+            if (file_exists($imagePaths['destinations'])) {
+                $location->addMedia($imagePaths['destinations'])
+                    ->toMediaCollection('location_images');
+            }
+        });
+
+        // Associate images with tours
+        Tour::all()->each(function ($tour, $index) use ($imagePaths) {
+            if (file_exists($imagePaths['tours'])) {
+                $tour->addMedia($imagePaths['tours'])
+                    ->toMediaCollection('tour_images');
+            }
+        });
+
+        // Associate images with activities
+        Activity::all()->each(function ($activity, $index) use ($imagePaths) {
+            if (file_exists($imagePaths['activities'])) {
+                $activity->addMedia($imagePaths['activities'])
+                    ->toMediaCollection('activity_images');
+            }
+        });
+
+        // Associate images with trekkings
+        Trekking::all()->each(function ($trekking, $index) use ($imagePaths) {
+            if (file_exists($imagePaths['trekking'])) {
+                $trekking->addMedia($imagePaths['trekking'])
+                    ->toMediaCollection('trekking_images');
+            }
+        });
+
+        // Associate images with posts
+        Post::all()->each(function ($post, $index) use ($imagePaths) {
+            if (file_exists($imagePaths['blog'])) {
+                $post->addMedia($imagePaths['blog'])
+                    ->toMediaCollection('post_images');
+            }
+        });
 
         // Re-enable FK checks
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

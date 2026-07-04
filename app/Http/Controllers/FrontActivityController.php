@@ -20,13 +20,15 @@ class FrontActivityController extends Controller
         $minPrice = Activity::min('base_price') ?? 0;
         $maxPrice = Activity::max('base_price') ?? 0;
 
-        $durations = [
-            '0-3 hours',
-            '3-5 hours',
-            '5-7 hours',
-            'Full day (7+ hours)',
-            'Multi-day'
-        ];
+        // Fetch distinct durations from DB to build the filter dropdown
+        $durations = Activity::query()
+            ->selectRaw('DISTINCT duration')
+            ->whereNotNull('duration')
+            ->orderByRaw(
+                "CAST(REPLACE(REPLACE(duration, ' Hours', ''), ' Hour', '') AS DECIMAL(4,1)) ASC"
+            )
+            ->pluck('duration')
+            ->toArray();
 
         $selectedCategories = $request->input('categories', []);
         $selectedDurations = $request->input('duration', []);
@@ -41,7 +43,19 @@ class FrontActivityController extends Controller
                 $query->whereIn('category_id', $selectedCategories);
             })
             ->when(!empty($selectedDurations), function ($query) use ($selectedDurations) {
-                $query->whereIn('duration', $selectedDurations);
+                // Convert selected durations to numeric values (e.g. "3.5 Hours" => 3.5)
+                $durationsNumeric = collect($selectedDurations)
+                    ->map(function ($duration) {
+                        return floatval(str_replace([' Hours', ' Hour'], '', $duration));
+                    })
+                    ->toArray();
+
+                // Build the raw SQL filtering expression
+                $placeholders = implode(',', array_fill(0, count($durationsNumeric), '?'));
+                $query->whereRaw(
+                    "CAST(REPLACE(REPLACE(duration, ' Hours', ''), ' Hour', '') AS DECIMAL(4,1)) IN ($placeholders)",
+                    $durationsNumeric
+                );
             })
             ->when(!empty($selectedSpecials), function ($query) use ($selectedSpecials) {
                 if (in_array('free_cancellation', $selectedSpecials)) {
@@ -77,7 +91,7 @@ class FrontActivityController extends Controller
                 break;
         }
 
-        $activities = $activities->paginate(10);
+        $activities = $activities->paginate(2);
 
         $activityIds = $activities->pluck('id');
 
@@ -99,8 +113,7 @@ class FrontActivityController extends Controller
                 return in_array(round($activity->avg_rating), $selectedRatings);
             })->values();
 
-            // Convert back to paginator
-            $activities = new LengthAwarePaginator(
+            $activities = new \Illuminate\Pagination\LengthAwarePaginator(
                 $filtered,
                 $filtered->count(),
                 $activities->perPage(),
@@ -221,7 +234,10 @@ class FrontActivityController extends Controller
 
         // Save reservation logic
 
-        return back()->with('success', 'Your reservation was submitted!');
+        return back()->with('success', [
+            'message' => 'Your reservation was submitted!',
+            'context' => 'reservation',
+        ]);
     }
 
     public function leaveReview(Request $request, $slug)
@@ -248,18 +264,20 @@ class FrontActivityController extends Controller
                 'email' => $validated['email'],
                 'title' => $validated['title'],
                 'comment' => $validated['comment'],
+                'rating' => collect($validated['ratings'])->avg(),
             ]);
 
             if ($request->hasFile('images')) {
                 $imagePaths = [];
                 foreach ($request->file('images') as $image) {
-                    $path = $image->store('reviews', 'public');
-                    $imagePaths[] = $path;
+                    if ($image && $image->isValid()) {
+                        $path = $image->store('reviews', 'public');
+                        $imagePaths[] = $path;
+                    }
                 }
                 $review->images = $imagePaths;
             }
 
-            $review->rating = collect($validated['ratings'])->avg();
             $review->save();
 
             foreach ($validated['categories'] as $categoryLabel) {
@@ -277,6 +295,9 @@ class FrontActivityController extends Controller
 
         return redirect()
             ->route('front.activities.show', $activity->slug)
-            ->with('success', 'Your review has been submitted!');
+            ->with('success', [
+                'message' => 'Your review has been submitted!',
+                'context' => 'review',
+            ]);
     }
 }

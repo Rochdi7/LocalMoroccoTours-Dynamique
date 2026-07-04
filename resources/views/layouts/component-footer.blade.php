@@ -29,7 +29,7 @@
 " alt="image"
                         class="footer-logo img-fluid mb-3" />
                     <p class="mb-4">Since 2014, over 6.3K developers have placed their trust in CodeSommet's
-                        Templates. Light Able is managed by their
+                        Templates. Code Sommet is managed by their
                         experienced team of professionals.</p>
                 </div>
                 <div class="col-md-8">
@@ -70,7 +70,8 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col my-1">
-                    <p class="m-0">Made with &#9829; by Team <a href="https://themeforest.net/user/CodeSommet" target="_blank"> CodeSommet</a></p>
+                    <p class="m-0">Made with &#9829; by Team <a href="https://themeforest.net/user/CodeSommet"
+                            target="_blank"> CodeSommet</a></p>
                 </div>
                 <div class="col-auto my-1">
                     <ul class="list-inline footer-sos-link mb-0">

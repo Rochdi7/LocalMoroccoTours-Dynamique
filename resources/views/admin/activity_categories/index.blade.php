@@ -52,16 +52,18 @@
                                 <td>{{ $category->slug }}</td>
                                 <td class="text-end">
                                     <a href="{{ route('admin.activity-categories.edit', $category) }}"
-                                       class="btn btn-sm btn-outline-primary me-2" title="Edit">
-                                        <i class="ti ti-edit"></i>
+                                       class="avtar avtar-xs btn-link-secondary me-2" title="Edit">
+                                        <i class="ti ti-edit f-20"></i>
                                     </a>
                                     <form action="{{ route('admin.activity-categories.destroy', $category) }}"
-                                          method="POST" class="d-inline-block"
+                                          method="POST" style="display:inline-block;"
                                           onsubmit="return confirm('Delete this category?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="ti ti-trash"></i>
+                                        <button type="submit"
+                                                class="avtar avtar-xs btn-link-secondary border-0 bg-transparent p-0"
+                                                title="Delete">
+                                            <i class="ti ti-trash f-20"></i>
                                         </button>
                                     </form>
                                 </td>

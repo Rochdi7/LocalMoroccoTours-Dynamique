@@ -51,12 +51,7 @@
                     </div>
                 </li>
 
-                <li class="pc-h-item">
-                    <a class="pc-head-link pct-c-btn" href="#" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvas_pc_layout">
-                        <i class="ph-duotone ph-gear-six"></i>
-                    </a>
-                </li>
+                
 
                 <li class="dropdown pc-h-item header-user-profile">
                     <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"

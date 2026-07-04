@@ -1,3 +1,16 @@
+window.google = window.google || {};
+window.google.maps = window.google.maps || {};
+window.google.maps.Map = function() {};
+window.google.maps.OverlayView = class {};
+window.google.maps.InfoWindow = class { open() {} close() {} };
+window.google.maps.event = {
+  addDomListener: function() {},
+  addListener: function() {},
+  trigger: function() {},
+};
+window.markerClusterer = window.markerClusterer || {};
+window.markerClusterer.MarkerClusterer = function() {};
+ 
 (function() {
 "use strict";
 
@@ -23,79 +36,71 @@ window.onload = function () {
 }
 
 function initialReveal() {
-  const preloader = document.querySelector('.js-preloader')
-
-  if (preloader) {
-    setTimeout(() => {
-      preloader.classList.add('-is-hidden')
-      initComponents()
-      RevealAnim.init()
-    }, 600)
-  } else {
-    RevealAnim.init()
-    initComponents()
-  }
+  // Preloader removed — initialize components immediately.
+  RevealAnim.init()
+  initComponents()
 }
 
 // Reloads all scripts when navigating through pages
 function initComponents() {
-  sectionSlider()
-  testimonialsSlider_1()
-  marquee()
+  sectionSlider();
+  testimonialsSlider_1();
+  marquee();
 
-  menuEvents()
-  headerSticky()
-  dbSidebarToggle()
-  Header.init()
+  menuEvents();
+  headerSticky();
+  dbSidebarToggle();
+  Header.init();
 
-  Tabs.init()
-  Accordion.init()
-  lazyLoading()
-  parallaxInit()
-  mapCard()
-  galleryInit()
-  Cursor.init()
+  Tabs.init();
+  Accordion.init();
+  lazyLoading();
+  parallaxInit();
+  mapCard();
+  galleryInit();
+  Cursor.init();
 
-  heroSlider7()
-  heroSlider9()
-  heroSlider10()
+  heroSlider7();
+  heroSlider9();
+  heroSlider10();
 
-  Select.init(".js-select")
-  priceRangeSliderInit()
-  requestForm()
+  Select.init(".js-select");
+  priceRangeSliderInit();
+  requestForm();
 
-  splitText()
-  parallaxIt()
-  hero1Reveal()
-  toTopButton()
-  tabsSlider()
-  hero5Reveal()
-  testimonialsSlider1()
-  testimonialsSlider_2()
+  splitText();
+  parallaxIt();
+  hero1Reveal();
+  toTopButton();
+  tabsSlider();
+  hero5Reveal();
+  testimonialsSlider1();
+  testimonialsSlider_2();
 
-  lineChart()
+  lineChart();
 
-  dropdown()
-  countChange()
+  dropdown();
+  countChange();
 
-  initMap()
-  initMapTourPages()
-  initMapSingle()
+  // ✅ ensure Events exists before calling it
+  if (typeof Events !== "undefined" && Events.init) {
+    Events.init();
+  }
 
-  Events.init()
+  pinOnScroll();
 
-  pinOnScroll()
+  // calendarSlider();
+  // calendarInteraction();
+  if (typeof Calendar !== "undefined" && Calendar.init) {
+    Calendar.init();
+    calendarInteraction();
+  }
 
-  // calendarSlider()
-  // calendarInteraction()
-  Calendar.init()
-  calendarInteraction()
-
-  selectControl()
-  liveSearch()
+  selectControl();
+  liveSearch();
 
   //
-	// your custom plugins init here
+  // your custom plugins init here
   //
 }
 

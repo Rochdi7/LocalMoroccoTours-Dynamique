@@ -39,9 +39,10 @@
 
             <div class="card-body pt-3">
                 <div class="table-responsive">
-                    <table class="table table-hover" id="pc-dt-simple">
+                    <table class="table table-hover align-middle" id="pc-dt-simple">
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Title</th>
                                 <th>Category</th>
                                 <th>Author</th>
@@ -52,30 +53,36 @@
                         </thead>
                         <tbody>
                             @foreach($posts as $index => $post)
-                            <tr class="animate__animated animate__fadeIn" style="animation-delay: {{ $index * 0.1 }}s;">
-                                <td>{{ $post->title }}</td>
-                                <td>{{ $post->category->name ?? '-' }}</td>
-                                <td>{{ $post->author->name ?? 'N/A' }}</td>
-                                <td>
-                                    <span class="badge bg-{{ $post->status === 'published' ? 'success' : 'secondary' }}">
-                                        {{ ucfirst($post->status) }}
-                                    </span>
-                                </td>
-                                <td>{{ $post->published_at ? \Carbon\Carbon::parse($post->published_at)->format('Y-m-d') : '-' }}</td>
-                                <td>
-                                    <a href="{{ route('admin.posts.edit', $post) }}"
-                                       class="avtar avtar-xs btn-link-secondary me-2" title="Edit">
-                                        <i class="ti ti-edit f-20"></i>
-                                    </a>
-                                    <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" style="display:inline-block;">
-                                        @csrf @method('DELETE')
-                                        <button class="avtar avtar-xs btn-link-secondary border-0 bg-transparent p-0"
-                                                onclick="return confirm('Delete this post?')" title="Delete">
-                                            <i class="ti ti-trash f-20"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                                @php
+                                    $imageUrl = $post->getFirstMediaUrl('featured_image', 'thumb') ?: asset('images/placeholder.png');
+                                @endphp
+                                <tr class="animate__animated animate__fadeIn" style="animation-delay: {{ $index * 0.1 }}s;">
+                                    <td>
+                                        <img src="{{ $imageUrl }}" alt="post image" width="60" class="rounded">
+                                    </td>
+                                    <td>{{ $post->title }}</td>
+                                    <td>{{ $post->category->name ?? '-' }}</td>
+                                    <td>{{ $post->author->name ?? 'N/A' }}</td>
+                                    <td>
+                                        <span class="badge bg-{{ $post->status === 'published' ? 'success' : 'secondary' }}">
+                                            {{ ucfirst($post->status) }}
+                                        </span>
+                                    </td>
+                                    <td>{{ $post->published_at ? \Carbon\Carbon::parse($post->published_at)->format('Y-m-d') : '-' }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.posts.edit', $post) }}"
+                                           class="avtar avtar-xs btn-link-secondary me-2" title="Edit">
+                                            <i class="ti ti-edit f-20"></i>
+                                        </a>
+                                        <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" style="display:inline-block;">
+                                            @csrf @method('DELETE')
+                                            <button class="avtar avtar-xs btn-link-secondary border-0 bg-transparent p-0"
+                                                    onclick="return confirm('Delete this post?')" title="Delete">
+                                                <i class="ti ti-trash f-20"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

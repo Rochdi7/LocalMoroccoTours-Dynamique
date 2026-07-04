@@ -11,23 +11,25 @@
 
 @section('content')
 
-@if(session('toast'))
-<div class="position-fixed top-0 end-0 p-3" style="z-index: 99999">
-    <div class="toast show animate__animated animate__fadeInDown" role="alert">
-        <div class="toast-header">
-            <strong class="me-auto">Success</strong>
-            <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast"></button>
-        </div>
-        <div class="toast-body">
-            {{ session('toast') }}
+@if(session('toast') || session('success') || session('error'))
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 99999">
+        <div id="liveToast" class="toast hide animate__animated animate__fadeInDown" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <img src="{{ asset('favicon.svg') }}" class="img-fluid me-2" alt="favicon" style="width: 17px">
+                <strong class="me-auto">MonAsso</strong>
+                <small>Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ session('toast') ?? session('success') ?? session('error') }}
+            </div>
         </div>
     </div>
-</div>
 @endif
 
 <div class="row">
     <div class="col-12">
-        <div class="card table-card animate__animated animate__fadeIn">
+        <div class="card table-card">
             <div class="card-header">
                 <div class="d-sm-flex justify-content-between align-items-center">
                     <h5 class="mb-3 mb-sm-0">Location List</h5>
@@ -37,33 +39,46 @@
 
             <div class="card-body pt-3">
                 <div class="table-responsive">
-                    <table class="table table-hover" id="location-table">
+                    <table class="table table-hover align-middle" id="pc-dt-simple">
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Name</th>
-                                <th>Parent Location</th>
                                 <th>Description</th>
                                 <th class="text-end">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($locations as $location)
-                                <tr class="animate__animated animate__fadeInUp" style="animation-delay: {{ $loop->index * 0.1 }}s;">
+                                @php
+                                    $media = $location->getFirstMedia('locations');
+                                    $imageUrl = $media
+                                        ? $media->getUrl('thumb')
+                                        : asset('images/placeholder.png');
+                                @endphp
+                                <tr>
+                                    <td>
+                                        <img src="{{ $imageUrl }}"
+                                             alt="{{ $media?->getCustomProperty('alt') ?? 'Location Image' }}"
+                                             width="60"
+                                             class="rounded shadow-sm">
+                                    </td>
                                     <td>{{ $location->name }}</td>
-                                    <td>{{ $location->parent?->name ?? '—' }}</td>
                                     <td>{{ Str::limit($location->description, 60) }}</td>
                                     <td class="text-end">
                                         <a href="{{ route('admin.locations.edit', $location) }}"
-                                           class="btn btn-sm btn-outline-primary me-2" title="Edit">
-                                            <i class="ti ti-edit"></i>
+                                           class="avtar avtar-xs btn-link-secondary me-2" title="Edit">
+                                            <i class="ti ti-edit f-20"></i>
                                         </a>
                                         <form action="{{ route('admin.locations.destroy', $location) }}"
-                                              method="POST" class="d-inline-block"
+                                              method="POST" style="display:inline-block;"
                                               onsubmit="return confirm('Delete this location?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                <i class="ti ti-trash"></i>
+                                            <button type="submit"
+                                                    class="avtar avtar-xs btn-link-secondary border-0 bg-transparent p-0"
+                                                    title="Delete">
+                                                <i class="ti ti-trash f-20"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -77,11 +92,9 @@
                     </table>
                 </div>
 
-                @if($locations->hasPages())
                 <div class="mt-3">
                     {{ $locations->links() }}
                 </div>
-                @endif
             </div>
         </div>
     </div>
@@ -90,13 +103,18 @@
 @endsection
 
 @section('scripts')
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const toastEl = document.querySelector('.toast');
-        if (toastEl) {
-            const toast = new bootstrap.Toast(toastEl);
-            toast.show();
-        }
-    });
-</script>
+    <script type="module">
+        import { DataTable } from "/build/js/plugins/module.js";
+        window.dt = new DataTable("#pc-dt-simple");
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toastEl = document.getElementById('liveToast');
+            if (toastEl) {
+                const toast = new bootstrap.Toast(toastEl);
+                toast.show();
+            }
+        });
+    </script>
 @endsection

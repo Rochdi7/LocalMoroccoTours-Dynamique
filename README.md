@@ -2,21 +2,21 @@
 <a href="https://themeforest.net/collections/6912257-angular-admin-dashboard-template"><img src="http://html.CodeSommet.net/adv-universal/adv-angular-collection-2.jpg"></a>
 <a href="https://themeforest.net/collections/7774628-reactjs-dashboard-template"><img src="http://html.CodeSommet.net/adv-universal/adv-react-collection-2.jpg"></a>
 
-<p>Light Able is one of the featured dashboard template in Themeforest. It has been used by over 2.5K customers for their projects, including startups and Fortune companies, for their backend needs.</p>
+<p>Code Sommet is one of the featured dashboard template in Themeforest. It has been used by over 2.5K customers for their projects, including startups and Fortune companies, for their backend needs.</p>
 
-<h3><strong>About Light Able Admin Template</strong></h3>
+<h3><strong>About Code Sommet Admin Template</strong></h3>
 <p>
-    With Light Able, you get a premium Bootstrap 5 Admin & Dashboard Template that is fully responsive. Whether you need to create an admin panel, a dashboard, an eCommerce app, a project management system, a crypto admin interface, a CRM, or a SASS-based interface, this template has got you covered. It features gulp-based build tools and supports SCSS variables-based modes, as well as RTL languages. Get your hands on this admin dashboard template today and build a dynamic web app that meets all of your requirements.
+    With Code Sommet, you get a premium Bootstrap 5 Admin & Dashboard Template that is fully responsive. Whether you need to create an admin panel, a dashboard, an eCommerce app, a project management system, a crypto admin interface, a CRM, or a SASS-based interface, this template has got you covered. It features gulp-based build tools and supports SCSS variables-based modes, as well as RTL languages. Get your hands on this admin dashboard template today and build a dynamic web app that meets all of your requirements.
 </p>
 <br>
 
 <h3><strong>Made for Performance</strong></h3>
-<p>Prioritizing performance was our main focus during the development of Light Able. We dedicated significant effort to testing and enhancing the code to achieve optimal performance.</p>
-<p>Light Able was designed with a focus on performance, and we have successfully achieved this goal through rigorous design and code testing. Our design has received high scores on Google Page Speed, Pingdom, and gtMetrix, while our code has passed rigorous testing through w3 validator, and WCAG.</p>
+<p>Prioritizing performance was our main focus during the development of Code Sommet. We dedicated significant effort to testing and enhancing the code to achieve optimal performance.</p>
+<p>Code Sommet was designed with a focus on performance, and we have successfully achieved this goal through rigorous design and code testing. Our design has received high scores on Google Page Speed, Pingdom, and gtMetrix, while our code has passed rigorous testing through w3 validator, and WCAG.</p>
 <br>
 
-<h3><strong>Light Able Tech Stack</strong></h3>
-<p>The Light Able Admin template incorporates the latest technologies available.</p>
+<h3><strong>Code Sommet Tech Stack</strong></h3>
+<p>The Code Sommet Admin template incorporates the latest technologies available.</p>
 <ul>
 	<li>Bootstrap 5</li>
 	<li>Gulp Build Tools (i.e not mandatory)</li>
@@ -29,7 +29,7 @@
 <br>
 
 <h3><strong>Key Features</strong></h3>
-<p>Here are the standout features of Light Able that set it apart from other templates.</p>
+<p>Here are the standout features of Code Sommet that set it apart from other templates.</p>
 
 <ul>
 	<li>Light/Dark/Auto Vertical Layout options.</li>
@@ -57,14 +57,15 @@
 <br>
 
 <strong>Widgets</strong>
+
 <p>40+ conceptual widget collection to display statistics, charts, and Table Related fieldset.</p>
 
 <h3><strong>Modern User Interface</strong></h3>
-<p>Light Able takes your dashboard to the next level with its professional-grade design interface, featuring proper typography, iconography, a well-optimized color palette, and carefully considered spacing. Moreover, it adheres to WCAG compliance standards for preferred contrast ratios, ensuring an even better user experience.</p>
+<p>Code Sommet takes your dashboard to the next level with its professional-grade design interface, featuring proper typography, iconography, a well-optimized color palette, and carefully considered spacing. Moreover, it adheres to WCAG compliance standards for preferred contrast ratios, ensuring an even better user experience.</p>
 
 <br>
 
-<h3><strong>Light Able Theming Options</strong></h3>
+<h3><strong>Code Sommet Theming Options</strong></h3>
 
 <ul>
 	<li>Default Layout (i.e. Light with LTR)</li>
@@ -89,9 +90,10 @@
 
 <h3><strong>Components</strong></h3>
 
-<p>The Light Able Admin Template includes all of the essential Bootstrap 5 components, as well as numerous additional third-party components listed below. All of these components are up-to-date with the latest versions available.</p>
+<p>The Code Sommet Admin Template includes all of the essential Bootstrap 5 components, as well as numerous additional third-party components listed below. All of these components are up-to-date with the latest versions available.</p>
 
 <strong>Advance components</strong>
+
 <ul>
 	<li>Sweet alert</li>
 	<li>Date Picker</li>
@@ -144,7 +146,7 @@
 <br>
 
 <h3><strong>Apps</strong></h3>
-<p>Light Able has 7+ Conceptual apps.</p>
+<p>Code Sommet has 7+ Conceptual apps.</p>
 <ul>
 	<li>Calendar</li>
 	<li>Chat</li>
@@ -179,7 +181,7 @@
 	<li>Figma design file</li>
 	<li>Documentation</li>
 </ul>
-<br>	
+<br>
 
 <h3><strong>Resources & Credits</strong></h3>
 <ul>
@@ -193,18 +195,17 @@
 <br>
 
 ===========
+
 <h3 id="item-description__description">Description</h3>
-<strong>Light Able 8.0 </strong> &#8211; is fully responsive admin template crafted by CodeSommet in Bootstrap4 framework with material look and feel. Hurry up !!!!
+<strong>Code Sommet 8.0 </strong> &#8211; is fully responsive admin template crafted by CodeSommet in Bootstrap4 framework with material look and feel. Hurry up !!!!
 
+<strong>New Unique Admin Panels</strong> added in Code Sommet 8.0 version.
 
-<strong>New Unique Admin Panels</strong> added in Light Able 8.0 version.
-
-
-<h3 id="item-description__-30-reasons-to-buy-able-pro-7-0-responsive-bootstrap-4-admin-template"> 30 Reasons to buy Light Able 8.0 Responsive Bootstrap 4 Admin Template</h3>
+<h3 id="item-description__-30-reasons-to-buy-able-pro-7-0-responsive-bootstrap-4-admin-template"> 30 Reasons to buy Code Sommet 8.0 Responsive Bootstrap 4 Admin Template</h3>
 <h4 id="item-description__-01-high-performance-said-by-our-customers"> 01. High Performance &#8211; Said by our Customers</h4>
 <ul>
     <li>Carefully crafted with High-performance demand for your next project.</li>
-    <li>Increased performance in every update of Light Able.</li>
+    <li>Increased performance in every update of Code Sommet.</li>
 </ul>
 
 <h4 id="item-description__02-easy-development-amp-deployment">02. Easy Development &#38; Deployment</h4>
@@ -377,16 +378,14 @@
 <li>Integrated App &#38; Extensions to suit your project requirement</li>
 </ul>
 
-	<p><img src="http://ableproadmin.com/adv-banner/adv-thankyou-review.jpg" alt="Thank You - Light Able 7.0 Responsive Bootstrap 4 Admin Template" ><br ></p>
-
+    <p><img src="http://ableproadmin.com/adv-banner/adv-thankyou-review.jpg" alt="Thank You - Code Sommet 7.0 Responsive Bootstrap 4 Admin Template" ><br ></p>
 
 <h3 id="item-description__sneak-peak-of-our-few-customer-s-review">Sneak Peak of our few customer&#8217;s Review</h3>
-<img src="http://ableproadmin.com/adv-banner/review-5.PNG" alt="Review for Light Able 7.0 Responsive Bootstrap 4 Admin Template" ><br >
-<img src="http://ableproadmin.com/adv-banner/review-4.PNG" alt="Review for Light Able 7.0 Responsive Bootstrap 4 Admin Template" ><br >
-<img src="http://ableproadmin.com/adv-banner/review-3.PNG" alt="Review for Light Able 7.0 Responsive Bootstrap 4 Admin Template" ><br >
-<img src="http://ableproadmin.com/adv-banner/review-2.PNG" alt="Review for Light Able 7.0 Responsive Bootstrap 4 Admin Template" ><br >
-<img src="http://ableproadmin.com/adv-banner/review-1.PNG" alt="Review for Light Able 7.0 Responsive Bootstrap 4 Admin Template" ><br >
-
+<img src="http://ableproadmin.com/adv-banner/review-5.PNG" alt="Review for Code Sommet 7.0 Responsive Bootstrap 4 Admin Template" ><br >
+<img src="http://ableproadmin.com/adv-banner/review-4.PNG" alt="Review for Code Sommet 7.0 Responsive Bootstrap 4 Admin Template" ><br >
+<img src="http://ableproadmin.com/adv-banner/review-3.PNG" alt="Review for Code Sommet 7.0 Responsive Bootstrap 4 Admin Template" ><br >
+<img src="http://ableproadmin.com/adv-banner/review-2.PNG" alt="Review for Code Sommet 7.0 Responsive Bootstrap 4 Admin Template" ><br >
+<img src="http://ableproadmin.com/adv-banner/review-1.PNG" alt="Review for Code Sommet 7.0 Responsive Bootstrap 4 Admin Template" ><br >
 
 </p><h3 id="item-description__important-notes">Important notes</h3>
 <blockquote>
@@ -394,19 +393,18 @@ You may use amCharts as free with the watermark of amChart. For any other commer
 - <a href="https://www.amcharts.com/" rel="nofollow">amCharts</a> : Get 15% Off on amCharts licences. Use code &#8220;CodeSommet&#8221; 
 </blockquote>
 <blockquote>
-Light Able v7.3 released. 
+Code Sommet v7.3 released. 
 Older v6.1 is still included in download package. Please check detailed change log at the bottom of the page.
 </blockquote>
 <blockquote>
 Angular 4, 5 &#38; 6 separate folder available in download package
 </blockquote>
 <blockquote>
-PHP version is comes with only Light Able v6.0 (i.e. Older version)
+PHP version is comes with only Code Sommet v6.0 (i.e. Older version)
 </blockquote>
 <blockquote>
 Make Sure Angular version have less feature than HTML version because of lack of 3rd party plugins support in Angular. Make sure you must check the Angular version demo first.
 </blockquote>
-
 
 <h3 id="item-description__updates">Updates </h3>
 <pre>
@@ -415,88 +413,89 @@ React TypeScript Hook version support
 
 04-12-2020 - Release v8.0.5
 
-Angular -v11
----------
- - updated to angular 11
- - upgrade all third-party modules
- - remove ng2-toasty and add new ng-snotify third party module for notification
- - bug-fixed: helpdesk customer list
- - bug-fixed: datatable options like, colrecorder, searcihing, responsive
- - bug-fixed: advance range slider variable
+## Angular -v11
+
+-   updated to angular 11
+-   upgrade all third-party modules
+-   remove ng2-toasty and add new ng-snotify third party module for notification
+-   bug-fixed: helpdesk customer list
+-   bug-fixed: datatable options like, colrecorder, searcihing, responsive
+-   bug-fixed: advance range slider variable
 
 07-07-2020
 
-Angular -v8.0.4
-----------
- - updated to angular 10
- - upgrade all third-party modules
- - updated 'fullcalendar' structure
- - bug fixed datatable options like, colrecorder, searcihing, responsive
- - change dark-logo
- - import sweetalert2 css to third-party module scss
+## Angular -v8.0.4
 
-React
---------
-- No change
+-   updated to angular 10
+-   upgrade all third-party modules
+-   updated 'fullcalendar' structure
+-   bug fixed datatable options like, colrecorder, searcihing, responsive
+-   change dark-logo
+-   import sweetalert2 css to third-party module scss
 
-Bootstrap
--------------
-- No change
+## React
+
+-   No change
+
+## Bootstrap
+
+-   No change
 
 03-03-2020 - Release v8.0.2
 Angular
----------
+
+---
+
 No Change
 
-Bootstrap
----------
+## Bootstrap
+
 No Change
 
-React
---------
- - Upgrade to React 16.13.0
- - Remove react-trello third party module
+## React
 
-15-02-2020 - Release v8.0.1
------------------------------------
-Angular
----------
-- Updated to Angular 9
+-   Upgrade to React 16.13.0
+-   Remove react-trello third party module
 
-React
----------
-- No change
+## 15-02-2020 - Release v8.0.1
 
-Bootstrap
--------------
-- No change
+## Angular
 
+-   Updated to Angular 9
 
-21-08-2019 - Release v8.0
------------------------------------
+## React
+
+-   No change
+
+## Bootstrap
+
+-   No change
+
+## 21-08-2019 - Release v8.0
+
 -Below listed features added
-  - Gulp / npm support
-  - UI kit
-  - Live customizer improved version
-  - New improved layouts with RTL support
-  - 8+ New Admin Panels
-- New Menu Layouts + Versions available.
-- It's completely  different from v7.3.3
-- Documentation changes for v8.0
 
-React
----------
-- React Redux version added
+-   Gulp / npm support
+-   UI kit
+-   Live customizer improved version
+-   New improved layouts with RTL support
+-   8+ New Admin Panels
+-   New Menu Layouts + Versions available.
+-   It's completely different from v7.3.3
+-   Documentation changes for v8.0
 
+## React
 
-19-06-2019 - Release v7.3.3
------------------------------------
-HTML
-----------
-- No change
+-   React Redux version added
 
-Angular
-----------
+## 19-06-2019 - Release v7.3.3
+
+## HTML
+
+-   No change
+
+## Angular
+
     - Upgrade to Angular 8+ with CLI 8.0.1
     - Fix horizontal menu structure bug
     - Fix IE Support bug
@@ -511,103 +510,104 @@ Angular
     - Add Advance UI module like, Sweetalert, datepicker
     - Remove basic color module
 
+## 07-01-2019 - Release v7.3.2
 
-07-01-2019 - Release v7.3.2
------------------------------------
-HTML
-----------
-- Bug fixs.
-- No need to migrate from v7.3.1 to v7.3.2
+## HTML
 
-Angular
-----------
-- Release Angular 7 compatible version
+-   Bug fixs.
+-   No need to migrate from v7.3.1 to v7.3.2
 
-21-08-2018 - Release v7.3.1
------------------------------------
-HTML
-----------
-- No change
+## Angular
 
-Angular
-----------
-- upgrade to angular cli 6.0.7
-- for easy setup add new package skeleton for vertical and horizontal
-- error 404 for amchart SVG images
-- horizontal menu overlay problem solved
-- mobile and tablet device spacing problem solved
-- amchart zoom to index solved
+-   Release Angular 7 compatible version
 
-10-05-2018 - Release v7.3
------------------------------------
-- Note - skip version v7.2
-- Major changes in both HTML &#38; Angular versions.
-- older version v6.1 is still available in the download package.
-- Angular 4 &#38; 5 version also still available in the download package.
+## 21-08-2018 - Release v7.3.1
 
-HTML
---------
-- Added documentation in the download package.
-- Menu hover transition remove.
-- Menu hover &#38; active radius reduce
-- Authentication Pages change
-- File upload page change.
-- Box layout improved.
-- Few of bugs fixes
+## HTML
 
-Angular
----------
-- Release Angular 6 compatible version.
-- The horizontal version available for Angular 5 &#38; 6 too.
-- Added more components. Check to attach documentation for that.
-- Responsive bugs solve.
-- Apply all HTML version changes in Angular
+-   No change
 
-12-02-2018 - Release v7.1
------------------------------------
-- Angular 5 version for newer Light Able 7.0
-- No change in the HTML version.
+## Angular
 
-30-01-2018 - Release v7.0
-------------------------------------
-- Remove support of Angular 1 Version
-- New Menu Layouts + Versions available.
-- Angular 4 Version Available now for older version v6.1
-- It's completely  different from v6.0
-- Documentation changes for v7.0
+-   upgrade to angular cli 6.0.7
+-   for easy setup add new package skeleton for vertical and horizontal
+-   error 404 for amchart SVG images
+-   horizontal menu overlay problem solved
+-   mobile and tablet device spacing problem solved
+-   amchart zoom to index solved
 
-28-09-2017 - Release v6.0
-------------------------------------
-- Bootstrap 4 Beta version compatible
-- Bower Components folder structure changed. Changes made on every HTML Pages which contain bower components.
-- Bower installation through bower-installer 
-- visit https://github.com/rquadling/bower-installer for more info
-- Bugs fixes on Menus
-- No change in Angular version
-- note:- It's not recommended to use Light Able v5.0 with 6.0 OR you may replace CSS / JS assets/ files for a new update.
+## 10-05-2018 - Release v7.3
 
-01/05/2017 - Release v5.0
-------------------------------------
-- Bug fixes
+-   Note - skip version v7.2
+-   Major changes in both HTML &#38; Angular versions.
+-   older version v6.1 is still available in the download package.
+-   Angular 4 &#38; 5 version also still available in the download package.
 
-03/04/2017 - Release v4.0
-------------------------------------
-- The angular version included in the package with Bower, Grunt compatible
+## HTML
 
-09/01/2017 - Release v3.0
-------------------------------------
-- RTL - Boxed Version included in Package.
-- PHP version Horizontal mobile menu fix.
-- Changes in all .html files for better performance.
-- Detailed changelog provided in Documentation.
-- Kindly replace all CSS / JS files for better effect.
-------------------------------------
+-   Added documentation in the download package.
+-   Menu hover transition remove.
+-   Menu hover &#38; active radius reduce
+-   Authentication Pages change
+-   File upload page change.
+-   Box layout improved.
+-   Few of bugs fixes
 
-24/01/2017 - Release v2.0
-------------------------------------
-- Separate folder for Horizontal - Vertical Layouts with light and dark version separate too.
-- Separate folder for PHP version.
-------------------------------------
+## Angular
+
+-   Release Angular 6 compatible version.
+-   The horizontal version available for Angular 5 &#38; 6 too.
+-   Added more components. Check to attach documentation for that.
+-   Responsive bugs solve.
+-   Apply all HTML version changes in Angular
+
+## 12-02-2018 - Release v7.1
+
+-   Angular 5 version for newer Code Sommet 7.0
+-   No change in the HTML version.
+
+## 30-01-2018 - Release v7.0
+
+-   Remove support of Angular 1 Version
+-   New Menu Layouts + Versions available.
+-   Angular 4 Version Available now for older version v6.1
+-   It's completely different from v6.0
+-   Documentation changes for v7.0
+
+## 28-09-2017 - Release v6.0
+
+-   Bootstrap 4 Beta version compatible
+-   Bower Components folder structure changed. Changes made on every HTML Pages which contain bower components.
+-   Bower installation through bower-installer
+-   visit https://github.com/rquadling/bower-installer for more info
+-   Bugs fixes on Menus
+-   No change in Angular version
+-   note:- It's not recommended to use Code Sommet v5.0 with 6.0 OR you may replace CSS / JS assets/ files for a new update.
+
+## 01/05/2017 - Release v5.0
+
+-   Bug fixes
+
+## 03/04/2017 - Release v4.0
+
+-   The angular version included in the package with Bower, Grunt compatible
+
+## 09/01/2017 - Release v3.0
+
+-   RTL - Boxed Version included in Package.
+-   PHP version Horizontal mobile menu fix.
+-   Changes in all .html files for better performance.
+-   Detailed changelog provided in Documentation.
+-   Kindly replace all CSS / JS files for better effect.
+
+---
+
+## 24/01/2017 - Release v2.0
+
+-   Separate folder for Horizontal - Vertical Layouts with light and dark version separate too.
+-   Separate folder for PHP version.
+
+---
 
 21/01/2017 - Release v1.0 Initially
 

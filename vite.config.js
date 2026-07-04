@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
     build: {
@@ -10,13 +10,12 @@ export default defineConfig({
         cssCodeSplit: true,
         rollupOptions: {
             output: {
-                assetFileNames: (asset) => {
-                    if (asset.name && asset.name.endsWith('.css')) {
+                assetFileNames: (css) => {
+                    if (css.name.split('.').pop() == 'css') {
                         return 'css/' + `[name]` + '.css';
-                    } else if (asset.name) {
-                        return 'icons/' + asset.name;
+                    } else {
+                        return 'icons/' + css.name;
                     }
-                    return 'assets/[name].[ext]';
                 },
                 entryFileNames: 'js/' + `[name]` + `.js`,
             },
@@ -25,19 +24,10 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                // Existing SCSS files for Lightable
                 'resources/scss/landing.scss',
                 'resources/scss/style-preset.scss',
                 'resources/scss/style.scss',
                 'resources/scss/uikit.scss',
-
-                // New CSS files for LocalMoroccoTours theme
-                'resources/css/vendors.css',
-                'resources/css/main.css',
-
-                // Also add JS files for LocalMoroccoTours
-                'resources/js/vendors.js',
-                'resources/js/main.js',
             ],
             refresh: true,
         }),
@@ -45,25 +35,25 @@ export default defineConfig({
             targets: [
                 {
                     src: 'resources/plugins',
-                    dest: 'css',
+                    dest: 'css'
                 },
                 {
                     src: 'resources/fonts',
-                    dest: '',
+                    dest: ''
                 },
                 {
                     src: 'resources/images',
-                    dest: '',
+                    dest: ''
                 },
                 {
                     src: 'resources/js',
-                    dest: '',
+                    dest: ''
                 },
                 {
                     src: 'resources/json',
-                    dest: '',
+                    dest: ''
                 },
             ],
-        }),
+        })
     ],
 });

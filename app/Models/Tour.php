@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Spatie\Image\Manipulations;
 
 class Tour extends Model implements HasMedia
 {
@@ -15,6 +14,7 @@ class Tour extends Model implements HasMedia
     protected $fillable = [
         'title',
         'slug',
+        'type',
         'overview',
         'highlights',
         'duration',
@@ -27,7 +27,6 @@ class Tour extends Model implements HasMedia
         'map_frame',
         'category_id',
         'location_id',
-        'gallery',
         'included',
         'excluded',
         'itinerary',
@@ -35,11 +34,12 @@ class Tour extends Model implements HasMedia
     ];
 
     protected $casts = [
-        'gallery'    => 'array',
-        'included'   => 'array',
-        'excluded'   => 'array',
-        'itinerary'  => 'array',
-        'languages'  => 'array',
+        'included' => 'array',
+        'excluded' => 'array',
+        'itinerary' => 'array',
+        'languages' => 'array',
+        'bestseller_flag' => 'boolean',
+        'free_cancellation_flag' => 'boolean',
     ];
 
     /**
@@ -60,7 +60,7 @@ class Tour extends Model implements HasMedia
 
         return array_filter(
             preg_split('/\r\n|\r|\n/', $val),
-            fn($line) => trim($line) !== ''
+            fn ($line) => trim($line) !== ''
         );
     }
 
@@ -96,6 +96,12 @@ class Tour extends Model implements HasMedia
      */
     public function registerMediaCollections(): void
     {
+        // Cover image collection (single file)
+        $this->addMediaCollection('cover')
+            ->singleFile()
+            ->useDisk('public');
+
+        // Gallery collection (multiple images)
         $this->addMediaCollection('gallery')
             ->acceptsFile(function ($file) {
                 return in_array($file->mimeType, [

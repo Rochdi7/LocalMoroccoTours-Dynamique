@@ -10,20 +10,35 @@ use App\Models\Activity;
 use App\Models\Trekking;
 use App\Models\Post;
 use App\Models\ReviewRating;
+use App\Models\TourCategory;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        // -----------------------
+        // SPECIAL OFFERS
+        // -----------------------
         $specialOffers = SpecialOffer::where('is_active', true)
             ->orderBy('order', 'asc')
             ->take(3)
             ->get();
 
-        $locations = Location::withCount('tours')
+        // -----------------------
+        // LOCATIONS (for search & trending)
+        // -----------------------
+        $locationsForSearch = Location::orderBy('name')->get();
+
+        // Trending Locations (with tour counts)
+        $locationsForSection = Location::withCount('tours')
             ->orderBy('name')
             ->take(5)
             ->get();
+
+        // -----------------------
+        // TOUR CATEGORIES
+        // -----------------------
+        $tourCategories = TourCategory::orderBy('name')->get();
 
         // -----------------------
         // TOURS
@@ -55,25 +70,33 @@ class HomeController extends Controller
 
         $trekking = $this->attachAverageRatings($trekking, Trekking::class);
 
+        // -----------------------
+        // BLOG POSTS
+        // -----------------------
         $posts = Post::where('status', 'published')
             ->with(['author', 'category'])
             ->latest('published_at')
             ->take(3)
             ->get();
 
+        // -----------------------
+        // RETURN TO VIEW
+        // -----------------------
         return view('front.index', [
-            'specialOffers' => $specialOffers,
-            'locations'     => $locations,
-            'tours'         => $tours,
-            'activities'    => $activities,
-            'trekking'      => $trekking,
-            'posts'         => $posts,
+            'specialOffers'       => $specialOffers,
+            'tourCategories'      => $tourCategories,
+            'tours'               => $tours,
+            'activities'          => $activities,
+            'trekking'            => $trekking,
+            'posts'               => $posts,
+            'locationsForSearch'  => $locationsForSearch,
+            'locationsForSection' => $locationsForSection,
+            'locations'           => $locationsForSection, // 👈 alias for Blade compatibility
         ]);
     }
 
     /**
-     * For a given collection of models, fetch their average ratings
-     * and attach as a property `avg_rating`.
+     * Attach average ratings to a collection of models.
      */
     private function attachAverageRatings($items, $modelClass)
     {
@@ -98,11 +121,15 @@ class HomeController extends Controller
         return $items;
     }
 
+    /**
+     * Page view handler for static pages.
+     */
     public function pageView($page)
     {
         if (view()->exists('front.' . $page)) {
             return view('front.' . $page);
         }
+
         abort(404);
     }
 }

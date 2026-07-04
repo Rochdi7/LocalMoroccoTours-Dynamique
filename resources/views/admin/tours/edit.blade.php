@@ -43,13 +43,38 @@
             return '';
         }
 
-        // Ensure variables are always strings:
-        $highlights = (string) old('highlights', toNewlineSeparated($tour->highlights));
-        $languages = (string) old('languages', toCommaSeparated($tour->languages));
-        $included = (string) old('included', toCommaSeparated($tour->included));
-        $excluded = (string) old('excluded', toCommaSeparated($tour->excluded));
-        $itinerary = (string) old('itinerary', toNewlineSeparated($tour->itinerary));
+        $highlights = old('highlights');
+        if (is_null($highlights)) {
+            $highlights = is_array($tour->highlights)
+                ? implode("\n", $tour->highlights)
+                : toNewlineSeparated($tour->highlights);
+        }
+
+        $languages = old('languages');
+        if (is_null($languages)) {
+            $languages = is_array($tour->languages)
+                ? implode(', ', $tour->languages)
+                : toCommaSeparated($tour->languages);
+        }
+
+        $included = old('included');
+        if (is_null($included)) {
+            $included = is_array($tour->included) ? implode(', ', $tour->included) : toCommaSeparated($tour->included);
+        }
+
+        $excluded = old('excluded');
+        if (is_null($excluded)) {
+            $excluded = is_array($tour->excluded) ? implode(', ', $tour->excluded) : toCommaSeparated($tour->excluded);
+        }
+
+        $itinerary = old('itinerary');
+        if (is_null($itinerary)) {
+            $itinerary = is_array($tour->itinerary)
+                ? implode("\n", $tour->itinerary)
+                : toNewlineSeparated($tour->itinerary);
+        }
     @endphp
+
 
 
     <div class="row">
@@ -77,28 +102,167 @@
                     <div class="card-body">
                         <div class="row">
 
-                            {{-- Current Image Preview --}}
+                            {{-- ✅ Cover Image Preview --}}
                             <div class="mb-3 col-md-12">
-                                <label class="form-label d-block">Current Image</label>
-                                @if ($tour->getFirstMediaUrl('tours'))
-                                    <img src="{{ $tour->getFirstMediaUrl('tours') }}" alt="{{ $tour->title }}"
-                                        class="rounded-3 img-thumbnail" style="max-width: 300px;">
+                                <label class="form-label d-block">Current Cover Image</label>
+
+                                @php
+                                    $cover = $tour->getFirstMedia('cover');
+                                @endphp
+
+                                @if ($cover)
+                                    <img src="{{ $cover->getUrl('slider') }}" alt="{{ $tour->title }}"
+                                        class="rounded-3 img-thumbnail mb-2" style="max-width: 300px;">
                                 @else
-                                    <p class="text-muted">No image uploaded yet.</p>
+                                    <p class="text-muted">No cover image uploaded yet.</p>
                                 @endif
                             </div>
 
-                            {{-- New Image Upload --}}
+                            {{-- ✅ Upload New Cover Image --}}
                             <div class="mb-3 col-md-12">
-                                <label for="image" class="form-label">Upload New Image</label>
+                                <label for="image" class="form-label">Upload New Cover Image</label>
                                 <input type="file" name="image" id="image"
                                     class="form-control @error('image') is-invalid @enderror">
                                 @error('image')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
                                 <small class="text-muted d-block mt-1">
-                                    Upload a new image to replace the current one. Leave empty to keep existing.
+                                    Upload a new image to replace the current cover. Leave empty to keep existing.
                                 </small>
+                            </div>
+
+                            @php
+                                $cover = $tour->getFirstMedia('cover');
+                            @endphp
+
+                            @if ($cover)
+                                {{-- ✅ Edit Cover Metadata --}}
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label d-block">Edit Cover Image Metadata</label>
+
+                                    <div class="mb-2">
+                                        <label class="form-label">Alt Text</label>
+                                        <input type="text" name="existing_cover_alt"
+                                            value="{{ old('existing_cover_alt', $cover->getCustomProperty('alt')) }}"
+                                            class="form-control">
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label class="form-label">Title (optional)</label>
+                                        <input type="text" name="existing_cover_title"
+                                            value="{{ old('existing_cover_title', $cover->getCustomProperty('title')) }}"
+                                            class="form-control">
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label class="form-label">Caption (optional)</label>
+                                        <input type="text" name="existing_cover_caption"
+                                            value="{{ old('existing_cover_caption', $cover->getCustomProperty('caption')) }}"
+                                            class="form-control">
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <label class="form-label">Description (optional)</label>
+                                        <textarea name="existing_cover_description" rows="2" class="form-control">{{ old('existing_cover_description', $cover->getCustomProperty('description')) }}</textarea>
+                                    </div>
+                                </div>
+                            @endif
+
+
+                            {{-- ✅ Gallery Preview --}}
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label d-block">Current Gallery Images</label>
+
+                                @php
+                                    $galleryImages = $tour->getMedia('gallery');
+                                @endphp
+
+                                @if ($galleryImages->count())
+                                    <div class="row g-2">
+                                        @foreach ($galleryImages as $image)
+                                            <div class="col-md-4">
+                                                <div class="card mb-3">
+                                                    <img src="{{ $image->getUrl('thumb') }}" alt="Gallery Image"
+                                                        class="card-img-top rounded-3"
+                                                        style="width: 100%; max-width: 250px; margin: auto;">
+
+                                                    <div class="card-body">
+                                                        <div class="mb-2">
+                                                            <label class="form-label">Alt Text</label>
+                                                            <input type="text"
+                                                                name="existing_gallery_alt[{{ $image->id }}]"
+                                                                value="{{ old("existing_gallery_alt.{$image->id}", $image->getCustomProperty('alt')) }}"
+                                                                class="form-control">
+                                                        </div>
+
+                                                        <div class="mb-2">
+                                                            <label class="form-label">Title</label>
+                                                            <input type="text"
+                                                                name="existing_gallery_title[{{ $image->id }}]"
+                                                                value="{{ old("existing_gallery_title.{$image->id}", $image->getCustomProperty('title')) }}"
+                                                                class="form-control">
+                                                        </div>
+
+                                                        <div class="mb-2">
+                                                            <label class="form-label">Caption</label>
+                                                            <input type="text"
+                                                                name="existing_gallery_caption[{{ $image->id }}]"
+                                                                value="{{ old("existing_gallery_caption.{$image->id}", $image->getCustomProperty('caption')) }}"
+                                                                class="form-control">
+                                                        </div>
+
+                                                        <div class="mb-2">
+                                                            <label class="form-label">Description</label>
+                                                            <textarea name="existing_gallery_description[{{ $image->id }}]" rows="2" class="form-control">{{ old("existing_gallery_description.{$image->id}", $image->getCustomProperty('description')) }}</textarea>
+                                                        </div>
+
+                                                        <div class="form-check mt-2">
+                                                            <input type="checkbox" name="delete_gallery[]"
+                                                                value="{{ $image->id }}" class="form-check-input"
+                                                                id="delete_image_{{ $image->id }}">
+                                                            <label class="form-check-label text-danger small"
+                                                                for="delete_image_{{ $image->id }}">
+                                                                Delete
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+                                    </div>
+                                @else
+                                    <p class="text-muted">No gallery images uploaded yet.</p>
+                                @endif
+                            </div>
+
+                            {{-- ✅ Upload New Gallery Images --}}
+                            <div class="mb-3 col-md-12">
+                                <label for="gallery" class="form-label">Upload New Gallery Images</label>
+                                <input type="file" name="gallery[]" id="gallery" multiple
+                                    class="form-control @error('gallery.*') is-invalid @enderror">
+                                @error('gallery.*')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted d-block mt-1">
+                                    Upload new images to add to the gallery. Recommended formats: JPG, PNG, WEBP.
+                                </small>
+                            </div>
+
+                            {{-- Tour Type --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="type" class="form-label">Tour Type</label>
+                                <select name="type" id="type"
+                                    class="form-select @error('type') is-invalid @enderror" required>
+                                    <option value="">Select Type...</option>
+                                    <option value="multi_day" {{ old('type') == 'multi_day' ? 'selected' : '' }}>Multi-Day
+                                        Tour</option>
+                                    <option value="day_trip" {{ old('type') == 'day_trip' ? 'selected' : '' }}>Day Trip
+                                    </option>
+                                </select>
+                                @error('type')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             {{-- Title --}}
@@ -132,7 +296,8 @@
                             {{-- Group Size --}}
                             <div class="mb-3 col-md-6">
                                 <label for="group_size" class="form-label">Group Size</label>
-                                <input type="number" name="group_size" value="{{ old('group_size', $tour->group_size) }}"
+                                <input type="number" name="group_size"
+                                    value="{{ old('group_size', $tour->group_size) }}"
                                     class="form-control @error('group_size') is-invalid @enderror" required>
                                 <div class="invalid-feedback">
                                     @error('group_size')

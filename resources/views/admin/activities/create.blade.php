@@ -37,15 +37,82 @@
                     <div class="card-body">
                         <div class="row">
 
-                            {{-- Image upload --}}
+                            {{-- ✅ Cover Image Upload --}}
                             <div class="mb-3 col-md-12">
-                                <label for="image" class="form-label">Activity Image</label>
+                                <label for="image" class="form-label">Activity Cover Image</label>
                                 <input type="file" name="image" id="image"
                                     class="form-control @error('image') is-invalid @enderror">
                                 @error('image')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
-                                <small class="text-muted">Upload a main image for this activity.</small>
+                                <small class="text-muted">
+                                    Upload a single main cover image for this activity. This will appear as the primary
+                                    image on detail pages.
+                                </small>
+                            </div>
+
+                            {{-- ✅ Cover Image Metadata --}}
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Cover Image Metadata</label>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Alt Text</label>
+                                    <input type="text" name="cover_alt"
+                                        class="form-control @error('cover_alt') is-invalid @enderror"
+                                        placeholder="E.g. People kayaking in river" value="{{ old('cover_alt') }}">
+                                    @error('cover_alt')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Title (optional)</label>
+                                    <input type="text" name="cover_title"
+                                        class="form-control @error('cover_title') is-invalid @enderror"
+                                        placeholder="E.g. Kayaking Adventure" value="{{ old('cover_title') }}">
+                                    @error('cover_title')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Caption (optional)</label>
+                                    <input type="text" name="cover_caption"
+                                        class="form-control @error('cover_caption') is-invalid @enderror"
+                                        placeholder="E.g. Exploring rivers in Marrakech"
+                                        value="{{ old('cover_caption') }}">
+                                    @error('cover_caption')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-2">
+                                    <label class="form-label">Description (optional)</label>
+                                    <textarea name="cover_description" rows="2" class="form-control @error('cover_description') is-invalid @enderror"
+                                        placeholder="Detailed description of the cover image...">{{ old('cover_description') }}</textarea>
+                                    @error('cover_description')
+                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            {{-- ✅ Gallery Images Upload --}}
+                            <div class="mb-3 col-md-12">
+                                <label for="gallery" class="form-label">Activity Gallery Images</label>
+                                <input type="file" name="gallery[]" id="gallery" multiple
+                                    class="form-control @error('gallery.*') is-invalid @enderror">
+                                @error('gallery.*')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                                <small class="text-muted">
+                                    Upload one or more additional images for the gallery. Recommended formats: JPG, PNG,
+                                    WEBP.
+                                </small>
+
+                                {{-- ✅ Gallery Metadata Fields Container --}}
+                                <div id="gallery-meta-container" class="mt-4"></div>
                             </div>
 
                             {{-- Title --}}
@@ -273,4 +340,46 @@
             }, 1000);
         }
     </script>
+@section('scripts')
+    @parent
+    <script>
+        document.getElementById('gallery').addEventListener('change', function(e) {
+            const container = document.getElementById('gallery-meta-container');
+            container.innerHTML = '';
+            const files = e.target.files;
+
+            Array.from(files).forEach((file, index) => {
+                const div = document.createElement('div');
+                div.classList.add('gallery-meta-item', 'mb-4', 'p-3', 'border', 'rounded', 'bg-light');
+
+                div.innerHTML = `
+                    <p class="fw-bold mb-2">Image: ${file.name}</p>
+
+                    <div class="mb-2">
+                        <label class="form-label">Alt Text</label>
+                        <input type="text" name="gallery_alt[]" class="form-control" placeholder="E.g. Kayaking scene">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Title (optional)</label>
+                        <input type="text" name="gallery_title[]" class="form-control" placeholder="E.g. Adventure Trip">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Caption (optional)</label>
+                        <input type="text" name="gallery_caption[]" class="form-control" placeholder="E.g. Group paddling on the river.">
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label">Description (optional)</label>
+                        <textarea name="gallery_description[]" class="form-control" rows="2" placeholder="Detailed description of the image..."></textarea>
+                    </div>
+                `;
+
+                container.appendChild(div);
+            });
+        });
+    </script>
+
+
 @endsection

@@ -42,6 +42,7 @@
                     <table class="table table-hover align-middle">
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Title</th>
                                 <th>Category</th>
                                 <th>Duration</th>
@@ -52,7 +53,13 @@
                         </thead>
                         <tbody>
                             @forelse($treks as $index => $trek)
+                                @php
+                                    $imageUrl = $trek->getFirstMediaUrl('cover', 'thumb') ?: asset('images/placeholder.png');
+                                @endphp
                                 <tr class="animate__animated animate__fadeInUp" style="animation-delay: {{ $index * 0.05 }}s;">
+                                    <td>
+                                        <img src="{{ $imageUrl }}" alt="Trek Image" width="60" class="rounded">
+                                    </td>
                                     <td>{{ $trek->title }}</td>
                                     <td>{{ $trek->category->name ?? '-' }}</td>
                                     <td>{{ $trek->duration }}</td>
@@ -60,22 +67,24 @@
                                     <td>{{ number_format($trek->base_price, 2) }} MAD</td>
                                     <td class="text-end">
                                         <a href="{{ route('admin.trekking.edit', $trek) }}"
-                                           class="btn btn-sm btn-outline-primary me-2" title="Edit">
-                                            <i class="ti ti-edit"></i>
+                                           class="avtar avtar-xs btn-link-secondary me-2" title="Edit">
+                                            <i class="ti ti-edit f-20"></i>
                                         </a>
-                                        <form action="{{ route('admin.trekking.destroy', $trek) }}" method="POST" class="d-inline-block"
+                                        <form action="{{ route('admin.trekking.destroy', $trek) }}" method="POST" style="display:inline-block;"
                                               onsubmit="return confirm('Delete this trek?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                <i class="ti ti-trash"></i>
+                                            <button type="submit"
+                                                    class="avtar avtar-xs btn-link-secondary border-0 bg-transparent p-0"
+                                                    title="Delete">
+                                                <i class="ti ti-trash f-20"></i>
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted">No trekking records found.</td>
+                                    <td colspan="7" class="text-center text-muted">No trekking records found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

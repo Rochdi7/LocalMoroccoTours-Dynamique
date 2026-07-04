@@ -1,0 +1,84 @@
+.tourCard.-type-1 {
+  display: block;
+}
+.tourCard.-type-1 .tourCard__image {
+  position: relative;
+  z-index: 0;
+}
+.tourCard.-type-1 .tourCard__shape {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+  z-index: 1;
+}
+.tourCard.-type-1 .tourCard__header {
+  position: relative;
+}
+.tourCard.-type-1 .tourCard__favorite {
+  position: absolute;
+  bottom: -17px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background-color: white;
+  box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.05);
+  z-index: 1;
+  transition: 0.15s;
+}
+.tourCard.-type-1 .tourCard__favorite:hover {
+  color: white;
+  background-color: var(--color-accent-1);
+}
+.tourCard.-type-1.-hover-shadow {
+  transition: 0.15s;
+}
+.tourCard.-type-1.-hover-shadow:hover {
+  box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, 0.05);
+}
+.tourCard.-type-1.-rounded .tourCard__image {
+  position: relative;
+  z-index: 0;
+}
+.tourCard.-type-1.-rounded .tourCard__shape {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-color: white;
+  border-radius: 20px 20px 0 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.tourCard.-type-1.-rounded .tourCard__header {
+  position: relative;
+}
+.tourCard.-type-1.-rounded .tourCard__favorite {
+  top: 20px;
+  bottom: unset;
+  right: 20px;
+}
+.tourCard.-type-1.-rounded .tourCard__favorite:hover {
+  color: white;
+  background-color: var(--color-accent-1);
+}
+
+.tourCard__title span {
+  background-repeat: no-repeat;
+  background-image: linear-gradient(to right, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+  background-position: 0px 95%;
+  background-size: 0px 1px;
+  transition: background-size 0.25s cubic-bezier(0.785, 0.135, 0.15, 0.86) 0s;
+  padding: 0.1% 0px;
+}
+.tourCard:hover .tourCard__title span {
+  background-size: 100% 1px;
+}/*# sourceMappingURL=1.css.map */

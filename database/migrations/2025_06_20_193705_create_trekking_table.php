@@ -30,7 +30,6 @@ return new class extends Migration {
             $table->decimal('rating', 2, 1)->default(5.0);
             $table->integer('reviews_count')->default(0);
 
-            $table->json('gallery')->nullable();
             $table->json('included')->nullable();
             $table->json('excluded')->nullable();
             $table->json('itinerary')->nullable();

@@ -1,0 +1,26 @@
+.blogCard.-type-1 {
+  display: block;
+}
+.blogCard.-type-1 .blogCard__image {
+  position: relative;
+}
+.blogCard.-type-1 .blogCard__badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px 15px;
+  background-color: white;
+  border-radius: 200px;
+}
+.blogCard.-type-1 .blogCard__info {
+  display: flex;
+  align-items: center;
+}
+.blogCard.-type-1 .blogCard__line {
+  width: 1px;
+  height: 26px;
+  background-color: #E7E6E6;
+  margin: 0 10px;
+}/*# sourceMappingURL=1.css.map */

@@ -3,7 +3,7 @@
 @section('content')
     <section data-anim="fade" class="hero -type-1 -min">
         <div class="hero__bg">
-            <img src="{{ asset('assets/images/hero/hassan-ii-mosque-casablanca-morocco-ocean-sunset.jpg.webp') }}"
+            <img src="{{ asset('assets/images/hero/hassan-ii-mosque-casablanca-morocco-ocean-sunset.webp') }}"
                 alt="Hassan II Mosque in Casablanca, Morocco, standing over the ocean at sunset with a pastel sky"
                 title="The majestic Hassan II Mosque rises above the Atlantic waves in Casablanca, Morocco, glowing under a soft sunset sky.">
 
@@ -46,35 +46,30 @@
                                                 data-x-toggle="is-active">
                                                 <div class="searchFormItemDropdown__container">
                                                     <div class="searchFormItemDropdown__list scroll-bar-1">
-                                                        @foreach ($locations as $location)
-                                                            <div class="searchFormItemDropdown__item">
-                                                                <button type="button" class="js-location-select-button"
-                                                                    data-id="{{ $location->id }}"
-                                                                    data-name="{{ $location->name }}"
-                                                                    data-target="tourLocationInput">
-                                                                    <span
-                                                                        class="js-select-control-choice">{{ $location->name }}</span>
-                                                                    <span>{{ $location->parent ? 'Sub-location' : 'Main Location' }}</span>
-                                                                </button>
-                                                            </div>
 
-                                                            {{-- Show children --}}
-                                                            @foreach ($location->children as $child)
-                                                                <div class="searchFormItemDropdown__item">
-                                                                    <button type="button" class="js-location-select-button"
-                                                                        data-id="{{ $child->id }}"
-                                                                        data-name="{{ $child->name }}"
-                                                                        data-target="tourLocationInput">
-                                                                        <span
-                                                                            class="js-select-control-choice">{{ $child->name }}</span>
-                                                                        <span>Sub-location</span>
-                                                                    </button>
-                                                                </div>
+                                                        @if (!empty($locations))
+                                                            @foreach ($locations as $location)
+                                                                {{-- Keep only main locations (no parent) --}}
+                                                                @if (empty($location->parent))
+                                                                    <div class="searchFormItemDropdown__item">
+                                                                        <button type="button"
+                                                                            class="js-location-select-button"
+                                                                            data-id="{{ $location->id }}"
+                                                                            data-name="{{ $location->name }}"
+                                                                            data-target="tourLocationInput">
+                                                                            <span
+                                                                                class="js-select-control-choice">{{ $location->name }}</span>
+                                                                            <span>Main Location</span>
+                                                                        </button>
+                                                                    </div>
+                                                                @endif
                                                             @endforeach
-                                                        @endforeach
+                                                        @endif
+
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                         {{-- HIDDEN LOCATION INPUT --}}
@@ -85,7 +80,7 @@
                                         <div class="searchFormItem js-form-dd">
                                             <div class="searchFormItem__button" data-x-click="group_size">
                                                 <div class="searchFormItem__icon size-50 rounded-12 border-1 flex-center">
-<i class="fa-solid fa-users text-20"></i>
+                                                    <i class="icon-teamwork text-20"></i>
                                                 </div>
                                                 <div class="searchFormItem__content">
                                                     <h5>Group Size</h5>
@@ -94,6 +89,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
 
                                             <div class="searchFormItemDropdown -group_size" data-x="group_size"
                                                 data-x-toggle="is-active">
@@ -110,9 +106,10 @@
                                                                     min="1">
                                                             </div>
                                                             <button type="button" id="applyCustomGroupSize"
-                                                                class="mt-10 button -sm -accent-1 text-white">
+                                                                class="mt-10 button -sm -accent-1-dark bg-accent-1 text-white">
                                                                 Apply
                                                             </button>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,50 +214,47 @@
                 <div data-anim-child="slide-up" class="col-xl-3 col-lg-4">
                     <div class="lg:d-none">
                         <div class="sidebar -type-1 overflow-hidden rounded-12">
-                            <form method="GET" action="{{ route('front.trekking.index') }}">
+                            <form method="GET" action="{{ route('front.tours.index') }}">
 
                                 <div class="sidebar__content">
-                                    <!-- Tour type -->
+                                    <!-- Tour Type -->
                                     <div class="sidebar__item">
                                         <h5 class="text-18 fw-500">Tour Type</h5>
                                         <div class="pt-15">
                                             <div class="d-flex flex-column y-gap-15">
-                                                @foreach ($tourCategories as $index => $category)
-                                                    <div class="tour-category-item {{ $index >= 5 ? 'd-none' : '' }}">
-                                                        <div class="d-flex items-center">
-                                                            <div class="form-checkbox">
-                                                                <input type="checkbox" name="categories[]"
-                                                                    value="{{ $category->id }}"
-                                                                    {{ in_array($category->id, request()->input('categories', [])) ? 'checked' : '' }}>
-                                                                <div class="form-checkbox__mark">
-                                                                    <div class="form-checkbox__icon">
-                                                                        <svg width="10" height="8"
-                                                                            viewBox="0 0 10 8" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path
-                                                                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                                                                fill="white" />
-                                                                        </svg>
-                                                                    </div>
+                                                @php
+                                                    $tourTypes = [
+                                                        'multi_day' => 'Multi-Day Tour',
+                                                        'day_trip' => 'Day Trip',
+                                                    ];
+                                                @endphp
+
+                                                @foreach ($tourTypes as $typeKey => $typeLabel)
+                                                    <div class="d-flex items-center">
+                                                        <div class="form-checkbox">
+                                                            <input type="radio" name="type"
+                                                                value="{{ $typeKey }}"
+                                                                {{ request('type') === $typeKey ? 'checked' : '' }}>
+                                                            <div class="form-checkbox__mark">
+                                                                <div class="form-checkbox__icon">
+                                                                    <svg width="10" height="8" viewBox="0 0 10 8"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                                                            fill="white" />
+                                                                    </svg>
                                                                 </div>
                                                             </div>
-                                                            <div class="lh-11 ml-10">{{ $category->name }}</div>
+                                                        </div>
+                                                        <div class="lh-11 ml-10">
+                                                            {{ $typeLabel }}
                                                         </div>
                                                     </div>
                                                 @endforeach
                                             </div>
-
-                                            @if (count($tourCategories) > 5)
-                                                <a href="#" id="seeMoreTourCategories"
-                                                    class="d-flex text-15 fw-500 text-accent-2 mt-15">
-                                                    See More
-                                                </a>
-                                            @endif
                                         </div>
-
-
-
                                     </div>
+
 
                                     <!-- Filter price -->
                                     <div class="sidebar__item">
@@ -313,19 +307,36 @@
 
                                         </div>
                                     </div>
+                                    @php
+                                        $durations = [
+                                            '1 Day',
+                                            '2 Days',
+                                            '3 Days',
+                                            '4 Days',
+                                            '5 Days',
+                                            '6 Days',
+                                            '7 Days',
+                                            '8 Days',
+                                            '9 Days',
+                                            '10 Days',
+                                        ];
 
-                                    <!-- Duration -->
+                                        $selectedDurations = request()->input('duration', []);
+                                    @endphp
+
+                                    <!-- Duration (Desktop Sidebar) -->
                                     <div class="sidebar__item">
                                         <h5 class="text-18 fw-500">Duration</h5>
                                         <div class="pt-15">
-                                            <div class="d-flex flex-column y-gap-15">
-                                                @foreach ($durations as $duration)
-                                                    <div>
+                                            <div class="d-flex flex-column y-gap-15" id="duration-list-desktop">
+                                                @foreach ($durations as $index => $duration)
+                                                    <div
+                                                        class="{{ $index >= 5 ? 'd-none duration-hidden-desktop' : '' }}">
                                                         <div class="d-flex items-center">
                                                             <div class="form-checkbox">
                                                                 <input type="checkbox" name="duration[]"
                                                                     value="{{ $duration }}"
-                                                                    {{ in_array($duration, request('duration', [])) ? 'checked' : '' }}>
+                                                                    {{ in_array($duration, $selectedDurations) ? 'checked' : '' }}>
                                                                 <div class="form-checkbox__mark">
                                                                     <div class="form-checkbox__icon">
                                                                         <svg width="10" height="8"
@@ -343,6 +354,13 @@
                                                     </div>
                                                 @endforeach
                                             </div>
+
+                                            @if (count($durations) > 5)
+                                                <button type="button" class="d-flex text-15 fw-500 text-accent-2 mt-15"
+                                                    id="seeMoreDurationsDesktop">
+                                                    See More
+                                                </button>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -429,12 +447,18 @@
                                     </div>
 
                                     <!-- Submit button -->
-                                    <div class="mt-30">
-                                        <button type="submit" class="button -accent-1 w-100"
-                                            style="display: block; background-color: #ff5722; color: #fff; padding: 10px 20px; border: none; border-radius: 4px;">
+                                    <div class="mt-30 d-flex flex-column gap-10">
+                                        <button type="submit"
+                                            class="button -sm -accent-1-dark bg-accent-1 text-white w-100">
                                             Apply Filters
                                         </button>
+
+                                        <a href="{{ route('front.tours.index') }}" style="margin-top: 10px;"
+                                            class="button -sm -outline-accent-1 text-accent-1 w-100">
+                                            Reset Filters
+                                        </a>
                                     </div>
+
                                 </div>
 
                             </form>
@@ -496,12 +520,51 @@
                                             </div>
                                         </div>
 
-                                        <form method="GET" action="{{ route('front.trekking.index') }}">
+                                        <form method="GET" action="{{ route('front.tours.index') }}">
 
                                             <div class="sidebar__content">
-                                                <!-- Tour type -->
+                                                <!-- Tour Type -->
                                                 <div class="sidebar__item">
                                                     <h5 class="text-18 fw-500">Tour Type</h5>
+                                                    <div class="pt-15">
+                                                        <div class="d-flex flex-column y-gap-15">
+                                                            @php
+                                                                $tourTypes = [
+                                                                    'multi_day' => 'Multi-Day Tour',
+                                                                    'day_trip' => 'Day Trip',
+                                                                ];
+                                                            @endphp
+
+                                                            @foreach ($tourTypes as $typeKey => $typeLabel)
+                                                                <div class="d-flex items-center">
+                                                                    <div class="form-checkbox">
+                                                                        <input type="radio" name="type"
+                                                                            value="{{ $typeKey }}"
+                                                                            {{ request('type') === $typeKey ? 'checked' : '' }}>
+                                                                        <div class="form-checkbox__mark">
+                                                                            <div class="form-checkbox__icon">
+                                                                                <svg width="10" height="8"
+                                                                                    viewBox="0 0 10 8" fill="none"
+                                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                                    <path
+                                                                                        d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                                                                        fill="white" />
+                                                                                </svg>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="lh-11 ml-10">
+                                                                        {{ $typeLabel }}
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Tour Category -->
+                                                <div class="sidebar__item">
+                                                    <h5 class="text-18 fw-500">Tour Category</h5>
                                                     <div class="pt-15">
                                                         <div class="d-flex flex-column y-gap-15">
                                                             @foreach ($tourCategories as $index => $category)
@@ -524,14 +587,15 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="lh-11 ml-10">{{ $category->name }}
+                                                                        <div class="lh-11 ml-10">
+                                                                            {{ $category->name }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             @endforeach
                                                         </div>
 
-                                                        @if (count($tourCategories) > 5)
+                                                        @if (count($tourCategories) > 1)
                                                             <a href="#" id="seeMoreTourCategories"
                                                                 class="d-flex text-15 fw-500 text-accent-2 mt-15">
                                                                 See More
@@ -594,18 +658,20 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Duration -->
+                                                <!-- Duration (Mobile Sidebar) -->
                                                 <div class="sidebar__item">
                                                     <h5 class="text-18 fw-500">Duration</h5>
                                                     <div class="pt-15">
-                                                        <div class="d-flex flex-column y-gap-15">
-                                                            @foreach ($durations as $duration)
-                                                                <div>
+                                                        <div class="d-flex flex-column y-gap-15"
+                                                            id="duration-list-mobile">
+                                                            @foreach ($durations as $index => $duration)
+                                                                <div
+                                                                    class="{{ $index >= 5 ? 'd-none duration-hidden-mobile' : '' }}">
                                                                     <div class="d-flex items-center">
                                                                         <div class="form-checkbox">
                                                                             <input type="checkbox" name="duration[]"
                                                                                 value="{{ $duration }}"
-                                                                                {{ in_array($duration, request('duration', [])) ? 'checked' : '' }}>
+                                                                                {{ in_array($duration, $selectedDurations) ? 'checked' : '' }}>
                                                                             <div class="form-checkbox__mark">
                                                                                 <div class="form-checkbox__icon">
                                                                                     <svg width="10" height="8"
@@ -623,8 +689,46 @@
                                                                 </div>
                                                             @endforeach
                                                         </div>
+
+                                                        @if (count($durations) > 5)
+                                                            <button type="button"
+                                                                class="d-flex text-15 fw-500 text-accent-2 mt-15"
+                                                                id="seeMoreDurationsMobile">
+                                                                See More
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
+
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        let toggles = [{
+                                                                buttonId: 'seeMoreDurationsDesktop',
+                                                                hiddenClass: '.duration-hidden-desktop'
+                                                            },
+                                                            {
+                                                                buttonId: 'seeMoreDurationsMobile',
+                                                                hiddenClass: '.duration-hidden-mobile'
+                                                            }
+                                                        ];
+
+                                                        toggles.forEach(function(toggle) {
+                                                            let btn = document.getElementById(toggle.buttonId);
+                                                            if (btn) {
+                                                                btn.addEventListener('click', function(e) {
+                                                                    e.preventDefault();
+
+                                                                    document.querySelectorAll(toggle.hiddenClass).forEach(el => {
+                                                                        el.classList.toggle('d-none');
+                                                                    });
+
+                                                                    btn.textContent =
+                                                                        btn.textContent.trim() === 'See More' ? 'See Less' : 'See More';
+                                                                });
+                                                            }
+                                                        });
+                                                    });
+                                                </script>
 
                                                 <!-- Rating -->
                                                 <div class="sidebar__item">
@@ -711,12 +815,18 @@
                                                 </div>
 
                                                 <!-- Submit button -->
-                                                <div class="mt-30">
-                                                    <button type="submit" class="button -accent-1 w-100"
-                                                        style="display: block; background-color: #ff5722; color: #fff; padding: 10px 20px; border: none; border-radius: 4px;">
+                                                <div class="mt-30 d-flex flex-column gap-10">
+                                                    <button type="submit"
+                                                        class="button -sm -accent-1-dark bg-accent-1 text-white w-100">
                                                         Apply Filters
                                                     </button>
+
+                                                    <a href="{{ route('front.tours.index') }}" style="margin-top: 10px;"
+                                                        class="button -sm -outline-accent-1 text-accent-1 w-100">
+                                                        Reset Filters
+                                                    </a>
                                                 </div>
+
                                             </div>
 
                                         </form>
@@ -756,11 +866,22 @@
 
                     <div class="row y-gap-30 pt-30">
                         @foreach ($tours as $tour)
+                            @php
+                                $cover = $tour->getFirstMedia('cover');
+                                $coverUrl = $cover?->getUrl() ?? asset('img/default-tour.jpg');
+
+                                $alt = $cover?->getCustomProperty('alt') ?? $tour->title;
+                                $title = $cover?->getCustomProperty('title') ?? $tour->title;
+                                $caption = $cover?->getCustomProperty('caption') ?? '';
+                                $desc = $cover?->getCustomProperty('description') ?? '';
+                            @endphp
+
                             <div class="col-12">
                                 <div class="tourCard -type-2">
                                     <div class="tourCard__image">
-                                        <img src="{{ $tour->getFirstMediaUrl('tours') ?: asset('img/default-tour.jpg') }}"
-                                            alt="image">
+                                        <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                            title="{{ $title }}" data-caption="{{ $caption }}"
+                                            data-description="{{ $desc }}" class="img-ratio rounded-12">
 
                                         @if ($tour->discount > 0)
                                             <div class="tourCard__badge">
@@ -771,46 +892,52 @@
                                         @endif
 
                                         <div class="tourCard__favorite">
-                                            <button class="tourCard__favorite js-favorite-btn"
+                                            <button class="tourCard__favorite js-favorite-btn swiper-no-swiping"
                                                 data-id="{{ $tour->id }}" data-type="tour"
                                                 style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
                                                 <i class="icon-heart"></i>
                                             </button>
-
                                         </div>
                                     </div>
 
                                     <div class="tourCard__content">
-                                        <div class="tourCard__location">
-                                            <i class="icon-pin"></i>
-                                            {{ $tour->location->name ?? 'Unknown Location' }}
-                                        </div>
+                                        @if (!empty($tour->location?->name))
+                                            <div class="tourCard__location">
+                                                <i class="icon-pin"></i>
+                                                {{ $tour->location->name }}
+                                            </div>
+                                        @endif
 
                                         <h3 class="tourCard__title mt-5">
                                             <span>{{ $tour->title }}</span>
                                         </h3>
 
-                                        <div class="d-flex items-center mt-5">
-                                            <div class="d-flex items-center x-gap-5">
-                                                @php
-                                                    $rating = round($tour->avg_rating);
-                                                @endphp
+                                        @php
+                                            $reviewsCount = (int) ($tour->reviews_count ?? 0);
+                                            $rating = round($tour->avg_rating ?? 0);
+                                        @endphp
 
+                                        <div class="d-flex items-center mt-5">
+                                            @if ($reviewsCount > 0)
                                                 <div class="d-flex items-center x-gap-5">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        @if ($i <= $rating)
-                                                            <i class="icon-star text-yellow-2 text-12"></i>
-                                                        @else
-                                                            <i class="icon-star text-light-2 text-12"></i>
-                                                        @endif
-                                                    @endfor
+                                                    <div class="d-flex items-center x-gap-5">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $rating)
+                                                                <i class="icon-star text-yellow-2 text-12"></i>
+                                                            @else
+                                                                <i class="icon-star text-light-2 text-12"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
                                                 </div>
 
-                                            </div>
-
-                                            <div class="text-14 ml-10"><span class="fw-500">{{ $tour->rating }}</span>
-                                                ({{ $tour->reviews_count }})
-                                            </div>
+                                                <div class="text-14 ml-10">
+                                                    <span class="fw-500">{{ number_format($tour->avg_rating ?? 0, 1) }}</span>
+                                                    ({{ $reviewsCount }})
+                                                </div>
+                                            @else
+                                                <div class="text-14 text-accent-1 fw-500">New tour</div>
+                                            @endif
                                         </div>
 
                                         <p class="tourCard__text mt-5">
@@ -844,16 +971,19 @@
                                                 <div>${{ number_format($tour->base_price, 2) }}</div>
 
                                                 <div class="d-flex items-center">
-                                                    From <span
-                                                        class="text-20 fw-500 ml-5">${{ number_format($tour->discounted_base_price, 2) }}</span>
+                                                    From
+                                                    <span class="text-20 fw-500 ml-5">
+                                                        ${{ number_format($tour->discounted_base_price, 2) }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <button class="button -outline-accent-1 text-accent-1">
+                                        <a href="{{ route('front.tours.show', $tour->slug) }}"
+                                            class="button -outline-accent-1 text-accent-1">
                                             View Details
                                             <i class="icon-arrow-top-right ml-10"></i>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -861,47 +991,74 @@
                     </div>
 
 
+                    @if ($tours->lastPage() > 1)
+                        <div class="d-flex justify-center flex-column mt-60">
+                            <div class="pagination justify-center">
 
-                    <div class="d-flex justify-center flex-column mt-60">
-                        <div class="pagination justify-center">
-                            <!-- Previous Page Button -->
-                            @if ($tours->currentPage() > 1)
-                                <a href="{{ $tours->previousPageUrl() }}"
-                                    class="pagination__button button -accent-1 mr-15 -prev">
-                                    <i class="icon-arrow-left text-15"></i>
-                                </a>
-                            @endif
+                                {{-- Previous Page Button --}}
+                                @if ($tours->currentPage() > 1)
+                                    <a href="{{ $tours->previousPageUrl() }}"
+                                        class="pagination__button button -accent-1 mr-15 -prev">
+                                        <i class="icon-arrow-left text-15"></i>
+                                    </a>
+                                @endif
 
-                            <!-- Page Numbers -->
-                            <div class="pagination__count">
-                                @foreach ($tours->onEachSide(1) as $page => $url)
-                                    @if ($page == $tours->currentPage())
-                                        <a href="#" class="is-active">{{ $page }}</a>
+                                <div class="pagination__count">
+                                    {{-- Always show page 1 --}}
+                                    @if ($tours->currentPage() == 1)
+                                        <a href="#" class="is-active">1</a>
                                     @else
-                                        <a href="{{ $url }}">{{ $page }}</a>
+                                        <a href="{{ $tours->url(1) }}">1</a>
                                     @endif
-                                @endforeach
-                                <!-- Dots (show if there are more pages) -->
+
+                                    @php
+                                        $start = max(2, $tours->currentPage() - 1);
+                                        $end = min($tours->lastPage() - 1, $tours->currentPage() + 1);
+                                    @endphp
+
+                                    {{-- Show dots if there is a gap after page 1 --}}
+                                    @if ($start > 2)
+                                        <span>...</span>
+                                    @endif
+
+                                    {{-- Loop middle pages --}}
+                                    @for ($page = $start; $page <= $end; $page++)
+                                        @if ($page == $tours->currentPage())
+                                            <a href="#" class="is-active">{{ $page }}</a>
+                                        @else
+                                            <a href="{{ $tours->url($page) }}">{{ $page }}</a>
+                                        @endif
+                                    @endfor
+
+                                    {{-- Show dots if there is a gap before last page --}}
+                                    @if ($end < $tours->lastPage() - 1)
+                                        <span>...</span>
+                                    @endif
+
+                                    {{-- Always show last page if more than 1 page --}}
+                                    @if ($tours->lastPage() > 1 && $tours->currentPage() != $tours->lastPage())
+                                        <a href="{{ $tours->url($tours->lastPage()) }}">{{ $tours->lastPage() }}</a>
+                                    @elseif ($tours->lastPage() > 1 && $tours->currentPage() == $tours->lastPage())
+                                        <a href="#" class="is-active">{{ $tours->lastPage() }}</a>
+                                    @endif
+                                </div>
+
+                                {{-- Next Page Button --}}
                                 @if ($tours->hasMorePages())
-                                    <div>...</div>
-                                    <a href="{{ $tours->url($tours->lastPage()) }}">{{ $tours->lastPage() }}</a>
+                                    <a href="{{ $tours->nextPageUrl() }}"
+                                        class="pagination__button button -accent-1 ml-15 -next">
+                                        <i class="icon-arrow-right text-15"></i>
+                                    </a>
                                 @endif
                             </div>
 
-                            <!-- Next Page Button -->
-                            @if ($tours->hasMorePages())
-                                <a href="{{ $tours->nextPageUrl() }}"
-                                    class="pagination__button button -accent-1 ml-15 -next">
-                                    <i class="icon-arrow-right text-15"></i>
-                                </a>
-                            @endif
+                            {{-- Pagination Info --}}
+                            <div class="text-14 text-center mt-20">
+                                Showing results {{ $tours->firstItem() }}-{{ $tours->lastItem() }} of
+                                {{ $tours->total() }}
+                            </div>
                         </div>
-
-                        <!-- Pagination Info -->
-                        <div class="text-14 text-center mt-20">
-                            Showing results {{ $tours->firstItem() }}-{{ $tours->lastItem() }} of {{ $tours->total() }}
-                        </div>
-                    </div>
+                    @endif
 
                 </div>
             </div>

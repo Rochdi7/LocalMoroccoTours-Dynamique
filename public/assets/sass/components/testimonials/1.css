@@ -1,0 +1,23 @@
+.testimonials.-type-1 .testimonials__image {
+  position: relative;
+  margin: 0 auto;
+}
+.testimonials.-type-1 .testimonials__image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.testimonials.-type-1 .testimonials__icon {
+  position: absolute;
+  top: -8px;
+  left: -17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 100%;
+  color: white;
+  background-color: var(--color-accent-1);
+}/*# sourceMappingURL=1.css.map */

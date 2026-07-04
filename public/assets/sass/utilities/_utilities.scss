@@ -1,6 +1,6 @@
 @each $name, $color in $colors {
-  .bg-#{$name} { background-color: var(--color-#{$name}) !important; }
-}
+ .bg-#{$name} {
+  background-color: var(--color-#{$name}) !important;}
 
 .bg-white-10 { background-color: color-opac(white, .10); }
 .bg-accent-1-05 { background-color: color-opac(accent-1, .05); }
@@ -2683,8 +2683,8 @@ table.table-4 {
     transform: translateY(-50%) translateX(-50%);
     background-color: black;
     border-radius: 100%;
-    width: rem(52px);
-    height: rem(52px);
+    // width: rem(52px, 16px);
+    // height: rem(52px, 16px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2694,16 +2694,16 @@ table.table-4 {
     .icon {
       color: white;
       stroke-width: 1;
-      width: rem(28px);
-      height: rem(28px);
+      width: rem(28px, 16px);
+      height: rem(28px, 16px);
     }
 
     &.-bottom-right {
       top: unset;
       left: unset;
       transform: unset;
-      bottom: rem(30px);
-      right: rem(30px);
+      bottom: rem(30px, 16px);
+      right: rem(30px, 16px);
     }
   }
 }

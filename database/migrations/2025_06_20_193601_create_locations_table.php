@@ -13,11 +13,16 @@ return new class extends Migration {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('parent_id')->nullable()->constrained('locations')->onDelete('set null');
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
+
+            // SEO fields
+            $table->string('seo_alt')->nullable();
+            $table->string('seo_caption')->nullable();
+            $table->text('seo_description')->nullable();
+
             $table->timestamps();
         });
-
     }
 
     /**

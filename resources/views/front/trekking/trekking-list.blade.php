@@ -3,9 +3,9 @@
 @section('content')
     <section data-anim="fade" class="hero -type-1 -min">
         <div class="hero__bg">
-            <img src="{{ asset('assets/images/hero/toubkal-summit-hiker-atlas-mountains-morocco.webp') }}"
-                alt="Hiker standing on rocky summit of Mount Toubkal overlooking the dramatic ridges of Morocco’s Atlas Mountains under a bright blue sky."
-                title="Mount Toubkal Summit View — Trekking the High Atlas Mountains in Morocco">
+            <img src="{{ asset('assets/images/hero/localmorocco-tours-guide-high-atlas-mountain-climb.webp') }}"
+                alt="Owner of LocalMorocco Tours guiding clients on a winter climb in the High Atlas Mountains of Morocco"
+                title="LocalMorocco Tours Guide with Clients in Morocco's High Atlas Mountains">
 
             <img src="{{ asset('assets/img/hero/1/shape.svg') }}" alt="decorative shape">
         </div>
@@ -20,7 +20,7 @@
 
                         <p class="hero__text">
                             Conquer breathtaking peaks and explore rugged trails in Morocco’s High Atlas. Experience
-                            unforgettable trekking adventures led by expert guides.
+                            unforgettable trekking adventures led by expert local guides from LocalMorocco Tours.
                         </p>
 
                         <form method="GET" action="{{ route('front.trekking.index') }}">
@@ -71,7 +71,7 @@
                                         <div class="searchFormItem js-form-dd">
                                             <div class="searchFormItem__button" data-x-click="group_size">
                                                 <div class="searchFormItem__icon size-50 rounded-12 border-1 flex-center">
-                                                    <i class="text-20 icon-users"></i>
+                                                    <i class="icon-teamwork text-20"></i>
                                                 </div>
                                                 <div class="searchFormItem__content">
                                                     <h5>Group Size</h5>
@@ -96,7 +96,7 @@
                                                                     min="1">
                                                             </div>
                                                             <button type="button" id="applyCustomGroupSize"
-                                                                class="mt-10 button -sm -accent-1 text-white">
+                                                                class="mt-10 button -sm -accent-1-dark bg-accent-1 text-white">
                                                                 Apply
                                                             </button>
                                                         </div>
@@ -152,18 +152,14 @@
 
                                         let value = min && max ? `${min} - ${max}` : (min ? `${min}+` : `${max}+`);
 
-                                        // update hidden field
                                         document.getElementById('groupSize').value = value;
 
-                                        // update label shown in dropdown button
-                                        let chosen = document.querySelector('[data-x="group_size"]')
-                                            .closest('.searchFormItem')
+                                        let chosen = document.querySelector('[data-x="group_size"]').closest('.searchFormItem')
                                             .querySelector('.js-select-control-chosen');
                                         if (chosen) {
                                             chosen.textContent = value + ' people';
                                         }
 
-                                        // close dropdown
                                         document.querySelector('[data-x="group_size"]').classList.remove('is-active');
                                     });
                                 }
@@ -183,25 +179,21 @@
                             });
                         </script>
 
-
-
                         <!-- hidden SEO text -->
                         <div style="display: none;">
-                            Hiker standing on rocky summit of Mount Toubkal overlooking the dramatic ridges of Morocco’s
-                            Atlas Mountains under a bright blue sky.
+                            Owner of LocalMorocco Tours guiding clients on a winter climb in the High Atlas Mountains of
+                            Morocco.
                         </div>
                         <div style="display: none;">
-                            Experience trekking adventures in Morocco’s High Atlas Mountains, including Mount Toubkal, North
-                            Africa’s highest peak. Explore stunning landscapes, panoramic vistas, and challenging trails
-                            perfect for adventure seekers.
+                            Experience trekking adventures in Morocco’s High Atlas Mountains with LocalMorocco Tours, guided
+                            by local experts who lead climbers through breathtaking snowy peaks and stunning panoramic
+                            views.
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
 
     <section data-anim-wrap class="layout-pt-md layout-pb-xl">
         <div class="container">
@@ -298,21 +290,45 @@
                                         </div>
                                     </div>
 
-                                    <!-- Duration -->
+                                    <!-- Duration (Desktop) -->
                                     <div class="sidebar__item">
                                         <h5 class="text-18 fw-500">Duration</h5>
                                         <div class="pt-15">
-                                            <div class="d-flex flex-column y-gap-15">
-                                                @foreach ($durations as $duration)
-                                                    <div>
+                                            @php
+                                                $trekkingDurations = [
+                                                    '1 Day',
+                                                    '2 Days',
+                                                    '3 Days',
+                                                    '4 Days',
+                                                    '5 Days',
+                                                    '6 Days',
+                                                    '7 Days',
+                                                    '8 Days',
+                                                    '9 Days',
+                                                    '10 Days',
+                                                ];
+
+                                                $selectedTrekkingDurations = request()->input('duration', []);
+                                            @endphp
+
+                                            <div class="d-flex flex-column y-gap-15" id="trekking-duration-list-desktop">
+                                                @foreach ($trekkingDurations as $index => $duration)
+                                                    <div
+                                                        class="{{ $index >= 5 ? 'd-none trekking-duration-hidden-desktop' : '' }}">
                                                         <div class="d-flex items-center">
                                                             <div class="form-checkbox">
                                                                 <input type="checkbox" name="duration[]"
                                                                     value="{{ $duration }}"
-                                                                    {{ in_array($duration, request('duration', [])) ? 'checked' : '' }}>
+                                                                    {{ in_array($duration, $selectedTrekkingDurations) ? 'checked' : '' }}>
                                                                 <div class="form-checkbox__mark">
                                                                     <div class="form-checkbox__icon">
-                                                                        <!-- your SVG icon -->
+                                                                        <svg width="10" height="8"
+                                                                            viewBox="0 0 10 8" fill="none"
+                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                            <path
+                                                                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                                                                fill="white" />
+                                                                        </svg>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -321,8 +337,33 @@
                                                     </div>
                                                 @endforeach
                                             </div>
+
+                                            @if (count($trekkingDurations) > 5)
+                                                <a href="#" id="seeMoreTrekkingDurationsDesktop"
+                                                    class="d-flex text-15 fw-500 text-accent-2 mt-15">
+                                                    See More
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
+
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            let btn = document.getElementById('seeMoreTrekkingDurationsDesktop');
+
+                                            if (btn) {
+                                                btn.addEventListener('click', function(e) {
+                                                    e.preventDefault();
+
+                                                    document.querySelectorAll('.trekking-duration-hidden-desktop')
+                                                        .forEach(el => el.classList.toggle('d-none'));
+
+                                                    btn.textContent =
+                                                        btn.textContent.trim() === 'See More' ? 'See Less' : 'See More';
+                                                });
+                                            }
+                                        });
+                                    </script>
 
                                     <!-- Rating -->
                                     <div class="sidebar__item">
@@ -398,12 +439,18 @@
                                     </div>
 
                                     <!-- Submit button -->
-                                    <div class="mt-30">
-                                        <button type="submit" class="button -accent-1 w-100"
-                                            style="display: block; background-color: #ff5722; color: #fff; padding: 10px 20px; border: none; border-radius: 4px;">
+                                    <div class="mt-30 d-flex flex-column gap-10">
+                                        <button type="submit"
+                                            class="button -sm -accent-1-dark bg-accent-1 text-white w-100">
                                             Apply Filters
                                         </button>
+
+                                        <a href="{{ route('front.trekking.index') }}" style="margin-top: 10px;"
+                                            class="button -sm -outline-accent-1 text-accent-1 w-100">
+                                            Reset Filters
+                                        </a>
                                     </div>
+
 
 
                                 </div>
@@ -561,21 +608,49 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Duration -->
+                                                <!-- Duration (Mobile) -->
                                                 <div class="sidebar__item">
                                                     <h5 class="text-18 fw-500">Duration</h5>
                                                     <div class="pt-15">
-                                                        <div class="d-flex flex-column y-gap-15">
-                                                            @foreach ($durations as $duration)
-                                                                <div>
+                                                        @php
+                                                            $trekkingDurations = [
+                                                                '1 Day',
+                                                                '2 Days',
+                                                                '3 Days',
+                                                                '4 Days',
+                                                                '5 Days',
+                                                                '6 Days',
+                                                                '7 Days',
+                                                                '8 Days',
+                                                                '9 Days',
+                                                                '10 Days',
+                                                            ];
+
+                                                            $selectedTrekkingDurations = request()->input(
+                                                                'duration',
+                                                                [],
+                                                            );
+                                                        @endphp
+
+                                                        <div class="d-flex flex-column y-gap-15"
+                                                            id="trekking-duration-list-mobile">
+                                                            @foreach ($trekkingDurations as $index => $duration)
+                                                                <div
+                                                                    class="{{ $index >= 5 ? 'd-none trekking-duration-hidden-mobile' : '' }}">
                                                                     <div class="d-flex items-center">
                                                                         <div class="form-checkbox">
                                                                             <input type="checkbox" name="duration[]"
                                                                                 value="{{ $duration }}"
-                                                                                {{ in_array($duration, request('duration', [])) ? 'checked' : '' }}>
+                                                                                {{ in_array($duration, $selectedTrekkingDurations) ? 'checked' : '' }}>
                                                                             <div class="form-checkbox__mark">
                                                                                 <div class="form-checkbox__icon">
-                                                                                    <!-- your SVG icon -->
+                                                                                    <svg width="10" height="8"
+                                                                                        viewBox="0 0 10 8" fill="none"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path
+                                                                                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
+                                                                                            fill="white" />
+                                                                                    </svg>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -584,8 +659,34 @@
                                                                 </div>
                                                             @endforeach
                                                         </div>
+
+                                                        @if (count($trekkingDurations) > 5)
+                                                            <a href="#" id="seeMoreTrekkingDurationsMobile"
+                                                                class="d-flex text-15 fw-500 text-accent-2 mt-15">
+                                                                See More
+                                                            </a>
+                                                        @endif
                                                     </div>
                                                 </div>
+
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        let btn = document.getElementById('seeMoreTrekkingDurationsMobile');
+
+                                                        if (btn) {
+                                                            btn.addEventListener('click', function(e) {
+                                                                e.preventDefault();
+
+                                                                document.querySelectorAll('.trekking-duration-hidden-mobile')
+                                                                    .forEach(el => el.classList.toggle('d-none'));
+
+                                                                btn.textContent =
+                                                                    btn.textContent.trim() === 'See More' ? 'See Less' : 'See More';
+                                                            });
+                                                        }
+                                                    });
+                                                </script>
+
 
                                                 <!-- Rating -->
                                                 <div class="sidebar__item">
@@ -660,12 +761,19 @@
                                                 </div>
 
                                                 <!-- Submit button -->
-                                                <div class="mt-30">
-                                                    <button type="submit" class="button -accent-1 w-100"
-                                                        style="display: block; background-color: #ff5722; color: #fff; padding: 10px 20px; border: none; border-radius: 4px;">
+                                                <div class="mt-30 d-flex flex-column gap-10">
+                                                    <button type="submit"
+                                                        class="button -sm -accent-1-dark bg-accent-1 text-white w-100">
                                                         Apply Filters
                                                     </button>
+
+                                                    <a href="{{ route('front.trekking.index') }}"
+                                                        style="margin-top: 10px;"
+                                                        class="button -sm -outline-accent-1 text-accent-1 w-100">
+                                                        Reset Filters
+                                                    </a>
                                                 </div>
+
 
 
                                             </div>
@@ -706,11 +814,22 @@
 
                     <div class="row y-gap-30 pt-30">
                         @foreach ($trekkings as $trek)
+                            @php
+                                $cover = $trek->getFirstMedia('cover');
+                                $coverUrl = $cover?->getUrl() ?? asset('img/default-trekking.jpg');
+
+                                $alt = $cover?->getCustomProperty('alt') ?? $trek->title;
+                                $title = $cover?->getCustomProperty('title') ?? $trek->title;
+                                $caption = $cover?->getCustomProperty('caption') ?? '';
+                                $desc = $cover?->getCustomProperty('description') ?? '';
+                            @endphp
+
                             <div class="col-12">
                                 <div class="tourCard -type-2">
                                     <div class="tourCard__image">
-                                        <img src="{{ $trek->getFirstMediaUrl('trekking') ?: asset('img/default-tour.jpg') }}"
-                                            alt="{{ $trek->title }}">
+                                        <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                            title="{{ $title }}" data-caption="{{ $caption }}"
+                                            data-description="{{ $desc }}" class="img-ratio rounded-12">
 
                                         @if ($trek->discount > 0)
                                             <div class="tourCard__badge">
@@ -720,7 +839,7 @@
                                             </div>
                                         @endif
 
-                                        <button class="tourCard__favorite js-favorite-btn" data-id="{{ $trek->slug }}"
+                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping" data-id="{{ $trek->slug }}"
                                             data-type="trekking"
                                             style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
                                             <i class="icon-heart"></i>
@@ -737,27 +856,32 @@
                                             <span>{{ $trek->title }}</span>
                                         </h3>
 
+                                        @php
+                                            $reviewsCount = (int) ($trek->reviews_count ?? 0);
+                                            $rating = round($trek->avg_rating ?? 0);
+                                        @endphp
+
                                         <div class="d-flex items-center mt-5">
-                                            <div class="d-flex items-center x-gap-5">
-                                                @php
-                                                    $rating = round($trek->avg_rating);
-                                                @endphp
-
+                                            @if ($reviewsCount > 0)
                                                 <div class="d-flex items-center x-gap-5">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        @if ($i <= $rating)
-                                                            <i class="icon-star text-yellow-2 text-12"></i>
-                                                        @else
-                                                            <i class="icon-star text-light-2 text-12"></i>
-                                                        @endif
-                                                    @endfor
+                                                    <div class="d-flex items-center x-gap-5">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $rating)
+                                                                <i class="icon-star text-yellow-2 text-12"></i>
+                                                            @else
+                                                                <i class="icon-star text-light-2 text-12"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="text-14 ml-10">
-                                                <span class="fw-500">{{ number_format($trek->avg_rating, 1) }}</span>
-                                                ({{ $trek->reviews_count }})
-                                            </div>
+                                                <div class="text-14 ml-10">
+                                                    <span class="fw-500">{{ number_format($trek->avg_rating ?? 0, 1) }}</span>
+                                                    ({{ $reviewsCount }})
+                                                </div>
+                                            @else
+                                                <div class="text-14 text-accent-1 fw-500">New trek</div>
+                                            @endif
                                         </div>
 
                                         <p class="tourCard__text mt-5">
@@ -796,8 +920,10 @@
                                                 <div>${{ number_format($trek->base_price, 2) }}</div>
 
                                                 <div class="d-flex items-center">
-                                                    From <span
-                                                        class="text-20 fw-500 ml-5">${{ number_format($trek->discounted_base_price, 2) }}</span>
+                                                    From
+                                                    <span class="text-20 fw-500 ml-5">
+                                                        ${{ number_format($trek->discounted_base_price, 2) }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -813,39 +939,76 @@
                         @endforeach
                     </div>
 
+                    @if ($trekkings->lastPage() > 1)
+                        <div class="d-flex justify-center flex-column mt-60">
+                            <div class="pagination justify-center">
 
-                    <div class="d-flex justify-center flex-column mt-60">
-                        <div class="pagination justify-center">
-                            @if ($trekkings->currentPage() > 1)
-                                <a href="{{ $trekkings->previousPageUrl() }}"
-                                    class="pagination__button button -accent-1 mr-15 -prev">
-                                    <i class="icon-arrow-left text-15"></i>
-                                </a>
-                            @endif
+                                {{-- Previous Page Button --}}
+                                @if ($trekkings->currentPage() > 1)
+                                    <a href="{{ $trekkings->previousPageUrl() }}"
+                                        class="pagination__button button -accent-1 mr-15 -prev">
+                                        <i class="icon-arrow-left text-15"></i>
+                                    </a>
+                                @endif
 
-                            <div class="pagination__count">
-                                @foreach ($trekkings->getUrlRange(1, $trekkings->lastPage()) as $page => $url)
-                                    @if ($page == $trekkings->currentPage())
-                                        <a href="#" class="is-active">{{ $page }}</a>
+                                <div class="pagination__count">
+                                    {{-- Always show page 1 --}}
+                                    @if ($trekkings->currentPage() == 1)
+                                        <a href="#" class="is-active">1</a>
                                     @else
-                                        <a href="{{ $url }}">{{ $page }}</a>
+                                        <a href="{{ $trekkings->url(1) }}">1</a>
                                     @endif
-                                @endforeach
+
+                                    @php
+                                        $start = max(2, $trekkings->currentPage() - 1);
+                                        $end = min($trekkings->lastPage() - 1, $trekkings->currentPage() + 1);
+                                    @endphp
+
+                                    {{-- Show dots if gap after page 1 --}}
+                                    @if ($start > 2)
+                                        <span>...</span>
+                                    @endif
+
+                                    {{-- Loop middle pages --}}
+                                    @for ($page = $start; $page <= $end; $page++)
+                                        @if ($page == $trekkings->currentPage())
+                                            <a href="#" class="is-active">{{ $page }}</a>
+                                        @else
+                                            <a href="{{ $trekkings->url($page) }}">{{ $page }}</a>
+                                        @endif
+                                    @endfor
+
+                                    {{-- Show dots if gap before last page --}}
+                                    @if ($end < $trekkings->lastPage() - 1)
+                                        <span>...</span>
+                                    @endif
+
+                                    {{-- Always show last page if more than 1 page --}}
+                                    @if ($trekkings->lastPage() > 1 && $trekkings->currentPage() != $trekkings->lastPage())
+                                        <a
+                                            href="{{ $trekkings->url($trekkings->lastPage()) }}">{{ $trekkings->lastPage() }}</a>
+                                    @elseif ($trekkings->lastPage() > 1 && $trekkings->currentPage() == $trekkings->lastPage())
+                                        <a href="#" class="is-active">{{ $trekkings->lastPage() }}</a>
+                                    @endif
+                                </div>
+
+                                {{-- Next Page Button --}}
+                                @if ($trekkings->hasMorePages())
+                                    <a href="{{ $trekkings->nextPageUrl() }}"
+                                        class="pagination__button button -accent-1 ml-15 -next">
+                                        <i class="icon-arrow-right text-15"></i>
+                                    </a>
+                                @endif
                             </div>
 
-                            @if ($trekkings->hasMorePages())
-                                <a href="{{ $trekkings->nextPageUrl() }}"
-                                    class="pagination__button button -accent-1 ml-15 -next">
-                                    <i class="icon-arrow-right text-15"></i>
-                                </a>
-                            @endif
+                            {{-- Pagination Info --}}
+                            <div class="text-14 text-center mt-20">
+                                Showing results {{ $trekkings->firstItem() }}-{{ $trekkings->lastItem() }} of
+                                {{ $trekkings->total() }}
+                            </div>
                         </div>
+                    @endif
 
-                        <div class="text-14 text-center mt-20">
-                            Showing results {{ $trekkings->firstItem() }}-{{ $trekkings->lastItem() }} of
-                            {{ $trekkings->total() }}
-                        </div>
-                    </div>
                 </div>
 
             </div>

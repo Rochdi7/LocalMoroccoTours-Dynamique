@@ -3,7 +3,7 @@
 @section('content')
     <section data-anim="fade" class="hero -type-1 -min">
         <div class="hero__bg">
-            <img src="{{ asset('assets/images/hero/morocco-sahara-camel-trek-sunset-merzouga.jpg.webp') }}"
+            <img src="{{ asset('assets/images/hero/morocco-sahara-camel-trek-sunset-merzouga.webp') }}"
                 alt="Camel caravan crossing Morocco’s Sahara Desert dunes at sunset under a vivid orange and purple sky"
                 title="Camel trekking at sunset in the golden dunes of Merzouga, Morocco.">
 
@@ -71,7 +71,7 @@
                                         <div class="searchFormItem js-form-dd">
                                             <div class="searchFormItem__button" data-x-click="group_size">
                                                 <div class="searchFormItem__icon size-50 rounded-12 border-1 flex-center">
-                                                    <i class="text-20 icon-users"></i>
+                                                    <i class="icon-teamwork text-20"></i>
                                                 </div>
                                                 <div class="searchFormItem__content">
                                                     <h5>Group Size</h5>
@@ -96,9 +96,10 @@
                                                                     min="1">
                                                             </div>
                                                             <button type="button" id="applyCustomGroupSize"
-                                                                class="mt-10 button -sm -accent-1 text-white">
+                                                                class="mt-10 button -sm -accent-1-dark bg-accent-1 text-white">
                                                                 Apply
                                                             </button>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -204,7 +205,7 @@
                 <div data-anim-child="slide-up" class="col-xl-3 col-lg-4">
                     <div class="lg:d-none">
                         <div class="sidebar -type-1 overflow-hidden rounded-12">
-                            <form method="GET" action="{{ route('front.trekking.index') }}">
+                            <form method="GET" action="{{ route('front.activities.index') }}">
 
                                 <div class="sidebar__content">
                                     <!-- Tour type -->
@@ -298,13 +299,30 @@
                                         </div>
                                     </div>
 
-                                    <!-- Duration -->
+                                    
+                                    @php
+                                        $durations = [
+                                            '1 Hours',
+                                            '1.5 Hours',
+                                            '2 Hours',
+                                            '2.5 Hours',
+                                            '3 Hours',
+                                            '3.5 Hours',
+                                            '4 Hours',
+                                            '5 Hours',
+                                            '6 Hours',
+                                            '8 Hours',
+                                        ];
+
+                                        $selectedDurations = request()->input('duration', []);
+                                    @endphp
+
                                     <div class="sidebar__item">
                                         <h5 class="text-18 fw-500">Duration</h5>
                                         <div class="pt-15">
-                                            <div class="d-flex flex-column y-gap-15">
-                                                @foreach ($durations as $duration)
-                                                    <div>
+                                            <div class="d-flex flex-column y-gap-15" id="duration-list-desktop">
+                                                @foreach ($durations as $index => $duration)
+                                                    <div class="{{ $index >= 5 ? 'd-none duration-hidden' : '' }}">
                                                         <div class="d-flex items-center">
                                                             <div class="form-checkbox">
                                                                 <input type="checkbox" name="duration[]"
@@ -312,13 +330,7 @@
                                                                     {{ in_array($duration, request('duration', [])) ? 'checked' : '' }}>
                                                                 <div class="form-checkbox__mark">
                                                                     <div class="form-checkbox__icon">
-                                                                        <svg width="10" height="8"
-                                                                            viewBox="0 0 10 8" fill="none"
-                                                                            xmlns="http://www.w3.org/2000/svg">
-                                                                            <path
-                                                                                d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                                                                fill="white" />
-                                                                        </svg>
+                                                                        <!-- your SVG here -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -327,8 +339,47 @@
                                                     </div>
                                                 @endforeach
                                             </div>
+
+                                            @if (count($durations) > 5)
+                                                <a href="#" data-action="see-more-durations"
+                                                    data-target="#duration-list-desktop"
+                                                    class="d-flex text-15 fw-500 text-accent-2 mt-15">
+                                                    See More
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
+                                    <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+
+                                            const durationSeeMoreButtons = document.querySelectorAll('[data-action="see-more-durations"]');
+
+                                            durationSeeMoreButtons.forEach(button => {
+                                                button.addEventListener('click', function(e) {
+                                                    e.preventDefault();
+
+                                                    const containerSelector = this.getAttribute('data-target');
+                                                    const container = document.querySelector(containerSelector);
+
+                                                    if (!container) return;
+
+                                                    const hiddenItems = container.querySelectorAll('.duration-hidden');
+
+                                                    hiddenItems.forEach(item => {
+                                                        item.classList.toggle('d-none');
+                                                    });
+
+                                                    if (this.textContent.trim() === 'See More') {
+                                                        this.textContent = 'See Less';
+                                                    } else {
+                                                        this.textContent = 'See More';
+                                                    }
+                                                });
+                                            });
+
+                                        });
+                                    </script>
+
 
                                     <!-- Rating -->
                                     <div class="sidebar__item">
@@ -413,12 +464,18 @@
                                     </div>
 
                                     <!-- Submit button -->
-                                    <div class="mt-30">
-                                        <button type="submit" class="button -accent-1 w-100"
-                                            style="display: block; background-color: #ff5722; color: #fff; padding: 10px 20px; border: none; border-radius: 4px;">
+                                    <div class="mt-30 d-flex flex-column gap-10">
+                                        <button type="submit"
+                                            class="button -sm -accent-1-dark bg-accent-1 text-white w-100">
                                             Apply Filters
                                         </button>
+
+                                        <a href="{{ route('front.activities.index') }}" style="margin-top: 10px;"
+                                            class="button -sm -outline-accent-1 text-accent-1 w-100">
+                                            Reset Filters
+                                        </a>
                                     </div>
+
                                 </div>
 
                             </form>
@@ -480,7 +537,7 @@
                                             </div>
                                         </div>
 
-                                        <form method="GET" action="{{ route('front.trekking.index') }}">
+                                        <form method="GET" action="{{ route('front.activities.index') }}">
 
                                             <div class="sidebar__content">
                                                 <!-- Tour type -->
@@ -579,13 +636,14 @@
                                                     </div>
                                                 </div>
 
-                                                <!-- Duration -->
                                                 <div class="sidebar__item">
                                                     <h5 class="text-18 fw-500">Duration</h5>
                                                     <div class="pt-15">
-                                                        <div class="d-flex flex-column y-gap-15">
-                                                            @foreach ($durations as $duration)
-                                                                <div>
+                                                        <div class="d-flex flex-column y-gap-15"
+                                                            id="duration-list-mobile">
+                                                            @foreach ($durations as $index => $duration)
+                                                                <div
+                                                                    class="{{ $index >= 5 ? 'd-none duration-hidden' : '' }}">
                                                                     <div class="d-flex items-center">
                                                                         <div class="form-checkbox">
                                                                             <input type="checkbox" name="duration[]"
@@ -593,13 +651,7 @@
                                                                                 {{ in_array($duration, request('duration', [])) ? 'checked' : '' }}>
                                                                             <div class="form-checkbox__mark">
                                                                                 <div class="form-checkbox__icon">
-                                                                                    <svg width="10" height="8"
-                                                                                        viewBox="0 0 10 8" fill="none"
-                                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                                        <path
-                                                                                            d="M9.29082 0.971021C9.01235 0.692189 8.56018 0.692365 8.28134 0.971021L3.73802 5.51452L1.71871 3.49523C1.43988 3.21639 0.987896 3.21639 0.709063 3.49523C0.430231 3.77406 0.430231 4.22604 0.709063 4.50487L3.23309 7.0289C3.37242 7.16823 3.55512 7.23807 3.73783 7.23807C3.92054 7.23807 4.10341 7.16841 4.24274 7.0289L9.29082 1.98065C9.56965 1.70201 9.56965 1.24984 9.29082 0.971021Z"
-                                                                                            fill="white" />
-                                                                                    </svg>
+                                                                                    <!-- your SVG here -->
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -608,8 +660,17 @@
                                                                 </div>
                                                             @endforeach
                                                         </div>
+
+                                                        @if (count($durations) > 5)
+                                                            <a href="#" data-action="see-more-durations"
+                                                                data-target="#duration-list-mobile"
+                                                                class="d-flex text-15 fw-500 text-accent-2 mt-15">
+                                                                See More
+                                                            </a>
+                                                        @endif
                                                     </div>
                                                 </div>
+
 
                                                 <!-- Rating -->
                                                 <div class="sidebar__item">
@@ -696,12 +757,19 @@
                                                 </div>
 
                                                 <!-- Submit button -->
-                                                <div class="mt-30">
-                                                    <button type="submit" class="button -accent-1 w-100"
-                                                        style="display: block; background-color: #ff5722; color: #fff; padding: 10px 20px; border: none; border-radius: 4px;">
+                                                <div class="mt-30 d-flex flex-column gap-10">
+                                                    <button type="submit"
+                                                        class="button -sm -accent-1-dark bg-accent-1 text-white w-100">
                                                         Apply Filters
                                                     </button>
+
+                                                    <a href="{{ route('front.activities.index') }}"
+                                                        style="margin-top: 10px;"
+                                                        class="button -sm -outline-accent-1 text-accent-1 w-100">
+                                                        Reset Filters
+                                                    </a>
                                                 </div>
+
                                             </div>
 
                                         </form>
@@ -741,11 +809,22 @@
 
                     <div class="row y-gap-30 pt-30">
                         @foreach ($activities as $activity)
+                            @php
+                                $cover = $activity->getFirstMedia('cover');
+                                $coverUrl = $cover?->getUrl() ?? asset('img/default-activity.jpg');
+
+                                $alt = $cover?->getCustomProperty('alt') ?? $activity->title;
+                                $title = $cover?->getCustomProperty('title') ?? $activity->title;
+                                $caption = $cover?->getCustomProperty('caption') ?? '';
+                                $desc = $cover?->getCustomProperty('description') ?? '';
+                            @endphp
+
                             <div class="col-12">
                                 <div class="tourCard -type-2">
                                     <div class="tourCard__image">
-                                        <img src="{{ $activity->getFirstMediaUrl('activities') ?: asset('img/default-tour.jpg') }}"
-                                            alt="image">
+                                        <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                            title="{{ $title }}" data-caption="{{ $caption }}"
+                                            data-description="{{ $desc }}" class="img-ratio rounded-12">
 
                                         @if ($activity->discount > 0)
                                             <div class="tourCard__badge">
@@ -756,12 +835,11 @@
                                         @endif
 
                                         <div class="tourCard__favorite">
-                                            <button class="tourCard__favorite js-favorite-btn"
+                                            <button class="tourCard__favorite js-favorite-btn swiper-no-swiping"
                                                 data-id="{{ $activity->id }}" data-type="activity"
                                                 style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
                                                 <i class="icon-heart"></i>
                                             </button>
-
                                         </div>
                                     </div>
 
@@ -775,27 +853,32 @@
                                             <span>{{ $activity->title }}</span>
                                         </h3>
 
+                                        @php
+                                            $reviewsCount = (int) ($activity->reviews_count ?? 0);
+                                            $rating = round($activity->avg_rating ?? 0);
+                                        @endphp
+
                                         <div class="d-flex items-center mt-5">
-                                            <div class="d-flex items-center x-gap-5">
-                                                @php
-                                                    $rating = round($activity->avg_rating);
-                                                @endphp
-
+                                            @if ($reviewsCount > 0)
                                                 <div class="d-flex items-center x-gap-5">
-                                                    @for ($i = 1; $i <= 5; $i++)
-                                                        @if ($i <= $rating)
-                                                            <i class="icon-star text-yellow-2 text-12"></i>
-                                                        @else
-                                                            <i class="icon-star text-light-2 text-12"></i>
-                                                        @endif
-                                                    @endfor
+                                                    <div class="d-flex items-center x-gap-5">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $rating)
+                                                                <i class="icon-star text-yellow-2 text-12"></i>
+                                                            @else
+                                                                <i class="icon-star text-light-2 text-12"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="text-14 ml-10"><span
-                                                    class="fw-500">{{ $activity->rating }}</span>
-                                                ({{ $activity->reviews_count }})
-                                            </div>
+                                                <div class="text-14 ml-10">
+                                                    <span class="fw-500">{{ number_format($activity->avg_rating ?? 0, 1) }}</span>
+                                                    ({{ $reviewsCount }})
+                                                </div>
+                                            @else
+                                                <div class="text-14 text-accent-1 fw-500">New activity</div>
+                                            @endif
                                         </div>
 
                                         <p class="tourCard__text mt-5">
@@ -829,8 +912,10 @@
                                                 <div>${{ number_format($activity->base_price, 2) }}</div>
 
                                                 <div class="d-flex items-center">
-                                                    From <span
-                                                        class="text-20 fw-500 ml-5">${{ number_format($activity->discounted_base_price, 2) }}</span>
+                                                    From
+                                                    <span class="text-20 fw-500 ml-5">
+                                                        ${{ number_format($activity->discounted_base_price, 2) }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -840,7 +925,6 @@
                                             View Details
                                             <i class="icon-arrow-top-right ml-10"></i>
                                         </a>
-
                                     </div>
                                 </div>
                             </div>
@@ -848,49 +932,76 @@
                     </div>
 
 
+                    @if ($activities->lastPage() > 1)
+                        <div class="d-flex justify-center flex-column mt-60">
+                            <div class="pagination justify-center">
 
-                    <div class="d-flex justify-center flex-column mt-60">
-                        <div class="pagination justify-center">
-                            <!-- Previous Page Button -->
-                            @if ($activities->currentPage() > 1)
-                                <a href="{{ $activities->previousPageUrl() }}"
-                                    class="pagination__button button -accent-1 mr-15 -prev">
-                                    <i class="icon-arrow-left text-15"></i>
-                                </a>
-                            @endif
+                                {{-- Previous Page Button --}}
+                                @if ($activities->currentPage() > 1)
+                                    <a href="{{ $activities->previousPageUrl() }}"
+                                        class="pagination__button button -accent-1 mr-15 -prev">
+                                        <i class="icon-arrow-left text-15"></i>
+                                    </a>
+                                @endif
 
-                            <!-- Page Numbers -->
-                            <div class="pagination__count">
-                                @foreach ($activities->onEachSide(1) as $page => $url)
-                                    @if ($page == $activities->currentPage())
-                                        <a href="#" class="is-active">{{ $page }}</a>
+                                <div class="pagination__count">
+                                    {{-- Always show page 1 --}}
+                                    @if ($activities->currentPage() == 1)
+                                        <a href="#" class="is-active">1</a>
                                     @else
-                                        <a href="{{ $url }}">{{ $page }}</a>
+                                        <a href="{{ $activities->url(1) }}">1</a>
                                     @endif
-                                @endforeach
-                                <!-- Dots (show if there are more pages) -->
+
+                                    @php
+                                        $start = max(2, $activities->currentPage() - 1);
+                                        $end = min($activities->lastPage() - 1, $activities->currentPage() + 1);
+                                    @endphp
+
+                                    {{-- Show dots if there is a gap after page 1 --}}
+                                    @if ($start > 2)
+                                        <span>...</span>
+                                    @endif
+
+                                    {{-- Loop middle pages --}}
+                                    @for ($page = $start; $page <= $end; $page++)
+                                        @if ($page == $activities->currentPage())
+                                            <a href="#" class="is-active">{{ $page }}</a>
+                                        @else
+                                            <a href="{{ $activities->url($page) }}">{{ $page }}</a>
+                                        @endif
+                                    @endfor
+
+                                    {{-- Show dots if there is a gap before last page --}}
+                                    @if ($end < $activities->lastPage() - 1)
+                                        <span>...</span>
+                                    @endif
+
+                                    {{-- Always show last page if more than 1 page --}}
+                                    @if ($activities->lastPage() > 1 && $activities->currentPage() != $activities->lastPage())
+                                        <a
+                                            href="{{ $activities->url($activities->lastPage()) }}">{{ $activities->lastPage() }}</a>
+                                    @elseif ($activities->lastPage() > 1 && $activities->currentPage() == $activities->lastPage())
+                                        <a href="#" class="is-active">{{ $activities->lastPage() }}</a>
+                                    @endif
+                                </div>
+
+                                {{-- Next Page Button --}}
                                 @if ($activities->hasMorePages())
-                                    <div>...</div>
-                                    <a
-                                        href="{{ $activities->url($activities->lastPage()) }}">{{ $activities->lastPage() }}</a>
+                                    <a href="{{ $activities->nextPageUrl() }}"
+                                        class="pagination__button button -accent-1 ml-15 -next">
+                                        <i class="icon-arrow-right text-15"></i>
+                                    </a>
                                 @endif
                             </div>
 
-                            <!-- Next Page Button -->
-                            @if ($activities->hasMorePages())
-                                <a href="{{ $activities->nextPageUrl() }}"
-                                    class="pagination__button button -accent-1 ml-15 -next">
-                                    <i class="icon-arrow-right text-15"></i>
-                                </a>
-                            @endif
+                            {{-- Pagination Info --}}
+                            <div class="text-14 text-center mt-20">
+                                Showing results {{ $activities->firstItem() }}-{{ $activities->lastItem() }} of
+                                {{ $activities->total() }}
+                            </div>
                         </div>
+                    @endif
 
-                        <!-- Pagination Info -->
-                        <div class="text-14 text-center mt-20">
-                            Showing results {{ $activities->firstItem() }}-{{ $activities->lastItem() }} of
-                            {{ $activities->total() }}
-                        </div>
-                    </div>
 
                 </div>
             </div>

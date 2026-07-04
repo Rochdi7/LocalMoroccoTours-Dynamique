@@ -6,153 +6,275 @@
 @section('page-animation', 'animate__rollIn')
 
 @section('css')
-    <link rel="stylesheet" href="{{ URL::asset('build/css/plugins/style.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('build/css/plugins/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/plugins/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/plugins/animate.min.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('build/css/plugins/quill.core.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/plugins/quill.snow.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/plugins/quill.bubble.css') }}">
 @endsection
 
 @section('content')
-<div class="row">
-    <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
 
-        @if ($errors->any())
-            <div class="alert alert-danger animate__animated animate__shakeX">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
-            @csrf
-
-            <div id="post-form-card" class="card animate__animated animate__rollIn">
-                <div class="card-header">
-                    <h5>New Blog Post</h5>
+            @if ($errors->any())
+                <div class="alert alert-danger animate__animated animate__shakeX">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
+            @endif
 
-                <div class="card-body">
-                    <div class="row">
+            <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data"
+                class="needs-validation" novalidate>
+                @csrf
 
-                        {{-- Title --}}
-                        <div class="mb-3 col-md-6">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                                   value="{{ old('title') }}" required>
-                            <div class="invalid-feedback">
-                                @error('title') {{ $message }} @else Please enter a title. @enderror
+                <div id="post-form-card" class="card animate__animated animate__rollIn">
+                    <div class="card-header">
+                        <h5>New Blog Post</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+
+                            {{-- Title --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" name="title"
+                                    class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}"
+                                    required>
+                                <div class="invalid-feedback">
+                                    @error('title')
+                                        {{ $message }}
+                                    @else
+                                        Please enter a title.
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
 
-                        {{-- Status --}}
-                        <div class="mb-3 col-md-6">
-                            <label for="status" class="form-label">Status</label>
-                            <select name="status" class="form-select @error('status') is-invalid @enderror" required>
-                                <option value="draft" @selected(old('status') == 'draft')>Draft</option>
-                                <option value="published" @selected(old('status') == 'published')>Published</option>
-                            </select>
-                            @error('status')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            {{-- Status --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="status" class="form-label">Status</label>
+                                <select name="status" class="form-select @error('status') is-invalid @enderror" required>
+                                    <option value="draft" @selected(old('status') == 'draft')>Draft</option>
+                                    <option value="published" @selected(old('status') == 'published')>Published</option>
+                                </select>
+                                @error('status')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        {{-- Category --}}
-                        <div class="mb-3 col-md-6">
-                            <label for="category_id" class="form-label">Category</label>
-                            <select name="category_id" class="form-select @error('category_id') is-invalid @enderror">
-                                <option value="">Select category...</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            {{-- Category --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="category_id" class="form-label">Category</label>
+                                <select name="category_id" class="form-select @error('category_id') is-invalid @enderror">
+                                    <option value="">Select category...</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" @selected(old('category_id') == $category->id)>
+                                            {{ $category->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        {{-- Tags --}}
-                        <div class="mb-3 col-md-6">
-                            <label for="tags" class="form-label">Tags</label>
-                            <select name="tags[]" class="form-select" multiple>
-                                @foreach($tags as $tag)
-                                    <option value="{{ $tag->id }}" @selected(collect(old('tags'))->contains($tag->id))>
-                                        {{ $tag->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                            {{-- Tags --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="tags" class="form-label">Tags</label>
+                                <select name="tags[]" class="form-select" multiple>
+                                    @foreach ($tags as $tag)
+                                        <option value="{{ $tag->id }}" @selected(collect(old('tags'))->contains($tag->id))>
+                                            {{ $tag->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                        {{-- Featured Image Upload --}}
-                        <div class="mb-3 col-md-12">
-                            <label for="featured_image" class="form-label">Featured Image</label>
-                            <input type="file" name="featured_image" class="form-control @error('featured_image') is-invalid @enderror" accept="image/*">
-                            @error('featured_image')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            {{-- Featured Image Upload --}}
+                            <div class="mb-3 col-md-12">
+                                <label for="featured_image" class="form-label">Featured Image</label>
+                                <input type="file" name="featured_image"
+                                    class="form-control @error('featured_image') is-invalid @enderror" accept="image/*">
+                                @error('featured_image')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        {{-- Excerpt --}}
-                        <div class="mb-3 col-md-12">
-                            <label for="excerpt" class="form-label">Excerpt</label>
-                            <textarea name="excerpt" rows="3" class="form-control @error('excerpt') is-invalid @enderror">{{ old('excerpt') }}</textarea>
-                            @error('excerpt')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            {{-- Excerpt --}}
+                            <div class="mb-3 col-md-12">
+                                <label for="excerpt" class="form-label">Excerpt</label>
+                                <textarea name="excerpt" rows="3" class="form-control @error('excerpt') is-invalid @enderror">{{ old('excerpt') }}</textarea>
+                                @error('excerpt')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                        {{-- Content --}}
-                        <div class="mb-3 col-md-12">
-                            <label for="content" class="form-label">Content</label>
-                            <textarea name="content" rows="6" class="form-control @error('content') is-invalid @enderror" required>{{ old('content') }}</textarea>
-                            @error('content')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            <div class="mb-3 col-md-12">
+                                <label for="quote" class="form-label">Quote</label>
+                                <textarea name="quote" rows="3" class="form-control @error('quote') is-invalid @enderror">{{ old('quote') }}</textarea>
+                                @error('quote')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
 
+
+                            {{-- Content with Quill --}}
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Content</label>
+                                <div id="quill-editor" style="height: 400px;">{!! old('content') !!}</div>
+                                @error('content')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+
+                                <input type="hidden" name="content" id="content-hidden">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-end">
+                        <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary"
+                            onclick="rollOutCard(event, this, 'post-form-card')">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Publish Post</button>
                     </div>
                 </div>
-
-                <div class="card-footer text-end">
-                    <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary"
-                       onclick="rollOutCard(event, this, 'post-form-card')">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Publish Post</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 @endsection
 
 @section('scripts')
-<script>
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            const forms = document.getElementsByClassName('needs-validation');
-            Array.prototype.forEach.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
+    <script src="{{ asset('build/js/plugins/quill.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
+        (function() {
+            var toolbarOptions = [
+                ['bold', 'italic', 'underline', 'strike'],
+                ['blockquote', 'code-block'],
+                [{
+                    'header': 1
+                }, {
+                    'header': 2
+                }],
+                [{
+                    'list': 'ordered'
+                }, {
+                    'list': 'bullet'
+                }],
+                [{
+                    'script': 'sub'
+                }, {
+                    'script': 'super'
+                }],
+                [{
+                    'indent': '-1'
+                }, {
+                    'indent': '+1'
+                }],
+                [{
+                    'direction': 'rtl'
+                }],
+                [{
+                    'size': ['small', false, 'large', 'huge']
+                }],
+                [{
+                    'header': [1, 2, 3, 4, 5, 6, false]
+                }],
+                [{
+                    'color': []
+                }, {
+                    'background': []
+                }],
+                [{
+                    'font': []
+                }],
+                [{
+                    'align': []
+                }],
+                ['clean'],
+                ['link', 'image', 'video']
+            ];
 
-    function rollOutCard(event, link, cardId = 'post-form-card') {
-        event.preventDefault();
-        const card = document.getElementById(cardId);
-        if (!card) return;
-        card.classList.remove('animate__rollIn');
-        card.classList.add('animate__animated', 'animate__rollOut');
-        setTimeout(() => {
-            window.location.href = link.href;
-        }, 1000);
-    }
-</script>
+            var quill = new Quill('#quill-editor', {
+                theme: 'snow',
+                modules: {
+                    toolbar: {
+                        container: toolbarOptions,
+                        handlers: {
+                            image: imageHandler
+                        }
+                    }
+                }
+            });
+
+            function imageHandler() {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.click();
+
+                input.onchange = function() {
+                    var file = input.files[0];
+                    if (!file) return;
+
+                    var formData = new FormData();
+                    formData.append('image', file);
+                    formData.append('_token', '{{ csrf_token() }}');
+
+                    fetch('{{ route('admin.posts.upload-image') }}', {
+                            method: 'POST',
+                            body: formData,
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.success && result.url) {
+                                var range = quill.getSelection(true);
+                                quill.insertEmbed(range.index, 'image', result.url);
+                            } else {
+                                alert('Image upload failed');
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            alert('Upload error.');
+                        });
+                };
+            }
+
+            document.querySelector('.needs-validation').addEventListener('submit', function(e) {
+                var html = quill.root.innerHTML;
+                document.getElementById('content-hidden').value = html;
+            });
+
+            window.addEventListener('load', function() {
+                const forms = document.getElementsByClassName('needs-validation');
+                Array.prototype.forEach.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            });
+
+        })();
+
+        function rollOutCard(event, link, cardId = 'post-form-card') {
+            event.preventDefault();
+            const card = document.getElementById(cardId);
+            if (!card) return;
+            card.classList.remove('animate__rollIn');
+            card.classList.add('animate__animated', 'animate__rollOut');
+            setTimeout(() => {
+                window.location.href = link.href;
+            }, 1000);
+        }
+    </script>
 @endsection

@@ -28,6 +28,24 @@ class FrontTourController extends Controller
             'Multi-day'
         ];
 
+        // New: resolve location_slug → id
+        $locationId = null;
+        if ($request->filled('location_slug')) {
+            $location = Location::where('slug', $request->location_slug)->first();
+            if ($location) {
+                $locationId = $location->id;
+            }
+        }
+
+        // New: resolve tour_category_slug → id
+        $tourCategoryId = null;
+        if ($request->filled('tour_category_slug')) {
+            $category = TourCategory::where('slug', $request->tour_category_slug)->first();
+            if ($category) {
+                $tourCategoryId = $category->id;
+            }
+        }
+
         $selectedCategories = $request->input('categories', []);
         $selectedDurations = $request->input('duration', []);
         $selectedPriceRange = $request->input('price', [$minPrice, $maxPrice]);
@@ -37,8 +55,23 @@ class FrontTourController extends Controller
         $sortBy = $request->input('sort_by', 'featured');
 
         $tours = Tour::with(['category', 'location'])
+            ->when($request->filled('type'), function ($query) use ($request) {
+                $query->where('type', $request->type);
+            })
             ->when(!empty($selectedCategories), function ($query) use ($selectedCategories) {
                 $query->whereIn('category_id', $selectedCategories);
+            })
+            ->when($locationId, function ($query) use ($locationId) {
+                $query->where('location_id', $locationId);
+            })
+            ->when($tourCategoryId, function ($query) use ($tourCategoryId) {
+                $query->where('category_id', $tourCategoryId);
+            })
+            ->when($request->filled('group_size_min'), function ($query) use ($request) {
+                $query->where('group_size', '>=', $request->group_size_min);
+            })
+            ->when($request->filled('group_size_max'), function ($query) use ($request) {
+                $query->where('group_size', '<=', $request->group_size_max);
             })
             ->when(!empty($selectedDurations), function ($query) use ($selectedDurations) {
                 $query->whereIn('duration', $selectedDurations);
@@ -77,7 +110,7 @@ class FrontTourController extends Controller
                 break;
         }
 
-        $tours = $tours->paginate(10);
+        $tours = $tours->paginate(5);
 
         $tourIds = $tours->pluck('id');
 
@@ -100,13 +133,12 @@ class FrontTourController extends Controller
             $tour->reviews_count = $reviewCounts[$tour->id] ?? 0;
         }
 
-        // ✅ Filter by avg_rating after loading
         if (!empty($selectedRatings)) {
             $filtered = $tours->filter(function ($tour) use ($selectedRatings) {
                 return in_array(round($tour->avg_rating), $selectedRatings);
             })->values();
 
-            $tours = new LengthAwarePaginator(
+            $tours = new \Illuminate\Pagination\LengthAwarePaginator(
                 $filtered,
                 $filtered->count(),
                 $tours->perPage(),
@@ -130,10 +162,12 @@ class FrontTourController extends Controller
 
     public function show($slug)
     {
-        $tour = Tour::withCount(['reviews'])
-            ->with(['location', 'category'])
+        $tour = Tour::with(['location', 'category', 'media'])
+            ->withCount('reviews')
             ->where('slug', $slug)
             ->firstOrFail();
+        $gallery = $tour->getMedia('gallery');
+
 
         // Calculate average rating for this tour
         $avgRating = Review::where('reviewable_type', Tour::class)
@@ -150,6 +184,20 @@ class FrontTourController extends Controller
             ->where('id', '<>', $tour->id)
             ->take(8)
             ->get();
+
+        $similarTourIds = $similarTours->pluck('id');
+
+        $avgRatings = \App\Models\Review::query()
+            ->selectRaw('reviewable_id, AVG(rating) as avg_rating')
+            ->where('reviewable_type', \App\Models\Tour::class)
+            ->whereIn('reviewable_id', $similarTourIds)
+            ->groupBy('reviewable_id')
+            ->pluck('avg_rating', 'reviewable_id');
+
+        foreach ($similarTours as $tour) {
+            $tour->avg_rating = $avgRatings[$tour->id] ?? 0.0;
+        }
+
 
         $similarToursCount = $similarTours->count();
 
@@ -195,6 +243,7 @@ class FrontTourController extends Controller
 
         return view('front.tours.tours-details', compact(
             'tour',
+            'gallery',
             'similarTours',
             'similarToursCount',
             'overallRatings',
@@ -241,7 +290,10 @@ class FrontTourController extends Controller
 
         // Save reservation logic (to be implemented)
 
-        return back()->with('success', 'Your reservation was submitted!');
+        return back()->with('success', [
+            'message' => 'Your reservation was submitted!',
+            'context' => 'reservation',
+        ]);
     }
 
     public function leaveReview(Request $request, $slug)
@@ -301,6 +353,9 @@ class FrontTourController extends Controller
 
         return redirect()
             ->route('front.tours.show', $tour->slug)
-            ->with('success', 'Your review has been submitted!');
+            ->with('success', [
+                'message' => 'Your review has been submitted!',
+                'context' => 'review',
+            ]);
     }
 }

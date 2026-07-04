@@ -1,9 +1,9 @@
 /**
 =========================================================================
 =========================================================================
-Template Name: Light Able - Bootstrap Admin Template
-Author: CodeSommet
-Support: https://CodeSommet.authordesk.app
+Template Name: Code Sommet - Bootstrap Admin Template
+Author: Phoenixcoded
+Support: https://phoenixcoded.authordesk.app
 File: script.js
 Description:  this file will contains code for handling Buynow link.
 =========================================================================
