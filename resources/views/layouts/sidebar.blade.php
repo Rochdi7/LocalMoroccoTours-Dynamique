@@ -2,10 +2,10 @@
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
         <div class="m-header">
-            <a href="//index" class="b-brand text-primary">
+            <a href="{{ route('admin.dashboard') }}" class="b-brand text-primary">
                 <!-- ========   Change your logo from here   ============ -->
-                <img src="{{ asset('assets/images/logo/LocalMoroccoTours_bg.png') }}
-" alt="logo image" class="logo-lg">
+                <img src="{{ asset('assets/images/logo/' . (env('APP_DARK_LAYOUT') == 'true' ? 'ama_logo_white.png' : 'ama_logo_dark.png')) }}"
+                    alt="logo image" class="logo-lg" style="height:36px;width:auto;max-width:180px;object-fit:contain;">
                 <span class="badge bg-brand-color-2 rounded-pill ms-1 theme-version">v1.2.0</span>
             </a>
         </div>
@@ -17,7 +17,7 @@
                 <div class="card-body" style="background-image: url('/build/images/layout/nav-card-bg.svg')">
                     <h5 class="text-dark">Help Center</h5>
                     <p class="text-dark text-opacity-75">Please contact us for more questions.</p>
-                    <a href="https://CodeSommet.support-hub.io/" class="btn btn-primary" target="_blank">Go to help
+                    <a href="https://codesommet.com/" class="btn btn-primary" target="_blank">Go to help
                         Center</a>
                 </div>
             </div>
@@ -27,9 +27,13 @@
                 <div class="d-flex align-items-center">
                     @php
                         $auth = auth()->user();
-                        $profilePhoto = $auth && $auth->photo && file_exists(public_path('storage/' . $auth->photo))
-                            ? asset('storage/' . $auth->photo)
-                            : asset('build/images/user/avatar-1.jpg');
+                        $profilePhoto =
+                            $auth && $auth->photo && file_exists(public_path('storage/' . $auth->photo))
+                                ? asset('storage/' . $auth->photo)
+                                : 'data:image/svg+xml,' .
+                                    rawurlencode(
+                                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#e9ecef"/><circle cx="50" cy="38" r="18" fill="#adb5bd"/><path d="M50 62c-22 0-34 12-34 26v6h68v-6c0-14-12-26-34-26z" fill="#adb5bd"/></svg>',
+                                    );
                     @endphp
 
                     <div class="flex-shrink-0">
@@ -67,7 +71,8 @@
                                     </li>
 
 
-                                    <li><a class="pc-user-links" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <li><a class="pc-user-links" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();">
                                             <i class="ph-duotone ph-power"></i>
                                             <span>Logout</span>

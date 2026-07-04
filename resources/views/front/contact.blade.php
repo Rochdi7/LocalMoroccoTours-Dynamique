@@ -162,6 +162,44 @@
                                     </div>
                                 </div>
                             @endif
+
+                            @push('scripts')
+                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                                <script>
+                                    @if (session('success'))
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Message Sent!',
+                                            text: @json(session('success')),
+                                            confirmButtonColor: '#3085d6',
+                                        });
+                                    @endif
+
+                                    @if (session('error'))
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Something went wrong!',
+                                            text: @json(session('error')),
+                                            confirmButtonColor: '#d33',
+                                        });
+                                    @endif
+
+                                    @if ($errors->any())
+                                        Swal.fire({
+                                            toast: true,
+                                            position: 'top-end',
+                                            icon: 'warning',
+                                            title: 'Please fix the following:',
+                                            html: @json($errors->all())
+                                                .map(msg => `&bull; ${msg}`)
+                                                .join('<br>'),
+                                            showConfirmButton: false,
+                                            timer: 6000,
+                                            timerProgressBar: true,
+                                        });
+                                    @endif
+                                </script>
+                            @endpush
                         </div>
                     </form>
                 </div>

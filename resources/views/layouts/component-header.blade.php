@@ -2,8 +2,7 @@
 <nav class="navbar navbar-expand-md navbar-light default">
     <div class="container">
         <a class="navbar-brand " href="{{ url('index') }}">
-            <img src="{{ asset('assets/images/logo/LocalMoroccoTours_bg.png') }}
-" alt="logo"
+            <img src="{{ asset('assets/images/logo/ama_logo_dark.png') }}" alt="logo"
                 class="logo-lg landing-logo" />
         </a>
         <button class="navbar-toggler rounded" type="button" data-bs-toggle="collapse"

@@ -194,8 +194,8 @@ class FrontTourController extends Controller
             ->groupBy('reviewable_id')
             ->pluck('avg_rating', 'reviewable_id');
 
-        foreach ($similarTours as $tour) {
-            $tour->avg_rating = $avgRatings[$tour->id] ?? 0.0;
+        foreach ($similarTours as $similarTour) {
+            $similarTour->avg_rating = $avgRatings[$similarTour->id] ?? 0.0;
         }
 
 

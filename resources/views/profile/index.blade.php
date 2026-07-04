@@ -41,10 +41,6 @@
       </form>
       </p>
       </div>
-      <div class="flex-shrink-0">
-      <img src="{{ URL::asset('build/images/application/img-accout-alert.png') }}" alt="img"
-        class="img-fluid wid-80" />
-      </div>
       </div>
       </div>
     </div>
@@ -56,9 +52,12 @@
         <div class="card-body position-relative">
         <div class="text-center mt-3">
           <div class="chat-avtar d-inline-flex mx-auto">
-          <img class="rounded-circle img-fluid wid-90 img-thumbnail" src="{{ $user->photo && file_exists(public_path('storage/' . $user->photo))
-    ? asset('storage/' . $user->photo)
-    : asset('build/images/user/avatar-1.jpg') }}" alt="User image" />
+          @php
+            $profilePhoto = $user->photo && file_exists(public_path('storage/' . $user->photo))
+              ? asset('storage/' . $user->photo)
+              : 'data:image/svg+xml,' . rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#e9ecef"/><circle cx="50" cy="38" r="18" fill="#adb5bd"/><path d="M50 62c-22 0-34 12-34 26v6h68v-6c0-14-12-26-34-26z" fill="#adb5bd"/></svg>');
+          @endphp
+          <img class="rounded-circle img-fluid wid-90 img-thumbnail" src="{{ $profilePhoto }}" alt="User image" />
 
           <i class="chat-badge bg-success me-2 mb-2"></i>
           </div>
@@ -128,10 +127,6 @@
               <u>Update your password now</u>
             </a>
 
-            </div>
-            <div class="flex-shrink-0">
-            <img src="{{ URL::asset('build/images/application/img-accout-password-alert.png') }}"
-              alt="Password Alert" class="img-fluid wid-80" />
             </div>
           </div>
           </div>

@@ -13,7 +13,9 @@
     <meta name="author" content="CodeSommet" />
 
     <!-- [Favicon] icon -->
-    <link rel="icon" href="{{ URL::asset('build/images/favicon.svg') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon/favicon.ico') }}" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon/favicon.svg') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
 
     @yield('css')
 

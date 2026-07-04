@@ -12,15 +12,20 @@
         <meta name="author" content="CodeSommet" />
 
         <!-- [Favicon] icon -->
-        <link rel="icon" href="{{ URL::asset('build/images/favicon.svg') }}" type="image/x-icon">
+        <link rel="icon" href="{{ asset('assets/images/favicon/favicon.ico') }}" sizes="any">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon/favicon.svg') }}">
+        <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
 
         @yield('css')
 
         @include('layouts.head-css')
     </head>
 
-    <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr"
-        data-pc-theme="light">
+    <body data-pc-preset="{{ env('APP_PRESET_THEME', 'preset-1') }}"
+        data-pc-sidebar-theme="{{ env('APP_DARK_NAVBAR') == 'true' ? 'dark' : 'light' }}"
+        data-pc-sidebar-caption="{{ env('APP_CAPTION_SHOW', 'true') }}"
+        data-pc-direction="{{ env('APP_RTL_LAYOUT') == 'true' ? 'rtl' : 'ltr' }}"
+        data-pc-theme="{{ env('APP_DARK_LAYOUT') == 'true' ? 'dark' : 'light' }}">
 
         @include('layouts.loader')
         @include('layouts.sidebar')

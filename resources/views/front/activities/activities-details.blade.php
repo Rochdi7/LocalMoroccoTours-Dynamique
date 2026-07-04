@@ -338,19 +338,9 @@
                      @if (!empty($activity->map_frame))
                          <h2 class="text-30 mt-60 mb-30">Activity Map</h2>
                          <div class="mapTourSingle">
-                             <div class="map__content rounded-12 js-map-tour" style="height: 600px;">
-                                 {!! $activity->map_frame !!}
-                             </div>
+                             <x-map-embed :frame="$activity->map_frame" />
                          </div>
                      @endif
-
-                     <style>
-                         .mapTourSingle iframe {
-                             width: 100%;
-                             height: 100%;
-                             border: 0;
-                         }
-                     </style>
 
 
                      <div class="line mt-60 mb-60"></div>
@@ -593,9 +583,24 @@
                                      confirmButtonColor: '#d33',
                                  });
                              @endif
+
+                             @if ($errors->any())
+                                 Swal.fire({
+                                     toast: true,
+                                     position: 'top-end',
+                                     icon: 'warning',
+                                     title: 'Please fix the following:',
+                                     html: @json($errors->all())
+                                         .map(msg => `&bull; ${msg}`)
+                                         .join('<br>'),
+                                     showConfirmButton: false,
+                                     timer: 6000,
+                                     timerProgressBar: true,
+                                 });
+                             @endif
                          </script>
 
-                         {{-- Validation Errors --}}
+                         {{-- Validation Errors (stay inline for accessibility) --}}
                          @if ($errors->any())
                              <div class="alert alert-danger mt-20">
                                  <ul class="mb-0">
@@ -646,6 +651,7 @@
                                  <div class="col-md-6">
                                      <div class="form-input">
                                          <input type="date" name="arrival_date" required
+                                             min="{{ now()->format('Y-m-d') }}"
                                              value="{{ old('arrival_date') }}">
                                          <label class="lh-1 text-16 text-light-1">Preferred Arrival Date *</label>
                                      </div>
@@ -654,6 +660,7 @@
                                  <div class="col-md-6">
                                      <div class="form-input">
                                          <input type="date" name="departure_date" required
+                                             min="{{ now()->format('Y-m-d') }}"
                                              value="{{ old('departure_date') }}">
                                          <label class="lh-1 text-16 text-light-1">Departure Date *</label>
                                      </div>
@@ -855,6 +862,35 @@
                          </div>
                      @endif
 
+                     @if ($errors->any())
+                         <div class="alert alert-danger mt-30"
+                             style="
+            background-color: #f8d7da;
+            color: #842029;
+            padding: 15px;
+            border-radius: 5px;">
+                             <ul class="mb-0">
+                                 @foreach ($errors->all() as $error)
+                                     <li>{{ $error }}</li>
+                                 @endforeach
+                             </ul>
+                         </div>
+                         <script>
+                             Swal.fire({
+                                 toast: true,
+                                 position: 'top-end',
+                                 icon: 'warning',
+                                 title: 'Please fix the following:',
+                                 html: @json($errors->all())
+                                     .map(msg => `&bull; ${msg}`)
+                                     .join('<br>'),
+                                 showConfirmButton: false,
+                                 timer: 6000,
+                                 timerProgressBar: true,
+                             });
+                         </script>
+                     @endif
+
 
                      <h2 class="text-30 pt-60">Leave a Reply</h2>
                      <p class="mt-30">Your email address will not be published. Required fields are marked *</p>
@@ -866,12 +902,11 @@
                              @csrf
 
                              {{-- ✅ REVIEWS GRID MOVED INSIDE THE FORM --}}
-                             <div class="reviewsGrid pt-30 d-flex flex-wrap gap-30">
+                             <div class="ratingForm pt-30">
                                  @foreach ($overallRatings as $rating)
-                                     <label class="reviewsGrid__item d-flex flex-column cursor-pointer"
-                                         style="min-width: 150px; user-select:none;">
-
-                                         <div class="d-flex items-center">
+                                     <div class="ratingForm__row">
+                                         <label class="ratingForm__label"
+                                             for="cat_{{ Str::slug($rating['label']) }}">
                                              {{-- Category Checkbox --}}
                                              <div class="form-checkbox">
                                                  <input type="checkbox" name="categories[]"
@@ -890,12 +925,11 @@
                                                  </div>
                                              </div>
 
-                                             <span class="text-16 fw-500 ml-10"
-                                                 for="cat_{{ Str::slug($rating['label']) }}">{{ $rating['label'] }}</span>
-                                         </div>
+                                             <span class="text-16 fw-500 ml-10">{{ $rating['label'] }}</span>
+                                         </label>
 
                                          {{-- Interactive Stars for this category --}}
-                                         <div class="d-flex x-gap-5 pl-20 mt-10">
+                                         <div class="ratingForm__stars">
                                              @for ($i = 5; $i >= 1; $i--)
                                                  <input type="radio"
                                                      id="star_{{ Str::slug($rating['label']) }}_{{ $i }}"
@@ -908,11 +942,54 @@
                                                  </label>
                                              @endfor
                                          </div>
-                                     </label>
+                                     </div>
                                  @endforeach
                              </div>
 
                              <style>
+                                 .ratingForm__row {
+                                     display: flex;
+                                     align-items: center;
+                                     justify-content: space-between;
+                                     flex-wrap: wrap;
+                                     gap: 10px 20px;
+                                     padding: 16px 0;
+                                     border-bottom: 1px solid var(--color-border, #E7E6E6);
+                                 }
+
+                                 .ratingForm__row:first-child {
+                                     padding-top: 0;
+                                 }
+
+                                 .ratingForm__row:last-child {
+                                     border-bottom: none;
+                                 }
+
+                                 .ratingForm__label {
+                                     display: flex;
+                                     align-items: center;
+                                     cursor: pointer;
+                                     user-select: none;
+                                     margin: 0;
+                                 }
+
+                                 .ratingForm__stars {
+                                     display: flex;
+                                     align-items: center;
+                                     gap: 5px;
+                                 }
+
+                                 @media (max-width: 575px) {
+                                     .ratingForm__row {
+                                         justify-content: flex-start;
+                                     }
+
+                                     .ratingForm__stars {
+                                         width: 100%;
+                                         padding-left: 30px;
+                                     }
+                                 }
+
                                  label[for^="star_"] i {
                                      color: #ccc;
                                      transition: color 0.3s;
@@ -990,7 +1067,7 @@
                                      </div>
 
                                      <div class="row x-gap-20 y-gap-20 mt-20 js-image-preview"></div>
-                                     <div class="text-14 mt-20">PNG or JPG no bigger than 800px wide and tall.</div>
+                                     <div class="text-14 mt-20">PNG or JPG, max 2MB per image.</div>
                                  </div>
                              </div>
 
@@ -1012,15 +1089,25 @@
                          const fileInput = document.querySelector('.js-image-upload');
                          const previewContainer = document.querySelector('.js-image-preview');
 
+                         const MAX_IMAGE_SIZE_MB = 2;
+
                          if (fileInput) {
                              fileInput.addEventListener('change', function(e) {
                                  previewContainer.innerHTML = ''; // Clear old previews
 
+                                 const oversized = [];
+
                                  Array.from(e.target.files).forEach(file => {
-                                     if (file.type.startsWith('image/')) {
-                                         const reader = new FileReader();
-                                         reader.onload = function(e) {
-                                             const imgHtml = `
+                                     if (!file.type.startsWith('image/')) return;
+
+                                     if (file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024) {
+                                         oversized.push(file.name);
+                                         return;
+                                     }
+
+                                     const reader = new FileReader();
+                                     reader.onload = function(e) {
+                                         const imgHtml = `
                                 <div class="col-auto">
                                     <div class="relative">
                                         <img src="${e.target.result}" class="size-200 rounded-12 object-cover" alt="">
@@ -1030,11 +1117,23 @@
                                     </div>
                                 </div>
                             `;
-                                             previewContainer.insertAdjacentHTML('beforeend', imgHtml);
-                                         };
-                                         reader.readAsDataURL(file);
-                                     }
+                                         previewContainer.insertAdjacentHTML('beforeend', imgHtml);
+                                     };
+                                     reader.readAsDataURL(file);
                                  });
+
+                                 if (oversized.length && typeof Swal !== 'undefined') {
+                                     Swal.fire({
+                                         toast: true,
+                                         position: 'top-end',
+                                         icon: 'warning',
+                                         title: `Skipped ${oversized.length} image(s) over ${MAX_IMAGE_SIZE_MB}MB`,
+                                         text: oversized.join(', '),
+                                         showConfirmButton: false,
+                                         timer: 6000,
+                                         timerProgressBar: true,
+                                     });
+                                 }
                              });
 
                              // Optional: remove image from preview

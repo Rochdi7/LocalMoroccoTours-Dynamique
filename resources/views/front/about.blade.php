@@ -69,7 +69,7 @@
         </div>
     </section>
 
-    <section data-anim="slide-up" class="layout-pt-xl">
+    <section data-anim="slide-up" class="layout-pt-xl layout-pb-xl">
         <div class="video relative container">
             <div class="video__bg">
                 <figure class="figure-no-margin">
@@ -108,7 +108,7 @@
         </div>
     </section>
 
-    <section class="layout-pt-xl" style="margin-top: 270px;">
+    <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row">
                 <div class="col-auto">
@@ -220,19 +220,19 @@
 
                             <div class="featuresGrid__item px-40 py-40 text-center bg-white rounded-12">
                                 <img src="{{ asset('assets/img/icons/2/1.svg') }}" alt="Map icon">
-                                <div class="text-40 fw-700 color-accent-2 mt-20 lh-14">240</div>
+                                <div class="text-40 fw-700 color-accent-2 mt-20 lh-14">12</div>
                                 <div>Total Destinations</div>
                             </div>
 
                             <div class="featuresGrid__item px-40 py-40 text-center bg-white rounded-12">
                                 <img src="{{ asset('assets/img/icons/2/2.svg') }}" alt="Hot air balloon icon">
-                                <div class="text-40 fw-700 color-accent-2 mt-20 lh-14">3672</div>
+                                <div class="text-40 fw-700 color-accent-2 mt-20 lh-14">45</div>
                                 <div>Amazing Tours</div>
                             </div>
 
                             <div class="featuresGrid__item px-40 py-40 text-center bg-white rounded-12">
                                 <img src="{{ asset('assets/img/icons/2/3.svg') }}" alt="Smiling face icon">
-                                <div class="text-40 fw-700 color-accent-2 mt-20 lh-14">92,842</div>
+                                <div class="text-40 fw-700 color-accent-2 mt-20 lh-14">350</div>
                                 <div>Happy Customers</div>
                             </div>
 
@@ -460,6 +460,37 @@
                                     @endforeach
                                 </ul>
                             </div>
+                        @endif
+
+                        @if (session('success') || $errors->any())
+                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    @if (session('success'))
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Subscribed!',
+                                            text: @json(session('success')),
+                                            confirmButtonColor: '#3085d6',
+                                        });
+                                    @endif
+
+                                    @if ($errors->any())
+                                        Swal.fire({
+                                            toast: true,
+                                            position: 'top-end',
+                                            icon: 'warning',
+                                            title: 'Please fix the following:',
+                                            html: @json($errors->all())
+                                                .map(msg => `&bull; ${msg}`)
+                                                .join('<br>'),
+                                            showConfirmButton: false,
+                                            timer: 6000,
+                                            timerProgressBar: true,
+                                        });
+                                    @endif
+                                });
+                            </script>
                         @endif
 
                         <form action="{{ route('newsletter.subscribe') }}" method="POST">

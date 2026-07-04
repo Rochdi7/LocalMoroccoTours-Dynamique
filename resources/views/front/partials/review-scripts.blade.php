@@ -32,9 +32,21 @@
             }
         }
 
+        function notify(message, icon = 'info') {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: icon,
+                title: message,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        }
+
         function sendVote(url, btn, countClass, reviewId, type) {
             if (hasVotedEither(reviewId)) {
-                alert('You have already voted on this review.');
+                notify('You have already voted on this review.', 'info');
                 return;
             }
 
@@ -64,11 +76,11 @@
                     setVoted(reviewId, type);
                     disableOppositeVote(reviewId, type);
                 } else {
-                    alert(data.message || "Vote failed.");
+                    notify(data.message || 'Vote failed.', 'warning');
                 }
             })
             .catch(error => {
-                alert(error.message || 'Error voting.');
+                notify(error.message || 'Error voting.', 'error');
                 console.error(error);
             });
         }
@@ -80,7 +92,7 @@
             btn.addEventListener('click', e => {
                 e.preventDefault();
                 if (btn.classList.contains('disabled')) {
-                    alert('You already voted not helpful for this review.');
+                    notify('You already voted not helpful for this review.', 'info');
                     return;
                 }
                 sendVote(`/review/${reviewId}/helpful`, btn, 'helpful_count', reviewId, 'helpful');
@@ -94,7 +106,7 @@
             btn.addEventListener('click', e => {
                 e.preventDefault();
                 if (btn.classList.contains('disabled')) {
-                    alert('You already voted helpful for this review.');
+                    notify('You already voted helpful for this review.', 'info');
                     return;
                 }
                 sendVote(`/review/${reviewId}/not-helpful`, btn, 'not_helpful_count', reviewId, 'notHelpful');

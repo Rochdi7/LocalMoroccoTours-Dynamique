@@ -1,6 +1,6 @@
 {{-- Dashboard --}}
 <li class="pc-item">
-  <a href="/index" class="pc-link">
+  <a href="{{ route('admin.dashboard') }}" class="pc-link">
     <span class="pc-micon"><i class="ph-duotone ph-gauge"></i></span>
     <span class="pc-mtext" data-i18n="Dashboard">Dashboard</span>
   </a>
@@ -112,7 +112,7 @@
 {{-- Special Offers --}}
 <li class="pc-item">
   <a href="{{ route('admin.special-offers.index') }}" class="pc-link">
-    <span class="pc-micon"><i class="ph-duotone ph-discount"></i></span>
+    <span class="pc-micon"><i class="ph-duotone ph-percent"></i></span>
     <span class="pc-mtext">Special Offers</span>
   </a>
 </li>

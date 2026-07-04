@@ -7,7 +7,7 @@
         <div class="card my-5">
             <div class="card-body">
                 <div class="text-center">
-                    <img src="{{ asset('assets/images/logo/LocalMoroccoTours_bg.png') }}" alt="Authentic Morocco Adventures" class="img-fluid mb-3">
+                    <img src="{{ asset('assets/images/logo/ama_logo_dark.png') }}" alt="Authentic Morocco Adventures" class="img-fluid mb-3">
 
                     <h4 class="f-w-500 mb-1">Login with your email</h4>
                     

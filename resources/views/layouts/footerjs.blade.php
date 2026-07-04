@@ -10,7 +10,25 @@
 <script src="{{ URL::asset('build/js/multi-lang.js') }}"></script>
 <script src="{{ URL::asset('build/js/plugins/feather.min.js') }}"></script>
 
-@if (env('APP_DARK_LAYOUT') == 'default')
+@php
+    // env() auto-casts the strings "true"/"false" to real booleans, so normalize
+    // everything back to plain 'true'/'false' strings before comparing below.
+    $normalizeBool = function ($value, $default) {
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+        return $value === null || $value === '' ? $default : (string) $value;
+    };
+
+    $darkLayout = $normalizeBool(env('APP_DARK_LAYOUT'), 'false');
+    $darkNavbar = $normalizeBool(env('APP_DARK_NAVBAR'), 'false');
+    $boxContainer = $normalizeBool(env('APP_BOX_CONTAINER'), 'false');
+    $captionShow = $normalizeBool(env('APP_CAPTION_SHOW'), 'true');
+    $rtlLayout = $normalizeBool(env('APP_RTL_LAYOUT'), 'false');
+    $presetTheme = $normalizeBool(env('APP_PRESET_THEME'), '');
+@endphp
+
+@if ($darkLayout === 'default')
 <script>
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         dark_layout = 'true';
@@ -24,72 +42,59 @@
         layout_change('light');
     }
 </script>
-@endif
-
-@if (env('APP_DARK_LAYOUT') != 'default')
-    @if (env('APP_DARK_LAYOUT') == 'true')
-        <script>
-            layout_change('dark');
-        </script>
-    @endif
-    @if (env('APP_DARK_LAYOUT') == false)
-        <script>
-            layout_change('light');
-        </script>
-    @endif
-@endif
-
-
-@if (env('APP_DARK_NAVBAR') == 'true')
+@elseif ($darkLayout === 'true')
     <script>
-        layout_sidebar_change('dark');
+        layout_change('dark');
+    </script>
+@else
+    <script>
+        layout_change('light');
     </script>
 @endif
 
-@if (env('APP_DARK_NAVBAR') == false)
+
+@if ($darkNavbar === 'true')
+    <script>
+        layout_sidebar_change('dark');
+    </script>
+@else
     <script>
         layout_sidebar_change('light');
     </script>
 @endif
 
-@if (env('APP_BOX_CONTAINER') == false)
+@if ($boxContainer === 'true')
     <script>
         change_box_container('true');
     </script>
-@endif
-
-@if (env('APP_BOX_CONTAINER') == false)
+@else
     <script>
         change_box_container('false');
     </script>
 @endif
 
-@if (env('APP_CAPTION_SHOW') == 'true')
+@if ($captionShow === 'true')
     <script>
         layout_caption_change('true');
     </script>
-@endif
-
-@if (env('APP_CAPTION_SHOW') == false)
+@else
     <script>
         layout_caption_change('false');
     </script>
 @endif
 
-@if (env('APP_RTL_LAYOUT') == 'true')
+@if ($rtlLayout === 'true')
     <script>
         layout_rtl_change('true');
     </script>
-@endif
-
-@if (env('APP_RTL_LAYOUT') == false)
+@else
     <script>
         layout_rtl_change('false');
     </script>
 @endif
 
-@if (env('APP_PRESET_THEME') != '')
+@if ($presetTheme !== '')
     <script>
-        preset_change("{{env('APP_PRESET_THEME')}}");
+        preset_change("{{ $presetTheme }}");
     </script>
 @endif

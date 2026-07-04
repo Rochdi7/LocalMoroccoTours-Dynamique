@@ -141,10 +141,42 @@
 
                         <form class="footer__newsletter" action="{{ route('newsletter.subscribe') }}" method="POST">
                             @csrf
-                            <input type="email" name="email" placeholder="Your email address">
+                            <label for="footer2-email" class="visually-hidden">Email address</label>
+                            <input type="email" id="footer2-email" name="email" placeholder="Your email address" required>
                             <button type="submit">Send</button>
                         </form>
                     </div>
+
+                    @if (session('success') || $errors->any())
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                @if (session('success'))
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Subscribed!',
+                                        text: @json(session('success')),
+                                        confirmButtonColor: '#3085d6',
+                                    });
+                                @endif
+
+                                @if ($errors->any())
+                                    Swal.fire({
+                                        toast: true,
+                                        position: 'top-end',
+                                        icon: 'warning',
+                                        title: 'Please fix the following:',
+                                        html: @json($errors->all())
+                                            .map(msg => `&bull; ${msg}`)
+                                            .join('<br>'),
+                                        showConfirmButton: false,
+                                        timer: 6000,
+                                        timerProgressBar: true,
+                                    });
+                                @endif
+                            });
+                        </script>
+                    @endif
 
                 </div>
             </div>

@@ -104,8 +104,8 @@
   --color-black: #000000;
   --color-border: #D1D1D1;
 
-  --color-accent-1: #f39903;
-  --color-accent-1-dark: #c87d02;
+  --color-accent-1: #C49539;
+  --color-accent-1-dark: #97732C;
 
   --color-accent-2: #05073C;
 
@@ -13879,3 +13879,73 @@ button.gm-ui-hover-effect::after {
         .js-favorite-btn.is-favorited i {
             color: #ff4d4d;
         }
+
+/* Container gutters + featureIcon spacing (missing from theme build) */
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+.featureIcon {
+  padding-bottom: 10px;
+}
+
+.featureIcon__icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 60px;
+}
+
+.featureIcon__icon img {
+  max-height: 48px;
+  width: auto;
+}
+
+.featureIcon__title {
+  color: #16213e;
+}
+
+.featureIcon__text {
+  color: #6e7391;
+  line-height: 1.6;
+}
+
+@media (min-width: 992px) {
+  .featureIcon.-type-1 {
+    padding-right: 20px;
+  }
+}

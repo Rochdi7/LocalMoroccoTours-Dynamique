@@ -9,9 +9,9 @@
         <div class="header__left">
             <div class="header__logo">
                 <a href="{{ route('home') }}" class="header__logo">
-                    <img id="header-logo" src="/assets/images/logo/LocalMoroccoTours_bg.png"
-                        data-default="/assets/images/logo/LocalMoroccoTours_bg.png"
-                        data-white="/assets/images/logo/logo_white.png" alt="Authentic Morocco Adventures Logo">
+                    <img id="header-logo" src="/assets/images/logo/ama_logo_dark.png"
+                        data-default="/assets/images/logo/ama_logo_dark.png"
+                        data-white="/assets/images/logo/ama_logo_white.png" alt="Authentic Morocco Adventures Logo">
                 </a>
 
                 <div class="xl:d-none ml-30">
@@ -64,14 +64,21 @@
         </div>
 
         <div class="headerMobile__right">
-            <button class="d-flex">
-                <i class="icon-search text-18"></i>
-            </button>
-
-            <a href="{{ route('profile.index') }}" class="d-flex ml-20">
-                <i class="icon-person text-18"></i>
+            <a href="https://www.tripadvisor.com/Attractions-g293734-Activities-Marrakech_Marrakech_Safi.html"
+                target="_blank" class="tripadvisor-icon-mobile d-flex items-center">
+                <img src="/assets/images/icon/tripdavisor.svg" alt="Tripadvisor">
             </a>
         </div>
+
+        <style>
+            /* Responsive size for mobile devices */
+            @media (max-width: 768px) {
+                .tripadvisor-icon-mobile img {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        </style>
 
         <div class="header__right">
             <a href="https://www.tripadvisor.com/Attractions-g293734-Activities-Marrakech_Marrakech_Safi.html"
@@ -146,7 +153,7 @@
             <i class="icon-headphone text-50"></i>
             <div class="text-20 lh-12 fw-500 mt-20">
                 <div>Speak to our expert at</div>
-                <div class="text-accent-1">1-800-453-6744</div>
+                <div class="text-accent-1">+212 666-107312</div>
             </div>
             <div class="d-flex items-center x-gap-10 pt-30">
                 <div><a class="d-block"><i class="icon-facebook"></i></a></div>
@@ -208,6 +215,30 @@
     /* Force links in dropdown to stay black even in sticky header */
     .desktopNavSubnav a {
         color: #111 !important;
+    }
+
+    /* Logo sizing (image is a wide wordmark lockup, constrain by height) */
+    #header-logo {
+        height: 48px;
+        width: auto;
+        max-width: 220px;
+        object-fit: contain;
+    }
+
+    @media (max-width: 767px) {
+        #header-logo {
+            height: 36px;
+            max-width: 160px;
+        }
+    }
+
+    /* Keep nav labels on one line so the wider logo doesn't force a wrap */
+    .header .desktopNav__item>a {
+        white-space: nowrap;
+    }
+
+    .header .desktopNav>* {
+        padding: 8px 14px;
     }
 </style>
 

@@ -60,7 +60,7 @@
                             $user = Auth::user();
                             $avatar = $user->photo && file_exists(public_path('storage/' . $user->photo))
                                 ? asset('storage/' . $user->photo)
-                                : asset('build/images/user/avatar-1.jpg');
+                                : 'data:image/svg+xml,' . rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#e9ecef"/><circle cx="50" cy="38" r="18" fill="#adb5bd"/><path d="M50 62c-22 0-34 12-34 26v6h68v-6c0-14-12-26-34-26z" fill="#adb5bd"/></svg>');
                         @endphp
 
                         <img src="{{ $avatar }}" alt="{{ $user->name }}" class="user-avtar avtar avtar-s" />

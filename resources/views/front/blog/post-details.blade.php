@@ -371,6 +371,20 @@
                                 @endforeach
                             </ul>
                         </div>
+                        <script>
+                            Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Please fix the following:',
+                                html: @json($errors->all())
+                                    .map(msg => `&bull; ${msg}`)
+                                    .join('<br>'),
+                                showConfirmButton: false,
+                                timer: 6000,
+                                timerProgressBar: true,
+                            });
+                        </script>
                     @endif
 
 
@@ -439,7 +453,7 @@
                                         </div>
                                     </div>
                                     <div class="row x-gap-20 y-gap-20 mt-20 js-image-preview"></div>
-                                    <div class="text-14 mt-20">PNG or JPG no bigger than 800px wide and tall.</div>
+                                    <div class="text-14 mt-20">PNG or JPG, max 2MB per image.</div>
                                 </div>
                             </div>
 
@@ -459,15 +473,25 @@
                             const fileInput = document.querySelector('.js-image-upload');
                             const previewContainer = document.querySelector('.js-image-preview');
 
+                            const MAX_IMAGE_SIZE_MB = 2;
+
                             if (fileInput) {
                                 fileInput.addEventListener('change', function(e) {
                                     previewContainer.innerHTML = '';
 
+                                    const oversized = [];
+
                                     Array.from(e.target.files).forEach(file => {
-                                        if (file.type.startsWith('image/')) {
-                                            const reader = new FileReader();
-                                            reader.onload = function(e) {
-                                                const imgHtml = `
+                                        if (!file.type.startsWith('image/')) return;
+
+                                        if (file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024) {
+                                            oversized.push(file.name);
+                                            return;
+                                        }
+
+                                        const reader = new FileReader();
+                                        reader.onload = function(e) {
+                                            const imgHtml = `
                                 <div class="col-auto">
                                     <div class="relative">
                                         <img src="${e.target.result}" class="size-200 rounded-12 object-cover" alt="">
@@ -477,11 +501,23 @@
                                     </div>
                                 </div>
                             `;
-                                                previewContainer.insertAdjacentHTML('beforeend', imgHtml);
-                                            };
-                                            reader.readAsDataURL(file);
-                                        }
+                                            previewContainer.insertAdjacentHTML('beforeend', imgHtml);
+                                        };
+                                        reader.readAsDataURL(file);
                                     });
+
+                                    if (oversized.length && typeof Swal !== 'undefined') {
+                                        Swal.fire({
+                                            toast: true,
+                                            position: 'top-end',
+                                            icon: 'warning',
+                                            title: `Skipped ${oversized.length} image(s) over ${MAX_IMAGE_SIZE_MB}MB`,
+                                            text: oversized.join(', '),
+                                            showConfirmButton: false,
+                                            timer: 6000,
+                                            timerProgressBar: true,
+                                        });
+                                    }
                                 });
 
                                 previewContainer?.addEventListener('click', function(e) {

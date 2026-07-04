@@ -11,7 +11,9 @@
     <meta name="description"
         content="Code Sommet admin and dashboard template offer a variety of UI elements and pages, ensuring your admin panel is both fast and effective." />
     <meta name="author" content="CodeSommet" />
-    <link rel="icon" href="{{ URL::asset('build/images/favicon.svg') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon/favicon.ico') }}" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon/favicon.svg') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
     @yield('css')
     @include('layouts.head-css')
 </head>

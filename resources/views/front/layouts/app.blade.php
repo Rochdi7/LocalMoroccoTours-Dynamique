@@ -9,19 +9,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    {{-- Fonts with font-display swap --}}
+    {{-- Fonts with font-display swap (display=swap already set in the Google Fonts URL) --}}
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
-    {{-- Preload critical CSS --}}
-    <link rel="preload" href="{{ asset('assets/css/vendors.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="{{ asset('assets/css/main.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ asset('assets/css/vendors.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/main.min.css') }}">
-    </noscript>
+    {{-- Critical layout CSS: loaded render-blocking, on purpose, so the page never paints unstyled --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/vendors.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.min.css') }}">
 
     {{-- SEO meta tags for homepage --}}
     @if (Request::is('/'))
@@ -66,7 +62,11 @@
               content="https://www.authenticmoroccoadventures.com/assets/images/home/marrakech-souk-moroccan-brass-lanterns-market.webp">
 
         {{-- Favicon --}}
-        <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
+        <link rel="icon" href="{{ asset('assets/images/favicon/favicon.ico') }}" sizes="any">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon/favicon.svg') }}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/images/favicon/favicon-96x96.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
+        <link rel="manifest" href="{{ asset('assets/images/favicon/site.webmanifest') }}">
 
         {{-- JSON-LD Structured Data --}}
         <script type="application/ld+json">

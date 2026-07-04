@@ -899,7 +899,7 @@
 
                 <div class="row justify-center pt-60 md:pt-20">
                     <div class="col-xl-6 col-md-8 col-sm-10">
-                        <div class="overflow-hidden js-testimonials-slider" data-slider-cols="xl-1 lg-1 md-1 sm-1 base-1"
+                        <div class="overflow-hidden js-section-slider" data-slider-cols="xl-1 lg-1 md-1 sm-1 base-1"
                             data-pagination="js-testimonials-pagination">
                             <div class="swiper-wrapper">
 
@@ -909,7 +909,7 @@
                                         <div class="testimonials__image size-100 rounded-full">
                                             <img src="{{ asset('assets/images/reviews/testimonial-matteo-italy_isnet-general-use.webp') }}"
                                                 alt="Matteo Rossi, traveler from Italy enjoying Morocco desert tour with camel rides and sunset views"
-                                                loading="lazy">
+                                                loading="eager">
                                             <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -943,7 +943,7 @@
                                         <div class="testimonials__image size-100 rounded-full">
                                             <img src="{{ asset('assets/images/reviews/testimonial-carlos-brazil_bria.webp') }}"
                                                 alt="Carlos Almeida, traveler from Brazil discovering Moroccan culture with Authentic Morocco Adventures"
-                                                loading="lazy">
+                                                loading="eager">
                                             <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -954,8 +954,8 @@
                                             </div>
                                         </div>
                                         <div class="visually-hidden">
-                                            Carlos Almeida discovered authentic Moroccan culture and hidden gems with Local
-                                            Morocco Tours.
+                                            Carlos Almeida discovered authentic Moroccan culture and hidden gems with
+                                            Authentic Morocco Adventures.
                                         </div>
                                         <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">
                                             Authentic Moroccan Culture
@@ -977,7 +977,7 @@
                                         <div class="testimonials__image size-100 rounded-full">
                                             <img src="{{ asset('assets/images/reviews/testimonial-james-usa_bria.webp') }}"
                                                 alt="James Peterson, traveler from USA praising seamless Morocco trip planning with Authentic Morocco Adventures"
-                                                loading="lazy">
+                                                loading="eager">
                                             <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -1011,7 +1011,7 @@
                                         <div class="testimonials__image size-100 rounded-full">
                                             <img src="{{ asset('assets/images/reviews/testimonial-aysha-morocco_bria.webp') }}"
                                                 alt="Aysha El Fassi, Moroccan traveler exploring hidden gems with Authentic Morocco Adventures"
-                                                loading="lazy">
+                                                loading="eager">
                                             <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -1022,8 +1022,8 @@
                                             </div>
                                         </div>
                                         <div class="visually-hidden">
-                                            Aysha El Fassi explored hidden gems and local secrets in Morocco with Local
-                                            Morocco Tours.
+                                            Aysha El Fassi explored hidden gems and local secrets in Morocco with
+                                            Authentic Morocco Adventures.
                                         </div>
                                         <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">
                                             Hidden Gems
@@ -1045,7 +1045,7 @@
                                         <div class="testimonials__image size-100 rounded-full">
                                             <img src="{{ asset('assets/images/reviews/testimonial-anastasia-russia_bria.webp') }}"
                                                 alt="Anastasia Ivanova, traveler from Russia sharing a professional and safe experience with Authentic Morocco Adventures"
-                                                loading="lazy">
+                                                loading="eager">
                                             <div class="testimonials__icon" aria-hidden="true">
                                                 <svg width="16" height="13" viewBox="0 0 16 13" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -1056,8 +1056,8 @@
                                             </div>
                                         </div>
                                         <div class="visually-hidden">
-                                            Anastasia Ivanova shared a professional and safe experience traveling with Local
-                                            Morocco Tours.
+                                            Anastasia Ivanova shared a professional and safe experience traveling with
+                                            Authentic Morocco Adventures.
                                         </div>
                                         <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">
                                             Professional Team

@@ -83,20 +83,26 @@
 
                                             <div class="searchFormItemDropdown -group_size" data-x="group_size"
                                                 data-x-toggle="is-active">
-                                                <div class="searchFormItemDropdown__container">
+                                                <div class="searchFormItemDropdown__container groupSizePanel">
                                                     <div class="searchFormItemDropdown__list scroll-bar-1">
-                                                        <div class="mt-10 p-10">
-                                                            <label class="text-14 fw-500 mb-5">Custom Group Size</label>
-                                                            <div class="d-flex gap-10">
-                                                                <input type="number" class="form-control"
-                                                                    id="customMinGroupSize" placeholder="Min"
-                                                                    min="1">
-                                                                <input type="number" class="form-control"
-                                                                    id="customMaxGroupSize" placeholder="Max"
-                                                                    min="1">
+                                                        <div class="groupSizePanel__body">
+                                                            <label class="groupSizePanel__label">Custom Group Size</label>
+                                                            <div class="groupSizePanel__row">
+                                                                <div class="groupSizePanel__field">
+                                                                    <span class="groupSizePanel__fieldLabel">Min</span>
+                                                                    <input type="number" class="groupSizePanel__input"
+                                                                        id="customMinGroupSize" placeholder="e.g. 1"
+                                                                        min="1">
+                                                                </div>
+                                                                <div class="groupSizePanel__field">
+                                                                    <span class="groupSizePanel__fieldLabel">Max</span>
+                                                                    <input type="number" class="groupSizePanel__input"
+                                                                        id="customMaxGroupSize" placeholder="e.g. 10"
+                                                                        min="1">
+                                                                </div>
                                                             </div>
                                                             <button type="button" id="applyCustomGroupSize"
-                                                                class="mt-10 button -sm -accent-1-dark bg-accent-1 text-white">
+                                                                class="groupSizePanel__apply button -sm -accent-1-dark bg-accent-1 text-white">
                                                                 Apply
                                                             </button>
                                                         </div>
@@ -104,6 +110,67 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <style>
+                                            .searchForm.-type-1 .searchFormItemDropdown.-group_size .searchFormItemDropdown__container {
+                                                width: 300px;
+                                                max-width: calc(100vw - 14px);
+                                                padding: 16px;
+                                            }
+
+                                            @media (max-width: 575px) {
+                                                .searchForm.-type-1 .searchFormItemDropdown.-group_size .searchFormItemDropdown__container {
+                                                    width: calc(100vw - 14px);
+                                                }
+                                            }
+
+                                            .groupSizePanel__label {
+                                                display: block;
+                                                font-size: 14px;
+                                                font-weight: 600;
+                                                color: var(--color-third, #05073C);
+                                                margin-bottom: 12px;
+                                            }
+
+                                            .groupSizePanel__row {
+                                                display: flex;
+                                                gap: 12px;
+                                            }
+
+                                            .groupSizePanel__field {
+                                                flex: 1;
+                                                display: flex;
+                                                flex-direction: column;
+                                                gap: 6px;
+                                            }
+
+                                            .groupSizePanel__fieldLabel {
+                                                font-size: 12px;
+                                                color: #717171;
+                                            }
+
+                                            .groupSizePanel__input {
+                                                width: 100%;
+                                                height: 44px;
+                                                border-radius: 10px;
+                                                border: 1px solid var(--Border, #E7E6E6) !important;
+                                                padding: 0 14px;
+                                                font-size: 14px;
+                                                color: var(--color-third, #05073C);
+                                                outline: none;
+                                                transition: border-color 0.2s;
+                                            }
+
+                                            .groupSizePanel__input:focus {
+                                                border-color: var(--color-accent-1) !important;
+                                            }
+
+                                            .groupSizePanel__apply {
+                                                width: 100%;
+                                                margin-top: 16px;
+                                                border-radius: 10px;
+                                            }
+                                        </style>
 
                                         {{-- Hidden input for group_size --}}
                                         <input type="hidden" name="group_size" id="groupSize"

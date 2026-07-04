@@ -13,7 +13,9 @@
     <title>@yield('title', 'Code Sommet Laravel 11 Admin & Dashboard Template')</title>
 
     <!-- Favicon Icon -->
-    <link rel="shortcut icon" href="{{ URL::asset('build/images/favicon.ico') }}">
+    <link rel="icon" href="{{ asset('assets/images/favicon/favicon.ico') }}" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon/favicon.svg') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
 
     @yield('css')
 

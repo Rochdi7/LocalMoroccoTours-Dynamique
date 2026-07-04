@@ -4,9 +4,8 @@
     <div class="m-header">
       <a href="//index" class="b-brand">
         <!-- ========   Change your logo from here   ============ -->
-        <img src="{{ asset('assets/images/logo/LocalMoroccoTours_bg.png') }}
-" alt="" class="logo logo-lg">
-        <img src="{{ URL::asset('build/images/favicon.svg') }}" alt="" class="logo logo-sm">
+        <img src="{{ asset('assets/images/logo/ama_logo_dark.png') }}" alt="" class="logo logo-lg">
+        <img src="{{ asset('assets/images/favicon/web-app-manifest-192x192.png') }}" alt="" class="logo logo-sm">
       </a>
     </div>
     <div class="navbar-content">

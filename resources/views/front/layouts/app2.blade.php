@@ -20,14 +20,9 @@
     <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-
-    <!-- Preload critical CSS -->
-    <link rel="preload" href="{{ asset('assets/css/vendors.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="{{ asset('assets/css/main.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-        <link rel="stylesheet" href="{{ asset('assets/css/vendors.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/main.min.css') }}">
-    </noscript>
+    <!-- Critical layout CSS: loaded render-blocking, on purpose, so the page never paints unstyled -->
+    <link rel="stylesheet" href="{{ asset('assets/css/vendors.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.min.css') }}">
 
     {{-- SEO Meta Data --}}
     <title>@yield('title', 'Authentic Morocco Adventures | Explore Morocco with a Local Tour Guide')</title>
@@ -62,7 +57,11 @@
     <meta name="twitter:image" content="@yield('twitter_image', asset('assets/images/home/marrakech-souk-moroccan-brass-lanterns-market.webp'))">
 
     {{-- Favicon --}}
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
+    <link rel="icon" href="{{ asset('assets/images/favicon/favicon.ico') }}" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('assets/images/favicon/favicon.svg') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/images/favicon/favicon-96x96.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('assets/images/favicon/site.webmanifest') }}">
 
     {{-- JSON-LD Structured Data --}}
     <script type="application/ld+json">

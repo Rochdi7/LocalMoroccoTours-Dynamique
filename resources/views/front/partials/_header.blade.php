@@ -9,8 +9,28 @@
         <div class="header__left">
             <div class="header__logo">
                 <a href="{{ route('home') }}" class="header__logo">
-                    <img src="/assets/images/new_logo.png" alt="Authentic Morocco Adventures Logo" width="50px" height="20px">
+                    <img src="/assets/images/logo/ama_logo_white.png" alt="Authentic Morocco Adventures Logo" class="header__logoImg">
                 </a>
+
+                <style>
+                    .header__logoImg {
+                        height: 48px;
+                        width: auto;
+                        max-width: 220px;
+                        object-fit: contain;
+                    }
+
+                    @media (max-width: 767px) {
+                        .header__logoImg {
+                            height: 36px;
+                            max-width: 160px;
+                        }
+                    }
+
+                    .header.-type-8 .desktopNav__item > a {
+                        white-space: nowrap;
+                    }
+                </style>
 
                 <div class="xl:d-none ml-30">
                     <div class="desktopNav -light -hover-light">

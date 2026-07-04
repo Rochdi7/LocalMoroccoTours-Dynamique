@@ -25,8 +25,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="{{ asset('assets/images/logo/LocalMoroccoTours_bg.png') }}
-" alt="image"
+                    <img src="{{ asset('assets/images/logo/ama_logo_dark.png') }}" alt="image"
                         class="footer-logo img-fluid mb-3" />
                     <p class="mb-4">Since 2014, over 6.3K developers have placed their trust in CodeSommet's
                         Templates. Code Sommet is managed by their
