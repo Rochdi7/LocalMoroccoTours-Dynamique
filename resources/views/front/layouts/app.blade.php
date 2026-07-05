@@ -15,6 +15,9 @@
       gtag('config', 'G-9M525H2VB2');
     </script>
 
+    <!-- Ahrefs Analytics -->
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="TCYTyxlxLWFvUbmQZwxlhg" async></script>
+
     {{-- Preconnect to critical origins --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
