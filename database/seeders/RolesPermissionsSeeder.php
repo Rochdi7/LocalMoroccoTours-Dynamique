@@ -32,10 +32,10 @@ class RolesPermissionsSeeder extends Seeder
 
         // Create the first admin user
         $admin = User::firstOrCreate(
-            ['email' => 'rochdi.karouali1234@gmail.com'],
+            ['email' => 'authenticmoroccoadventures@gmail.com'],
             [
                 'name' => 'Super Admin',
-                'password' => Hash::make('password'), 
+                'password' => Hash::make('password'),
             ]
         );
 
