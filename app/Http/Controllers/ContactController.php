@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMessageMail;
 
@@ -17,10 +18,19 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Queue the contact email
-        Mail::to('localmoroccotour1@gmail.com')
-            ->queue(new ContactMessageMail($validated));
+        try {
+            // Send synchronously so a real SMTP failure surfaces to the user
+            // instead of a false success (queued mail can silently never send).
+            Mail::to('localmoroccotour1@gmail.com')
+                ->send(new ContactMessageMail($validated));
+        } catch (\Throwable $e) {
+            Log::error('Contact form email failed: ' . $e->getMessage());
 
-        return back()->with('success', 'Your message has been sent. We’ll get back to you soon!');
+            return back()
+                ->withInput()
+                ->with('contact_error', 'Sorry, we could not send your message right now. Please try again later or contact us directly.');
+        }
+
+        return back()->with('contact_success', 'Your message has been sent. We’ll get back to you soon!');
     }
 }

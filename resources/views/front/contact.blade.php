@@ -135,18 +135,18 @@
                                 </button>
                             </div>
 
-                            @if (session('success'))
+                            @if (session('contact_success'))
                                 <div class="col-12 mt-20">
                                     <div class="alert alert-success">
-                                        {{ session('success') }}
+                                        {{ session('contact_success') }}
                                     </div>
                                 </div>
                             @endif
 
-                            @if (session('error'))
+                            @if (session('contact_error'))
                                 <div class="col-12 mt-20">
                                     <div class="alert alert-danger">
-                                        {{ session('error') }}
+                                        {{ session('contact_error') }}
                                     </div>
                                 </div>
                             @endif
@@ -166,20 +166,20 @@
                             @push('scripts')
                                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                 <script>
-                                    @if (session('success'))
+                                    @if (session('contact_success'))
                                         Swal.fire({
                                             icon: 'success',
                                             title: 'Message Sent!',
-                                            text: @json(session('success')),
+                                            text: @json(session('contact_success')),
                                             confirmButtonColor: '#3085d6',
                                         });
                                     @endif
 
-                                    @if (session('error'))
+                                    @if (session('contact_error'))
                                         Swal.fire({
                                             icon: 'error',
                                             title: 'Something went wrong!',
-                                            text: @json(session('error')),
+                                            text: @json(session('contact_error')),
                                             confirmButtonColor: '#d33',
                                         });
                                     @endif

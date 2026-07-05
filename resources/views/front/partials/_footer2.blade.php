@@ -147,31 +147,25 @@
                         </form>
                     </div>
 
-                    @if (session('success') || $errors->any())
+                    @if (session('newsletter_success') || session('newsletter_error'))
                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                         <script>
                             document.addEventListener('DOMContentLoaded', function () {
-                                @if (session('success'))
+                                @if (session('newsletter_success'))
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'Subscribed!',
-                                        text: @json(session('success')),
+                                        text: @json(session('newsletter_success')),
                                         confirmButtonColor: '#3085d6',
                                     });
                                 @endif
 
-                                @if ($errors->any())
+                                @if (session('newsletter_error'))
                                     Swal.fire({
-                                        toast: true,
-                                        position: 'top-end',
-                                        icon: 'warning',
-                                        title: 'Please fix the following:',
-                                        html: @json($errors->all())
-                                            .map(msg => `&bull; ${msg}`)
-                                            .join('<br>'),
-                                        showConfirmButton: false,
-                                        timer: 6000,
-                                        timerProgressBar: true,
+                                        icon: 'error',
+                                        title: 'Something went wrong',
+                                        text: @json(session('newsletter_error')),
+                                        confirmButtonColor: '#d33',
                                     });
                                 @endif
                             });

@@ -471,13 +471,19 @@
                         </p>
 
                         {{-- SUCCESS ALERT --}}
-                        @if (session('success'))
+                        @if (session('newsletter_success'))
                             <div class="alert alert-success mt-20">
-                                {{ session('success') }}
+                                {{ session('newsletter_success') }}
                             </div>
                         @endif
 
                         {{-- ERROR ALERT --}}
+                        @if (session('newsletter_error'))
+                            <div class="alert alert-danger mt-20">
+                                {{ session('newsletter_error') }}
+                            </div>
+                        @endif
+
                         @if ($errors->any())
                             <div class="alert alert-danger mt-20">
                                 <ul class="mb-0">
@@ -486,37 +492,6 @@
                                     @endforeach
                                 </ul>
                             </div>
-                        @endif
-
-                        @if (session('success') || $errors->any())
-                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    @if (session('success'))
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Subscribed!',
-                                            text: @json(session('success')),
-                                            confirmButtonColor: '#3085d6',
-                                        });
-                                    @endif
-
-                                    @if ($errors->any())
-                                        Swal.fire({
-                                            toast: true,
-                                            position: 'top-end',
-                                            icon: 'warning',
-                                            title: 'Please fix the following:',
-                                            html: @json($errors->all())
-                                                .map(msg => `&bull; ${msg}`)
-                                                .join('<br>'),
-                                            showConfirmButton: false,
-                                            timer: 6000,
-                                            timerProgressBar: true,
-                                        });
-                                    @endif
-                                });
-                            </script>
                         @endif
 
                         <form action="{{ route('newsletter.subscribe') }}" method="POST">

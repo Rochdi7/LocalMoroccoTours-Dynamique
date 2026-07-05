@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ToursSeeder::class,
             ActivitiesSeeder::class,
             TrekkingSeeder::class,
+            RatingCategorySeeder::class,
         ]);
     }
 }
