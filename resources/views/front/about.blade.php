@@ -121,7 +121,7 @@
         </div>
     </section>
 
-    <section class="layout-pt-xl">
+    <section class="layout-pt-xl about-why-choose">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row">
                 <div class="col-auto">
@@ -197,6 +197,19 @@
     margin-top: 0 !important;
     margin-bottom: 20px;
   }
+}
+
+/* Video section: its background image is position:absolute with a negative
+   z-index, and the .video wrapper has z-index:0. On large screens this let the
+   image bleed under the following "Why Choose" section. Isolate the video
+   section into its own stacking context and lift the following section above it. */
+.video {
+  isolation: isolate;
+}
+.about-why-choose {
+  position: relative;
+  z-index: 1;
+  background: var(--color-white, #fff);
 }
 </style>
 
