@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesPermissionsSeeder::class,
+            ToursSeeder::class,
+            ActivitiesSeeder::class,
+            TrekkingSeeder::class,
         ]);
     }
 }

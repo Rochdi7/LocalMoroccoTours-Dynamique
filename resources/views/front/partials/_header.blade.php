@@ -9,7 +9,8 @@
         <div class="header__left">
             <div class="header__logo">
                 <a href="{{ route('home') }}" class="header__logo">
-                    <img src="/assets/images/logo/ama_logo_white.png" alt="Authentic Morocco Adventures Logo" class="header__logoImg">
+                    <img src="/assets/images/logo/ama_logo_white.png" alt="Authentic Morocco Adventures Logo"
+                        class="header__logoImg">
                 </a>
 
                 <style>
@@ -27,7 +28,7 @@
                         }
                     }
 
-                    .header.-type-8 .desktopNav__item > a {
+                    .header.-type-8 .desktopNav__item>a {
                         white-space: nowrap;
                     }
                 </style>
@@ -80,7 +81,7 @@
 
         <div class="headerMobile__right">
 
-            <a href="https://www.tripadvisor.com/Attractions-g293734-Activities-Marrakech_Marrakech_Safi.html"
+            <a href="https://www.tripadvisor.fr/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
                 target="_blank" class="tripadvisor-icon-mobile d-flex items-center ml-20">
                 <img src="/assets/images/icon/tripdavisor.svg" alt="Tripadvisor">
             </a>
@@ -105,7 +106,7 @@
             </a>
 
             <!-- Tripadvisor icon with flying hover effect -->
-            <a href="https://www.tripadvisor.com/Attractions-g293734-Activities-Marrakech_Marrakech_Safi.html"
+            <a href="https://www.tripadvisor.fr/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
                 target="_blank" class="ml-20 d-flex items-center tripadvisor-hover">
                 <img src="/assets/images/icon/tripdavisor.svg" alt="Tripadvisor">
             </a>
@@ -234,8 +235,8 @@
                 </div>
 
                 <div>
-                    <a href="https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/" target="_blank" class="d-block"
-                        aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/" target="_blank"
+                        class="d-block" aria-label="LinkedIn">
                         <i class="icon-linkedin"></i>
                     </a>
                 </div>
@@ -248,8 +249,8 @@
                 </div>
 
                 <div>
-                    <a href="https://www.youtube.com/@AuthenticMoroccoAdventures"
-                        target="_blank" class="d-block text-dark" aria-label="YouTube">
+                    <a href="https://www.youtube.com/@AuthenticMoroccoAdventures" target="_blank"
+                        class="d-block text-dark" aria-label="YouTube">
                         <i class="bi bi-youtube"></i>
                     </a>
                 </div>

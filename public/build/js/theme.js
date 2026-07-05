@@ -215,11 +215,14 @@ function layout_change(layout, skipSave) {
     if (document.querySelector('.landing-logo')) {
       document.querySelector('.landing-logo').setAttribute('src', '/assets/images/logo/ama_logo_white.png');
     }
-    if (document.querySelector('.auth-main.v1 .auth-sidefooter')) {
+    if (document.querySelector('.auth-main.v1 .auth-sidefooter img')) {
       document.querySelector('.auth-main.v1 .auth-sidefooter img').setAttribute('src', '/assets/images/logo/ama_logo_white.png');
     }
     if (document.querySelector('.footer-top .footer-logo')) {
       document.querySelector('.footer-top .footer-logo').setAttribute('src', '/assets/images/logo/ama_logo_white.png');
+    }
+    if (document.querySelector('.js-auth-logo')) {
+      document.querySelector('.js-auth-logo').setAttribute('src', '/assets/images/logo/ama_logo_white.png');
     }
 
     var control = document.querySelector('.theme-layout .btn.active');
@@ -239,11 +242,14 @@ function layout_change(layout, skipSave) {
     if (document.querySelector('.landing-logo')) {
       document.querySelector('.landing-logo').setAttribute('src', '/assets/images/logo/ama_logo_dark.png');
     }
-    if (document.querySelector('.auth-main.v1 .auth-sidefooter')) {
+    if (document.querySelector('.auth-main.v1 .auth-sidefooter img')) {
       document.querySelector('.auth-main.v1 .auth-sidefooter img').setAttribute('src', '/assets/images/logo/ama_logo_dark.png');
     }
     if (document.querySelector('.footer-top .footer-logo')) {
       document.querySelector('.footer-top .footer-logo').setAttribute('src', '/assets/images/logo/ama_logo_dark.png');
+    }
+    if (document.querySelector('.js-auth-logo')) {
+      document.querySelector('.js-auth-logo').setAttribute('src', '/assets/images/logo/ama_logo_dark.png');
     }
 
     var control = document.querySelector('.theme-layout .btn.active');
