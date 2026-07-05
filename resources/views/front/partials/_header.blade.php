@@ -214,41 +214,41 @@
             </div>
             <div class="d-flex items-center x-gap-10 pt-30">
                 <div>
-                    <a href="https://www.facebook.com/AuthenticMoroccoAdventures/" target="_blank" class="d-block"
+                    <a href="https://web.facebook.com/authenticmoroccoadventures/" target="_blank" class="d-block"
                         aria-label="Facebook">
                         <i class="icon-facebook"></i>
                     </a>
                 </div>
 
                 <div>
-                    <a href="https://x.com/AuthMoroccoAdv" target="_blank" class="d-block" aria-label="Twitter (X)">
+                    <a href="https://x.com/AMADMCmor" target="_blank" class="d-block" aria-label="Twitter (X)">
                         <i class="icon-twitter"></i>
                     </a>
                 </div>
 
                 <div>
-                    <a href="https://www.instagram.com/AuthenticMoroccoAdventures/" target="_blank" class="d-block"
+                    <a href="https://www.instagram.com/authenticmoroccoadventures/" target="_blank" class="d-block"
                         aria-label="Instagram">
                         <i class="icon-instagram"></i>
                     </a>
                 </div>
 
                 <div>
-                    <a href="https://www.linkedin.com/company/authentic-morocco-adventures/" target="_blank" class="d-block"
+                    <a href="https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/" target="_blank" class="d-block"
                         aria-label="LinkedIn">
                         <i class="icon-linkedin"></i>
                     </a>
                 </div>
 
                 <div>
-                    <a href="https://fr.pinterest.com/AuthenticMoroccoAdventures/" target="_blank" class="d-block text-dark"
+                    <a href="https://fr.pinterest.com/amoroccoadventures/" target="_blank" class="d-block text-dark"
                         aria-label="Pinterest">
                         <i class="bi bi-pinterest"></i>
                     </a>
                 </div>
 
                 <div>
-                    <a href="https://www.youtube.com/channel/UCsawl2TXrlwoB88RWr2MX2w?view_as=subscriber"
+                    <a href="https://www.youtube.com/@AuthenticMoroccoAdventures"
                         target="_blank" class="d-block text-dark" aria-label="YouTube">
                         <i class="bi bi-youtube"></i>
                     </a>

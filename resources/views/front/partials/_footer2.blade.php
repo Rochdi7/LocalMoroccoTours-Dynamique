@@ -49,23 +49,23 @@
                             </div>
 
                             <div class="footerSocials__icons">
-                                <a href="https://www.facebook.com/AuthenticMoroccoAdventures/" target="_blank"
+                                <a href="https://web.facebook.com/authenticmoroccoadventures/" target="_blank"
                                     class="icon-facebook"></a>
 
-                                <a href="https://x.com/AuthMoroccoAdv" target="_blank" class="icon-twitter"></a>
+                                <a href="https://x.com/AMADMCmor" target="_blank" class="icon-twitter"></a>
 
-                                <a href="https://www.instagram.com/AuthenticMoroccoAdventures/" target="_blank"
+                                <a href="https://www.instagram.com/authenticmoroccoadventures/" target="_blank"
                                     class="icon-instagram"></a>
 
-                                <a href="https://www.linkedin.com/company/authentic-morocco-adventures/" target="_blank"
+                                <a href="https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/" target="_blank"
                                     class="icon-linkedin"></a>
 
-                                <a href="https://fr.pinterest.com/AuthenticMoroccoAdventures/" target="_blank"
+                                <a href="https://fr.pinterest.com/amoroccoadventures/" target="_blank"
                                     class="text-dark">
                                     <i class="bi bi-pinterest"></i>
                                 </a>
 
-                                <a href="https://www.youtube.com/channel/UCsawl2TXrlwoB88RWr2MX2w?view_as=subscriber"
+                                <a href="https://www.youtube.com/@AuthenticMoroccoAdventures"
                                     target="_blank" class="text-dark">
                                     <i class="bi bi-youtube"></i>
                                 </a>
@@ -85,7 +85,7 @@
                         <div class="y-gap-10 mt-20">
                             <span class="d-block">Phone: +212 666 107 312</span>
                             <span class="d-block">WhatsApp: +212 666 107 312</span>
-                            <a class="d-block" href="mailto:info@authenticmoroccoadventures.com">info@authenticmoroccoadventures.com</a>
+                            <a class="d-block" href="mailto:authenticmoroccoadventures@gmail.com">authenticmoroccoadventures@gmail.com</a>
                         </div>
                     </div>
 

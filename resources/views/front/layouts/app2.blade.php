@@ -73,9 +73,12 @@
   "description": "Authentic Morocco Adventures is a professional tour guide company offering private and authentic experiences across Morocco. Explore Marrakech, the Sahara Desert, and cultural gems with a local expert.",
   "url": "https://www.authenticmoroccoadventures.com/",
   "sameAs": [
-    "https://www.facebook.com/AuthenticMoroccoAdventures",
-    "https://www.instagram.com/AuthenticMoroccoAdventures",
-    "https://www.twitter.com/AuthenticMoroccoAdventures"
+    "https://web.facebook.com/authenticmoroccoadventures/",
+    "https://www.instagram.com/authenticmoroccoadventures/",
+    "https://x.com/AMADMCmor",
+    "https://fr.pinterest.com/amoroccoadventures/",
+    "https://www.youtube.com/@AuthenticMoroccoAdventures",
+    "https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/"
   ],
   "address": {
     "@type": "PostalAddress",

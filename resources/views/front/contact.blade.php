@@ -53,7 +53,7 @@
                         </p>
                         <p class="mb-10">
                             <strong>Email:</strong><br>
-                            <a href="mailto:info@authenticmoroccoadventures.com">info@authenticmoroccoadventures.com</a>
+                            <a href="mailto:authenticmoroccoadventures@gmail.com">authenticmoroccoadventures@gmail.com</a>
                         </p>
                     </div>
                 </div>

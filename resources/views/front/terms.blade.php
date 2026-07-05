@@ -109,7 +109,7 @@
             <div class="tabs__pane -tab-item-5">
               <h2 class="text-20 fw-500">Other Terms</h2>
               <p class="mt-10">
-                All content on our website, including images, text, and branding, is the property of Authentic Morocco Adventures and protected by copyright laws. Any disputes arising from these terms shall be governed by Moroccan law. For questions or concerns, please contact us at <a href="mailto:info@authenticmoroccoadventures.com">info@authenticmoroccoadventures.com</a>.
+                All content on our website, including images, text, and branding, is the property of Authentic Morocco Adventures and protected by copyright laws. Any disputes arising from these terms shall be governed by Moroccan law. For questions or concerns, please contact us at <a href="mailto:authenticmoroccoadventures@gmail.com">authenticmoroccoadventures@gmail.com</a>.
               </p>
             </div>
 

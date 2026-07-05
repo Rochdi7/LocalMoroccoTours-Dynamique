@@ -71,42 +71,42 @@
                            
                             <div class="d-flex x-gap-10">
                                 <div>
-                                    <a href="https://www.facebook.com/AuthenticMoroccoAdventures/" target="_blank"
+                                    <a href="https://web.facebook.com/authenticmoroccoadventures/" target="_blank"
                                         class="button -accent-1 size-40 flex-center bg-accent-1-05 rounded-full">
                                         <i class="icon-facebook text-14"></i>
                                     </a>
                                 </div>
 
                                 <div>
-                                    <a href="https://x.com/AuthMoroccoAdv" target="_blank"
+                                    <a href="https://x.com/AMADMCmor" target="_blank"
                                         class="button -accent-1 size-40 flex-center bg-accent-1-05 rounded-full">
                                         <i class="icon-twitter text-14"></i>
                                     </a>
                                 </div>
 
                                 <div>
-                                    <a href="https://www.instagram.com/AuthenticMoroccoAdventures/" target="_blank"
+                                    <a href="https://www.instagram.com/authenticmoroccoadventures/" target="_blank"
                                         class="button -accent-1 size-40 flex-center bg-accent-1-05 rounded-full">
                                         <i class="icon-instagram text-14"></i>
                                     </a>
                                 </div>
 
                                 <div>
-                                    <a href="https://www.linkedin.com/company/authentic-morocco-adventures/" target="_blank"
+                                    <a href="https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/" target="_blank"
                                         class="button -accent-1 size-40 flex-center bg-accent-1-05 rounded-full">
                                         <i class="icon-linkedin text-14"></i>
                                     </a>
                                 </div>
 
                                 <div>
-                                    <a href="https://fr.pinterest.com/AuthenticMoroccoAdventures/" target="_blank"
+                                    <a href="https://fr.pinterest.com/amoroccoadventures/" target="_blank"
                                         class="button -accent-1 size-40 flex-center bg-accent-1-05 rounded-full social-btn">
                                         <i class="bi bi-pinterest"></i>
                                     </a>
                                 </div>
 
                                 <div>
-                                    <a href="https://www.youtube.com/channel/UCsawl2TXrlwoB88RWr2MX2w?view_as=subscriber"
+                                    <a href="https://www.youtube.com/@AuthenticMoroccoAdventures"
                                         target="_blank"
                                         class="button -accent-1 size-40 flex-center bg-accent-1-05 rounded-full social-btn">
                                         <i class="bi bi-youtube"></i>

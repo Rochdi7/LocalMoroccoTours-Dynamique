@@ -24,19 +24,19 @@
                             </div>
 
                             <div class="footerSocials__icons text-white d-flex align-items-center gap-3">
-                                <a href="https://www.facebook.com/AuthenticMoroccoAdventures/" target="_blank" class="icon-facebook" aria-label="Facebook"></a>
+                                <a href="https://web.facebook.com/authenticmoroccoadventures/" target="_blank" class="icon-facebook" aria-label="Facebook"></a>
 
-                                <a href="https://x.com/AuthMoroccoAdv" target="_blank" class="icon-twitter" aria-label="Twitter (X)"></a>
+                                <a href="https://x.com/AMADMCmor" target="_blank" class="icon-twitter" aria-label="Twitter (X)"></a>
 
-                                <a href="https://www.instagram.com/AuthenticMoroccoAdventures/" target="_blank" class="icon-instagram" aria-label="Instagram"></a>
+                                <a href="https://www.instagram.com/authenticmoroccoadventures/" target="_blank" class="icon-instagram" aria-label="Instagram"></a>
 
-                                <a href="https://www.linkedin.com/company/authentic-morocco-adventures/" target="_blank" class="icon-linkedin" aria-label="LinkedIn"></a>
+                                <a href="https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/" target="_blank" class="icon-linkedin" aria-label="LinkedIn"></a>
 
-                                <a href="https://fr.pinterest.com/AuthenticMoroccoAdventures/" target="_blank" class="text-dark" aria-label="Pinterest">
+                                <a href="https://fr.pinterest.com/amoroccoadventures/" target="_blank" class="text-dark" aria-label="Pinterest">
                                     <i class="bi bi-pinterest"></i>
                                 </a>
 
-                                <a href="https://www.youtube.com/channel/UCsawl2TXrlwoB88RWr2MX2w?view_as=subscriber" target="_blank" class="text-dark" aria-label="YouTube">
+                                <a href="https://www.youtube.com/@AuthenticMoroccoAdventures" target="_blank" class="text-dark" aria-label="YouTube">
                                     <i class="bi bi-youtube"></i>
                                 </a>
                             </div>
@@ -57,7 +57,7 @@
                             <div class="y-gap-10 mt-20 text-white">
                                 <span class="d-block">Phone: <a href="tel:+212666107312" class="text-white">+212 666 107 312</a></span>
                                 <span class="d-block">WhatsApp: <a href="https://wa.me/212666107312" target="_blank" class="text-white">+212 666 107 312</a></span>
-                                <a class="d-block text-white" href="mailto:info@authenticmoroccoadventures.com">info@authenticmoroccoadventures.com</a>
+                                <a class="d-block text-white" href="mailto:authenticmoroccoadventures@gmail.com">authenticmoroccoadventures@gmail.com</a>
                             </div>
                         </div>
 
