@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\SpecialOfferController;
 use App\Http\Controllers\Admin\RatingCategoryController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TourReservationController;
 use App\Http\Controllers\ActivityReservationController;
@@ -112,7 +113,7 @@ Route::get('/test-mail', function () {
 });
 
 // Admin routes
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth'])->prefix('adminPanel')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::post('/posts/upload-image', [AdminPostController::class, 'uploadImage'])->name('posts.upload-image');
@@ -130,6 +131,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         'tags' => TagController::class,
         'special-offers' => SpecialOfferController::class,
         'rating-categories' => RatingCategoryController::class,
+        'users' => AdminUserController::class,
     ]);
 });
 

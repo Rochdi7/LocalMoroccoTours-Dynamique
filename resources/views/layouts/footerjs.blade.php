@@ -28,29 +28,37 @@
     $presetTheme = $normalizeBool(env('APP_PRESET_THEME'), '');
 @endphp
 
-@if ($darkLayout === 'default')
 <script>
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        dark_layout = 'true';
-    } else {
-        dark_layout = 'false';
-    }
-    layout_change_default();
-    if (dark_layout == 'true') {
-        layout_change('dark');
-    } else {
-        layout_change('light');
-    }
+    (function () {
+        // A user's manual Light/Dark choice (saved by layout_change() in theme.js)
+        // always wins over the site-wide .env default, so the toggle actually sticks.
+        var savedLayout = null;
+        try { savedLayout = localStorage.getItem('pc_dark_layout'); } catch (e) {}
+
+        if (savedLayout === 'dark' || savedLayout === 'light') {
+            layout_change(savedLayout, true);
+            return;
+        }
+
+        @if ($darkLayout === 'default')
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                dark_layout = 'true';
+            } else {
+                dark_layout = 'false';
+            }
+            layout_change_default();
+            if (dark_layout == 'true') {
+                layout_change('dark', true);
+            } else {
+                layout_change('light', true);
+            }
+        @elseif ($darkLayout === 'true')
+            layout_change('dark', true);
+        @else
+            layout_change('light', true);
+        @endif
+    })();
 </script>
-@elseif ($darkLayout === 'true')
-    <script>
-        layout_change('dark');
-    </script>
-@else
-    <script>
-        layout_change('light');
-    </script>
-@endif
 
 
 @if ($darkNavbar === 'true')

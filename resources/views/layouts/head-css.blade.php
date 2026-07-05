@@ -1,3 +1,18 @@
+<script>
+    // Apply a saved manual dark/light choice before CSS paints, so there's no flash
+    // of the wrong theme while footerjs.blade.php's script (loaded at the bottom) runs.
+    (function () {
+        try {
+            var saved = localStorage.getItem('pc_dark_layout');
+            if (saved === 'dark' || saved === 'light') {
+                document.documentElement.setAttribute('data-pc-theme', saved);
+                // <body> doesn't exist yet at this point in <head>; theme.js corrects
+                // it on DOMContentLoaded via footerjs.blade.php using the same saved value.
+            }
+        } catch (e) {}
+    })();
+</script>
+
 <!-- [Google Font : Public Sans] icon -->
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 

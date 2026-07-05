@@ -2204,8 +2204,9 @@ window.onclick = function(event) {
 }
 
 const Calendar = (function() {
-  const startYear = 2024
-  const startMonth = 1
+  const _today = new Date()
+  const startYear = _today.getFullYear()
+  const startMonth = _today.getMonth() + 1
   const monthRange = 12
   const weekDaysOrder = [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]
   let calendarEl

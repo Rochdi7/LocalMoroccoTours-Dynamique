@@ -3,6 +3,40 @@
 @push('styles')
     {{-- Load Bootstrap Icons only if not already in the layout --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        /* ---- Hero typewriter effect (homepage) ---- */
+        /* Force the heroIntro visible even though it sits inside the theme's
+           data-anim-child reveal wrapper, so the JS typewriter is what plays. */
+        .heroIntro {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        /* Blinking caret that trails the typed text. It's a span the JS keeps
+           at the end of whichever line is currently typing. */
+        .heroCaret {
+            display: inline-block;
+            width: 3px;
+            margin-left: 2px;
+            background: currentColor;
+            animation: heroCaretBlink 0.7s steps(1) infinite;
+            vertical-align: text-bottom;
+        }
+        .heroIntro__title .heroCaret { height: 0.9em; }
+        .heroIntro__text  .heroCaret { height: 1em; }
+
+        @keyframes heroCaretBlink {
+            0%, 50%   { opacity: 1; }
+            50.01%, 100% { opacity: 0; }
+        }
+
+        /* Reserve height so the hero doesn't jump as text types in. */
+        .heroIntro__title { min-height: 1.1em; }
+        .heroIntro__text  { min-height: 3em; }
+
+        /* Reduced motion: skip typing, JS fills text instantly (see script). */
+    </style>
 @endpush
 
 @section('content')
@@ -40,7 +74,7 @@
                                                 data-x-toggle="is-active">
                                                 <div class="searchFormItemDropdown__container">
                                                     <div class="searchFormItemDropdown__list scroll-bar-1">
-                                                        @foreach ($locationsForSearch as $location)
+                                                        @forelse ($locationsForSearch as $location)
                                                             <div class="searchFormItemDropdown__item">
                                                                 <button type="button" class="js-select-control-button"
                                                                     data-slug="{{ $location->slug }}"
@@ -50,7 +84,11 @@
                                                                     <span>Location</span>
                                                                 </button>
                                                             </div>
-                                                        @endforeach
+                                                        @empty
+                                                            <div class="searchFormItemDropdown__item">
+                                                                <span class="text-14 text-light-1">No destinations available yet</span>
+                                                            </div>
+                                                        @endforelse
                                                     </div>
                                                 </div>
                                             </div>
@@ -100,7 +138,7 @@
                                                 data-x-toggle="is-active">
                                                 <div class="searchFormItemDropdown__container">
                                                     <div class="searchFormItemDropdown__list scroll-bar-1">
-                                                        @foreach ($tourCategories as $category)
+                                                        @forelse ($tourCategories as $category)
                                                             <div class="searchFormItemDropdown__item">
                                                                 <button type="button" class="js-select-control-button"
                                                                     data-slug="{{ $category->slug }}"
@@ -109,7 +147,11 @@
                                                                         class="js-select-control-choice">{{ $category->name }}</span>
                                                                 </button>
                                                             </div>
-                                                        @endforeach
+                                                        @empty
+                                                            <div class="searchFormItemDropdown__item">
+                                                                <span class="text-14 text-light-1">No tour types available yet</span>
+                                                            </div>
+                                                        @endforelse
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,15 +176,13 @@
                             </form>
                         </div>
 
-                        {{-- TITLE & TEXT --}}
-                        <div>
-                            <h1 class="hero__title text-white">
-                                Find Next PlaceTo Visit
-                            </h1>
-                            <div class="hero__text text-white mt-10">
-                                Discover amzaing places at exclusive deals. Eat, Shop, Visit<br class="lg:d-none">
-                                interesting places around the world.
-                            </div>
+                        {{-- TITLE & TEXT (typewriter effect via JS below) --}}
+                        <div class="heroIntro">
+                            <h1 class="hero__title text-white heroIntro__title js-typewriter"
+                                data-text="Find Next Place To Visit">Find Next Place To Visit</h1>
+                            <div class="hero__text text-white mt-10 heroIntro__text js-typewriter"
+                                data-text="Discover amazing places at exclusive deals. Eat, Shop, Visit interesting places around the world.">
+                                Discover amazing places at exclusive deals. Eat, Shop, Visit interesting places around the world.</div>
                         </div>
 
                     </div>
@@ -150,6 +190,59 @@
             </div>
         </div>
     </section>
+
+    @push('scripts')
+        <script>
+            (function () {
+                var els = Array.prototype.slice.call(document.querySelectorAll('.heroIntro .js-typewriter'));
+                if (!els.length) return;
+
+                var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                // If the user prefers reduced motion, just leave the static text as-is.
+                if (reduce) return;
+
+                // Clear each line and prep a caret; hold the real text in data-text.
+                els.forEach(function (el) {
+                    el.textContent = '';
+                });
+
+                function typeLine(el, done) {
+                    var text = el.getAttribute('data-text') || '';
+                    var caret = document.createElement('span');
+                    caret.className = 'heroCaret';
+                    el.textContent = '';
+                    el.appendChild(caret);
+
+                    var i = 0;
+                    // ~35ms/char for the title, a touch faster for the longer paragraph.
+                    var speed = text.length > 40 ? 22 : 45;
+
+                    (function tick() {
+                        if (i < text.length) {
+                            caret.insertAdjacentText('beforebegin', text.charAt(i));
+                            i++;
+                            setTimeout(tick, speed);
+                        } else {
+                            // Leave caret on the last line only; remove on earlier lines.
+                            if (done) { el.removeChild(caret); }
+                            if (done) done();
+                        }
+                    })();
+                }
+
+                // Type each line in sequence: title first, then the paragraph.
+                function run(idx) {
+                    if (idx >= els.length) return;
+                    var isLast = idx === els.length - 1;
+                    typeLine(els[idx], isLast ? null : function () { run(idx + 1); });
+                }
+
+                // Kick off shortly after load so the hero image/reveal settles.
+                setTimeout(function () { run(0); }, 500);
+            })();
+        </script>
+    @endpush
 
     <section class="layout-pt-lg">
   <div data-anim-wrap class="container">
@@ -188,6 +281,7 @@
 </section>
 
 
+    @if ($specialOffers->isNotEmpty())
     <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
@@ -196,7 +290,6 @@
                 </div>
             </div>
 
-            @if ($specialOffers->isNotEmpty())
                 <div class="specialCardGrid row y-gap-30 md:y-gap-20 pt-40 sm:pt-20">
                     @foreach ($specialOffers as $offer)
                         <div data-anim-child="slide-up delay-{{ $loop->iteration }}" class="col-xl-4 col-lg-6 col-md-6">
@@ -218,14 +311,11 @@
                         </div>
                     @endforeach
                 </div>
-            @else
-                <div class="pt-40">
-                    <p>No special offers are available at the moment. Please check back later.</p>
-                </div>
-            @endif
         </div>
     </section>
+    @endif
 
+    @if ($locationsForSection->isNotEmpty())
     <section class="layout-pt-xl layout-pb-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-end">
@@ -286,6 +376,7 @@
             </div>
         </div>
     </section>
+    @endif
 
 
     <section data-anim="slide-up" class="cta -type-4 -style-2">
@@ -357,6 +448,7 @@
     <script></script>
 
     <!-- Tours Section -->
+    @if ($tours->isNotEmpty())
     <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center y-gap-10">
@@ -503,8 +595,10 @@
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Activities Section -->
+    @if ($activities->isNotEmpty())
     <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center">
@@ -652,8 +746,10 @@
             </div>
         </div>
     </section>
+    @endif
 
     <!-- Trekking Section -->
+    @if ($trekking->isNotEmpty())
     <section class="layout-pt-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center">
@@ -799,6 +895,7 @@
             </div>
         </div>
     </section>
+    @endif
 
     <style>
         .swiper-slide {
@@ -806,7 +903,23 @@
         }
     </style>
     <script></script>
-    <section class="layout-pt-xl" style="margin-bottom: 120px">
+    <style>
+        /* Fix "Why Choose" horizontal swipe on mobile — make columns
+           real scroll items so users can switch to the cards on the right. */
+        @media (max-width: 575px) {
+            #whyChoose .mobile-css-slider {
+                -webkit-overflow-scrolling: touch;
+                scroll-padding-left: 15px;
+                padding-bottom: 10px;
+            }
+            #whyChoose .mobile-css-slider > [class*="col-"] {
+                flex: 0 0 auto;
+                width: 280px;
+                max-width: 280px;
+            }
+        }
+    </style>
+    <section id="whyChoose" class="layout-pt-xl" style="margin-bottom: 120px">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row">
                 <div class="col-auto">
@@ -1085,6 +1198,7 @@
         </section>
     </div>
 
+    @if ($posts->isNotEmpty())
     <section class="layout-pt-xl layout-pb-xl">
         <div data-anim-wrap class="container">
             <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
@@ -1132,6 +1246,7 @@
             </div>
         </div>
     </section>
+    @endif
 
 
 @endsection

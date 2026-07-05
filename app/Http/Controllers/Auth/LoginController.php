@@ -14,7 +14,7 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
-        return '/admin';
+        return route('admin.dashboard');
     }
 
     public function __construct()

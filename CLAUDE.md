@@ -45,15 +45,16 @@ public/sitemap.xml, robots.txt
 ```
 
 ### Frontend Blade map (`resources/views/front/`)
-- `layouts/app.blade.php`   — **primary** layout. Hard-coded homepage SEO block +
+
+- `layouts/app.blade.php` — **primary** layout. Hard-coded homepage SEO block +
   generic fallback title. Includes `_header`, `_footer`, `_wishlist`.
-- `layouts/app2.blade.php`  — secondary layout using `@yield` SEO sections
+- `layouts/app2.blade.php` — secondary layout using `@yield` SEO sections
   (`title`, `meta_description`, `og_*`, `twitter_*`). Includes `_header2`,
   `_footer2`, `_wishlist`.
-- `partials/_header.blade.php`, `_footer.blade.php`   — used by `app`.
+- `partials/_header.blade.php`, `_footer.blade.php` — used by `app`.
 - `partials/_header2.blade.php`, `_footer2.blade.php` — used by `app2`.
 - `partials/_wishlist.blade.php` — floating wishlist button + slide-in panel (added).
-- `index.blade.php`         — homepage (uses `app`). Tour/Activity/Trek cards.
+- `index.blade.php` — homepage (uses `app`). Tour/Activity/Trek cards.
 - `about/contact/terms/help-center.blade.php` — static pages.
 - `tours/`, `activities/`, `trekking/` — `*-list.blade.php` (listing) +
   `*-details.blade.php` (single).
@@ -80,8 +81,8 @@ public/sitemap.xml, robots.txt
   responsive behavior.** This is a purchased theme; only edit content + the
   documented feature additions.
 - Brand colors (`public/assets/sass/abstracts/_variables.scss`):
-  - `accent-1: #ffc421` (yellow — primary CTAs, "New" labels)
-  - `accent-2: #044cb8` (blue — footer bg, wishlist button)
+    - `accent-1: #ffc421` (yellow — primary CTAs, "New" labels)
+    - `accent-2: #044cb8` (blue — footer bg, wishlist button)
 - Utility classes are theme-provided (`text-14`, `mt-5`, `x-gap-5`, `d-flex`,
   `tourCard__*`, `button -outline-accent-1`, etc.). Reuse them; don't invent new ones.
 - CSS is compiled. Editing `public/assets/css/main.min.css` directly is the quick
@@ -105,16 +106,16 @@ public/sitemap.xml, robots.txt
 ## 6. Content conventions
 
 - Visible brand name is always **Authentic Morocco Adventures**.
-- Contact email: `info@authenticmoroccoadventures.com` (display).
+- Contact email: `authenticmoroccoadventures@gmail.com` (display).
   Phone/WhatsApp: `+212 666 107 312`.
 - Social handles: `AuthenticMoroccoAdventures` (FB/IG/Pinterest/LinkedIn),
   X handle `AuthMoroccoAdv`.
 - Card empty-state rules:
-  - Location row is **hidden** when `$model->location?->name` is empty
-    (no "Unknown Location"). Activity/Trek lists may use a clean `'Marrakech'` fallback.
-  - When `reviews_count == 0`, show **"New tour / New activity / New trek"** instead of
-    a `0.0 (0)` rating.
-  - "Popular" badge renders only when `$model->bestseller_flag` is true (in `index`).
+    - Location row is **hidden** when `$model->location?->name` is empty
+      (no "Unknown Location"). Activity/Trek lists may use a clean `'Marrakech'` fallback.
+    - When `reviews_count == 0`, show **"New tour / New activity / New trek"** instead of
+      a `0.0 (0)` rating.
+    - "Popular" badge renders only when `$model->bestseller_flag` is true (in `index`).
 
 ---
 
@@ -158,7 +159,7 @@ Implemented in `public/assets/js/favorites.js` (loaded by both `app` and `app2`)
   classes, and animations intact.
 - Don't rename asset files (logos, images) — change `alt`/visible text instead.
   Known asset still named with old brand: `public/assets/images/logo/LocalMoroccoTours_bg.png`
-  (referenced in `_header2` + `auth/login`). Replace the *image content*, keep the path,
+  (referenced in `_header2` + `auth/login`). Replace the _image content_, keep the path,
   or rename the file AND update both references together.
 - Don't change route URLs or names; many views build links via `route(...)`.
 - After Blade edits run `php artisan view:clear`.

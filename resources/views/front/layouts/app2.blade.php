@@ -78,7 +78,8 @@
     "https://x.com/AMADMCmor",
     "https://fr.pinterest.com/amoroccoadventures/",
     "https://www.youtube.com/@AuthenticMoroccoAdventures",
-    "https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/"
+    "https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/",
+    "https://fr.trustpilot.com/review/authenticmoroccoadventures.com"
   ],
   "address": {
     "@type": "PostalAddress",

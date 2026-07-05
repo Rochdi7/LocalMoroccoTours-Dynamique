@@ -4,6 +4,19 @@
 
 @section('content')
 
+    <style>
+        /* Mobile-only: give the About hero paragraph breathing room so it
+           doesn't collide with the decorative curved shape at the bottom. */
+        @media (max-width: 767px) {
+            .pageHeader.-type-1 .pageHeader__content {
+                padding-bottom: 40px;
+            }
+            .pageHeader.-type-1 .pageHeader__text {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+
     <section data-anim="fade" class="pageHeader -type-1">
         <div class="pageHeader__bg">
             <figure style="margin: 0;">
@@ -584,8 +597,11 @@
 
                 <!-- Trustpilot -->
                 <div class="col-auto">
-                    <img src="{{ asset('assets/images/clients/trustpilot-seeklogo.svg') }}"
-                        alt="Trustpilot Logo - trusted review platform" class="client-logo">
+                    <a href="https://fr.trustpilot.com/review/authenticmoroccoadventures.com" target="_blank"
+                        rel="noopener" aria-label="Read our reviews on Trustpilot">
+                        <img src="{{ asset('assets/images/clients/trustpilot-seeklogo.svg') }}"
+                            alt="Trustpilot Logo - trusted review platform" class="client-logo">
+                    </a>
                     <div class="visually-hidden">
                         <strong>Trustpilot</strong> is an online review platform trusted worldwide.
                     </div>

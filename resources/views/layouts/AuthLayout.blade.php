@@ -22,8 +22,11 @@
     @include('layouts.head-css')
 </head>
 
-<body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr"
-    data-pc-theme="light">
+<body data-pc-preset="{{ env('APP_PRESET_THEME', 'preset-1') }}"
+    data-pc-sidebar-theme="{{ env('APP_DARK_NAVBAR') === true ? 'dark' : 'light' }}"
+    data-pc-sidebar-caption="{{ env('APP_CAPTION_SHOW', 'true') }}"
+    data-pc-direction="{{ env('APP_RTL_LAYOUT') === true ? 'rtl' : 'ltr' }}"
+    data-pc-theme="{{ env('APP_DARK_LAYOUT') === true ? 'dark' : 'light' }}">
 
     @include('layouts.loader')
 

@@ -116,3 +116,11 @@
     <span class="pc-mtext">Special Offers</span>
   </a>
 </li>
+
+{{-- Users --}}
+<li class="pc-item">
+  <a href="{{ route('admin.users.index') }}" class="pc-link">
+    <span class="pc-micon"><i class="ph-duotone ph-users"></i></span>
+    <span class="pc-mtext">Users</span>
+  </a>
+</li>
