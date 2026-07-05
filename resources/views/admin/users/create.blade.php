@@ -73,12 +73,26 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="mb-0">
+                            <div class="mb-3">
                                 <label for="phone" class="form-label">Phone <span class="text-muted">(optional)</span></label>
                                 <input type="text" id="phone" name="phone" class="form-control @error('phone') is-invalid @enderror"
                                        value="{{ old('phone') }}">
                                 <div class="invalid-feedback">
                                     @error('phone') {{ $message }} @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-0">
+                                <label for="role" class="form-label">Role <span class="text-muted">(optional)</span></label>
+                                <select id="role" name="role" class="form-select @error('role') is-invalid @enderror">
+                                    <option value="">— No role —</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role }}" @selected(old('role') === $role)>{{ $role }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="invalid-feedback">
+                                    @error('role') {{ $message }} @enderror
                                 </div>
                             </div>
                         </div>

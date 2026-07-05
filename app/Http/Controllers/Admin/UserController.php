@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -18,7 +19,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::orderBy('name')->pluck('name');
+        return view('admin.users.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -28,15 +30,20 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'phone' => 'nullable|string|max:20',
+            'role' => 'nullable|string|exists:roles,name',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'email_verified_at' => now(),
         ]);
+
+        if ($request->filled('role')) {
+            $user->assignRole($request->role);
+        }
 
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
