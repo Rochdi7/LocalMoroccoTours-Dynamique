@@ -9,7 +9,7 @@ use App\Mail\TrekkingReservationMail;
 
 class TrekkingReservationController extends Controller
 {
-    
+
     public function store(Request $request, $slug)
     {
         try {
@@ -27,13 +27,12 @@ class TrekkingReservationController extends Controller
             ]);
 
             // Send reservation email via queue
-            Mail::to('localmoroccotour1@gmail.com')->queue(
+            Mail::to('authenticmoroccoadventures@gmail.com')->queue(
                 new TrekkingReservationMail($validated, $slug)
             );
 
             return redirect()->back()
                 ->with('success', 'Your trekking reservation has been submitted successfully!');
-
         } catch (\Exception $e) {
             Log::error('Trekking reservation error: ' . $e->getMessage());
 

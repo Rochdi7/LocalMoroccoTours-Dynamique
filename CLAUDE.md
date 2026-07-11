@@ -164,7 +164,7 @@ Implemented in `public/assets/js/favorites.js` (loaded by both `app` and `app2`)
 - Don't change route URLs or names; many views build links via `route(...)`.
 - After Blade edits run `php artisan view:clear`.
 - Don't add packages for small features (the wishlist is dependency-free).
-- The receiving inbox `localmoroccotour1@gmail.com` in
+- The receiving inbox `authenticmoroccoadventures@gmail.com` in
   `*ReservationController` / `ContactController` and `localmoroccotour@gmail.com` in the
   `/test-mail` route are **backend recipients** (not user-visible). Change only when the
   business provides the new inbox, and update all controllers together.

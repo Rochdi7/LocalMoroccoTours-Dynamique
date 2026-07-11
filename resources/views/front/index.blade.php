@@ -224,8 +224,8 @@
                             i++;
                             setTimeout(tick, speed);
                         } else {
-                            // Leave caret on the last line only; remove on earlier lines.
-                            if (done) { el.removeChild(caret); }
+                            // Remove the caret once a line finishes so nothing keeps blinking.
+                            el.removeChild(caret);
                             if (done) done();
                         }
                     })();

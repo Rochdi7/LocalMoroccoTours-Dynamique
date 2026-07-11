@@ -26,13 +26,12 @@ class TourReservationController extends Controller
             ]);
 
             // Send reservation email via queue
-            Mail::to('localmoroccotour1@gmail.com')->queue(
+            Mail::to('authenticmoroccoadventures@gmail.com')->queue(
                 new TourReservationMail($validated, $slug)
             );
 
             return redirect()->back()
                 ->with('success', 'Your reservation has been submitted successfully!');
-
         } catch (\Exception $e) {
             Log::error('Reservation error: ' . $e->getMessage());
 

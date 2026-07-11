@@ -21,7 +21,7 @@ class ContactController extends Controller
         try {
             // Send synchronously so a real SMTP failure surfaces to the user
             // instead of a false success (queued mail can silently never send).
-            Mail::to('localmoroccotour1@gmail.com')
+            Mail::to('authenticmoroccoadventures@gmail.com')
                 ->send(new ContactMessageMail($validated));
         } catch (\Throwable $e) {
             Log::error('Contact form email failed: ' . $e->getMessage());

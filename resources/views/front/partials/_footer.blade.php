@@ -6,12 +6,12 @@
                     <div class="col-auto">
                         <div class="row y-gap-20 items-center">
                             <div class="col-auto">
-                                <i class="icon-headphone text-50 text-white" aria-hidden="true"></i>
+                                <i class="icon-headphone text-50 text-accent-1" aria-hidden="true"></i>
                             </div>
                             <div class="col-auto">
                                 <div class="text-20 fw-500 text-white">
                                     Speak to our expert at
-                                    <a href="tel:+212666107312" class="text-white">+212 666 107 312</a>
+                                    <a href="tel:+212666107312" class="text-accent-1">+212 666 107 312</a>
                                 </div>
                             </div>
                         </div>
@@ -19,7 +19,7 @@
 
                     <div class="col-auto">
                         <div class="footerSocials">
-                            <div class="footerSocials__title text-white">
+                            <div class="footerSocials__title text-accent-1">
                                 Follow Us
                             </div>
 
@@ -32,11 +32,11 @@
 
                                 <a href="https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/" target="_blank" class="icon-linkedin" aria-label="LinkedIn"></a>
 
-                                <a href="https://fr.pinterest.com/amoroccoadventures/" target="_blank" class="text-dark" aria-label="Pinterest">
+                                <a href="https://fr.pinterest.com/amoroccoadventures/" target="_blank" class="text-white" aria-label="Pinterest">
                                     <i class="bi bi-pinterest"></i>
                                 </a>
 
-                                <a href="https://www.youtube.com/@AuthenticMoroccoAdventures" target="_blank" class="text-dark" aria-label="YouTube">
+                                <a href="https://www.youtube.com/@AuthenticMoroccoAdventures" target="_blank" class="text-white" aria-label="YouTube">
                                     <i class="bi bi-youtube"></i>
                                 </a>
                             </div>
@@ -52,7 +52,7 @@
                     <div class="row y-gap-40 justify-between">
 
                         <div class="col-lg-4 col-md-6">
-                            <h4 class="text-20 fw-500 text-white">Contact</h4>
+                            <h4 class="text-20 fw-500 text-accent-1">Contact</h4>
 
                             <div class="y-gap-10 mt-20 text-white">
                                 <span class="d-block">Phone: <a href="tel:+212666107312" class="text-white">+212 666 107 312</a></span>
@@ -62,7 +62,7 @@
                         </div>
 
                         <div class="col-lg-auto col-6">
-                            <h4 class="text-20 fw-500 text-white">Company</h4>
+                            <h4 class="text-20 fw-500 text-accent-1">Company</h4>
                             <nav aria-label="Footer Company Menu">
                                 <div class="y-gap-10 mt-20">
                                     <a class="d-block fw-500 text-white" href="{{ route('front.about') }}">About</a>
@@ -75,7 +75,7 @@
                         </div>
 
                         <div class="col-lg-auto col-6">
-                            <h4 class="text-20 fw-500 text-white">Explore</h4>
+                            <h4 class="text-20 fw-500 text-accent-1">Explore</h4>
                             <nav aria-label="Footer Explore Menu">
                                 <div class="y-gap-10 mt-20">
                                     <a class="d-block fw-500 text-white" href="{{ route('front.tours.index') }}">Tours</a>
@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="col-lg-3 col-md-6">
-                            <h4 class="text-20 fw-500 text-white">Newsletter</h4>
+                            <h4 class="text-20 fw-500 text-accent-1">Newsletter</h4>
                             <p class="text-white mt-20">Subscribe to the free newsletter and stay up to date</p>
 
                             <form class="footer__newsletter" action="{{ route('newsletter.subscribe') }}" method="POST">

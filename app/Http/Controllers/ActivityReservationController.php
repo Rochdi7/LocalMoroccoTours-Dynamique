@@ -26,13 +26,12 @@ class ActivityReservationController extends Controller
             ]);
 
             // Send reservation email via queue
-            Mail::to('localmoroccotour1@gmail.com')->queue(
+            Mail::to('authenticmoroccoadventures@gmail.com')->queue(
                 new ActivityReservationMail($validated, $slug)
             );
 
             return redirect()->back()
                 ->with('success', 'Your activity reservation has been submitted successfully!');
-
         } catch (\Exception $e) {
             Log::error('Activity reservation error: ' . $e->getMessage());
 
