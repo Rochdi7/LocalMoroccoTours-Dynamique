@@ -125,7 +125,7 @@
                                  <div class="pagination__count">
                                      @for ($i = 1; $i <= $posts->lastPage(); $i++)
                                          @if ($i == $posts->currentPage())
-                                             <a href="#" class="is-active">{{ $i }}</a>
+                                             <span class="is-active">{{ $i }}</span>
                                          @else
                                              <a href="{{ $posts->url($i) }}">{{ $i }}</a>
                                          @endif

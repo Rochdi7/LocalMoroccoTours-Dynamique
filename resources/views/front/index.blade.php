@@ -571,10 +571,14 @@
                                             </div>
 
                                             <div>
-                                                From
-                                                <span class="text-16 fw-500">
-                                                    ${{ number_format($tour->base_price, 2) }}
-                                                </span>
+                                                @if ($tour->base_price > 0)
+                                                    From
+                                                    <span class="text-16 fw-500">
+                                                        ${{ number_format($tour->base_price, 2) }}
+                                                    </span>
+                                                @else
+                                                    <span class="text-14 fw-500">Contact for price</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -722,10 +726,14 @@
                                             </div>
 
                                             <div>
-                                                From
-                                                <span class="text-16 fw-500">
-                                                    ${{ number_format($activity->base_price, 2) }}
-                                                </span>
+                                                @if ($activity->base_price > 0)
+                                                    From
+                                                    <span class="text-16 fw-500">
+                                                        ${{ number_format($activity->base_price, 2) }}
+                                                    </span>
+                                                @else
+                                                    <span class="text-14 fw-500">Contact for price</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -871,10 +879,14 @@
                                                 {{ $trek->duration }}
                                             </div>
                                             <div>
-                                                From
-                                                <span class="text-16 fw-500">
-                                                    ${{ number_format($trek->base_price, 2) }}
-                                                </span>
+                                                @if ($trek->base_price > 0)
+                                                    From
+                                                    <span class="text-16 fw-500">
+                                                        ${{ number_format($trek->base_price, 2) }}
+                                                    </span>
+                                                @else
+                                                    <span class="text-14 fw-500">Contact for price</span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

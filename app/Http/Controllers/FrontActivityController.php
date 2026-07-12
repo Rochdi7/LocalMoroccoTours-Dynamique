@@ -18,7 +18,9 @@ class FrontActivityController extends Controller
     public function index(Request $request)
     {
         $minPrice = Activity::min('base_price') ?? 0;
-        $maxPrice = Activity::max('base_price') ?? 0;
+        // Cap the filter slider at a sensible ceiling so outlier/mis-entered
+        // prices don't blow the range out (e.g. $100,000).
+        $maxPrice = min((int) (Activity::max('base_price') ?? 0), 5000);
 
         // Fetch distinct durations from DB to build the filter dropdown
         $durations = Activity::query()
@@ -68,7 +70,9 @@ class FrontActivityController extends Controller
             ->when(!empty($selectedLocations), function ($query) use ($selectedLocations) {
                 $query->whereIn('location_id', $selectedLocations);
             })
-            ->whereBetween('base_price', $selectedPriceRange);
+            ->when($request->filled('price'), function ($query) use ($selectedPriceRange) {
+                $query->whereBetween('base_price', $selectedPriceRange);
+            });
 
         switch ($sortBy) {
             case 'price_low_high':

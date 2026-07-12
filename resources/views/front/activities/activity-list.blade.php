@@ -975,14 +975,21 @@
                                             </div>
 
                                             <div class="tourCard__price">
-                                                <div>${{ number_format($activity->base_price, 2) }}</div>
+                                                @if ($activity->base_price > 0)
+                                                    <div>${{ number_format($activity->base_price, 2) }}</div>
 
-                                                <div class="d-flex items-center">
-                                                    From
-                                                    <span class="text-20 fw-500 ml-5">
-                                                        ${{ number_format($activity->discounted_base_price, 2) }}
-                                                    </span>
-                                                </div>
+                                                    <div class="d-flex items-center">
+                                                        From
+                                                        <span class="text-20 fw-500 ml-5">
+                                                            ${{ number_format($activity->discounted_base_price, 2) }}
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <div class="d-flex items-center"
+                                                        style="text-decoration:none; color:var(--color-dark-1);">
+                                                        <span class="text-16 fw-500">Contact for price</span>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
 
@@ -1013,7 +1020,7 @@
                                 <div class="pagination__count">
                                     {{-- Always show page 1 --}}
                                     @if ($activities->currentPage() == 1)
-                                        <a href="#" class="is-active">1</a>
+                                        <span class="is-active">1</span>
                                     @else
                                         <a href="{{ $activities->url(1) }}">1</a>
                                     @endif
@@ -1025,13 +1032,13 @@
 
                                     {{-- Show dots if there is a gap after page 1 --}}
                                     @if ($start > 2)
-                                        <span>...</span>
+                                        <span class="pagination__dots">...</span>
                                     @endif
 
                                     {{-- Loop middle pages --}}
                                     @for ($page = $start; $page <= $end; $page++)
                                         @if ($page == $activities->currentPage())
-                                            <a href="#" class="is-active">{{ $page }}</a>
+                                            <span class="is-active">{{ $page }}</span>
                                         @else
                                             <a href="{{ $activities->url($page) }}">{{ $page }}</a>
                                         @endif
@@ -1039,7 +1046,7 @@
 
                                     {{-- Show dots if there is a gap before last page --}}
                                     @if ($end < $activities->lastPage() - 1)
-                                        <span>...</span>
+                                        <span class="pagination__dots">...</span>
                                     @endif
 
                                     {{-- Always show last page if more than 1 page --}}
@@ -1047,7 +1054,7 @@
                                         <a
                                             href="{{ $activities->url($activities->lastPage()) }}">{{ $activities->lastPage() }}</a>
                                     @elseif ($activities->lastPage() > 1 && $activities->currentPage() == $activities->lastPage())
-                                        <a href="#" class="is-active">{{ $activities->lastPage() }}</a>
+                                        <span class="is-active">{{ $activities->lastPage() }}</span>
                                     @endif
                                 </div>
 
