@@ -35,8 +35,8 @@ class ToursDataParserTest extends TestCase
         $records = $this->parser->parse(base_path('tours-data.md'));
 
         $matched = array_filter($records, fn ($r) => $r->hasImages());
-        $this->assertCount(49, $matched);
-        $this->assertCount(28, array_filter($records, fn ($r) => ! $r->hasImages()));
+        $this->assertCount(61, $matched); // 46 tours + 12 activities + 3 trekking
+        $this->assertCount(16, array_filter($records, fn ($r) => ! $r->hasImages()));
 
         foreach ($matched as $r) {
             $this->assertNotNull($r->cover, $r->title);
@@ -69,6 +69,29 @@ class ToursDataParserTest extends TestCase
         $problems = $this->parser->validate($records, public_path());
 
         $this->assertSame([], $problems);
+    }
+
+    public function test_itinerary_details_parsed_from_real_file(): void
+    {
+        $records = $this->parser->parse(base_path('tours-data.md'));
+
+        $withDetails = array_values(array_filter($records, fn ($r) => $r->itineraryDetails !== []));
+        $this->assertCount(65, $withDetails); // 62 tours + 3 trekking
+
+        foreach ($withDetails as $r) {
+            $this->assertSame(count($r->itinerary), count($r->itineraryDetails), $r->title);
+            foreach ($r->itineraryDetails as $d) {
+                $this->assertNotSame('', trim($d['description']), $r->title);
+                $this->assertStringNotContainsString('Local Morocco Tours', $d['description'], 'old brand leaked');
+                $this->assertStringNotContainsString('<', $d['description'], 'html leaked');
+            }
+        }
+        // activities have no legacy itinerary pages
+        foreach ($records as $r) {
+            if ($r->section === 'activity') {
+                $this->assertSame([], $r->itineraryDetails, $r->title);
+            }
+        }
     }
 
     public function test_unmatched_records_have_null_images_and_zero_confidence(): void

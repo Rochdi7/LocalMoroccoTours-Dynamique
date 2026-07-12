@@ -41,10 +41,13 @@ class ProgramData
         public readonly float $matchConfidence,
         public readonly array $matchEvidence,
         public readonly ?string $matchReviewNotes,
+        /** @var list<array{day: int, title: string, description: string}> */
+        public readonly array $itineraryDetails = [],
     ) {}
 
+    /** A record is "matched" when it has at least a cover; gallery is optional. */
     public function hasImages(): bool
     {
-        return $this->cover !== null && $this->gallery !== null;
+        return $this->cover !== null;
     }
 }

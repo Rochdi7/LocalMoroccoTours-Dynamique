@@ -64,7 +64,7 @@
         </div>
 
         <div class="headerMobile__right">
-            <a href="https://www.tripadvisor.fr/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
+            <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
                 target="_blank" class="tripadvisor-icon-mobile d-flex items-center">
                 <img src="/assets/images/icon/tripdavisor.svg" alt="Tripadvisor">
             </a>
@@ -81,7 +81,7 @@
         </style>
 
         <div class="header__right">
-            <a href="https://www.tripadvisor.fr/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
+            <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
                 target="_blank" class="button -sm rounded-200 ml-30 d-flex items-center">
                 <img src="/assets/images/icon/tripdavisor.svg" alt="Tripadvisor"
                     style="width: 18px; height: 18px; margin-right: 5px;">

@@ -340,7 +340,14 @@
                                              @endif
 
                                              <div class="roadmap__wrap">
-                                                 <div class="roadmap__title">{{ $day }}</div>
+                                                 @if (is_array($day))
+                                                     <div class="roadmap__title">{{ $day['title'] ?? '' }}</div>
+                                                     @if (!empty($day['content']))
+                                                         <div class="roadmap__content">{{ $day['content'] }}</div>
+                                                     @endif
+                                                 @else
+                                                     <div class="roadmap__title">{{ $day }}</div>
+                                                 @endif
                                              </div>
                                          </div>
                                      @endforeach

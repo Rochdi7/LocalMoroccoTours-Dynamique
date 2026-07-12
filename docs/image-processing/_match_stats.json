@@ -1,0 +1,20 @@
+{
+ "total": 77,
+ "tours": 62,
+ "activities": 12,
+ "trekking": 3,
+ "folders": 49,
+ "matched": 49,
+ "exact": 0,
+ "normalized": 36,
+ "high": 13,
+ "medium": 0,
+ "ambiguous": 0,
+ "unmatched_records": 28,
+ "unmatched_folders": 0,
+ "watermarked": 3,
+ "lowres": 27,
+ "promo": 1,
+ "dup": 2,
+ "sha_after": "2e39a5f82ea49b5bc13afaca2b907ff04dd2d9eec24980ab4e6fc259c27d3989"
+}

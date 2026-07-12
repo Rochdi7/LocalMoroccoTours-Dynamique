@@ -94,6 +94,12 @@ abstract class ProgramImportTestCase extends TestCase
             $out .= "- languages: English, French\n";
             $out .= "- included:\n    - Transport\n- excluded:\n    - Lunches\n";
             $out .= "- itinerary:\n    - Day 1: Go → See Aït Benhaddou\n    - Day 2: Return\n";
+            foreach ($r['itinerary_details'] ?? [] as $n => $d) {
+                $out .= $n === 0 ? "- itinerary_details:\n" : '';
+                $out .= '    - day: '.($n + 1)."\n";
+                $out .= '      title: "'.($d['title'] ?? 'Day title')."\"\n";
+                $out .= '      description: "'.$d['description']."\"\n";
+            }
             $out .= '- bestseller: '.($r['bestseller'] ?? 'false')."\n";
             $out .= '- free_cancellation: '.($r['free_cancellation'] ?? 'true')."\n";
             $out .= "- map_frame: |\n    <iframe src=\"https://maps.example/embed?pb=1\" width=\"100%\"></iframe>\n";

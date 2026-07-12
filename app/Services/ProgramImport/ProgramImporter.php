@@ -139,6 +139,13 @@ class ProgramImporter
     {
         $fillable = $this->buildFillOnlyMissing($record, $model, $options['update_content']);
 
+        $mergedItinerary = $this->mergeItineraryDescriptions($record, $model->getAttribute('itinerary'));
+        if ($mergedItinerary === false) {
+            $detail['warnings'] = ['itinerary_details day count does not match existing itinerary - descriptions not merged'];
+        } elseif ($mergedItinerary !== null) {
+            $fillable['itinerary'] = $mergedItinerary;
+        }
+
         if ($fillable === []) {
             $this->reporter->record($record, $slug, 'skipped', $detail + [
                 'record_id' => $model->id,
@@ -198,6 +205,9 @@ class ProgramImporter
     /** Source values shaped for the given model, following existing seeder conventions. */
     private function sourceContentFields(ProgramData $record, Model $model): array
     {
+        // NOTE: itinerary is deliberately absent - it is handled exclusively by
+        // mergeItineraryDescriptions() so day titles are never overwritten and
+        // descriptions are only ever ADDED.
         $fields = [
             'overview' => $record->overview,
             'duration' => $record->duration,
@@ -205,7 +215,6 @@ class ProgramImporter
             'map_frame' => $record->mapFrame,
             'included' => $record->included,
             'excluded' => $record->excluded,
-            'itinerary' => $record->itinerary,
             'languages' => $record->languages,
         ];
 
@@ -222,6 +231,65 @@ class ProgramImporter
         }
 
         return $fields;
+    }
+
+    /**
+     * Additive itinerary enrichment. Existing day TITLES are never changed and
+     * existing non-empty descriptions are never replaced; descriptions from
+     * tours-data.md itinerary_details are only ADDED where missing.
+     *
+     * @param  mixed  $current  the model's current itinerary attribute
+     * @return array|null|false merged array when something was added, null when
+     *                          nothing to do, false when day counts conflict
+     */
+    private function mergeItineraryDescriptions(ProgramData $record, mixed $current): array|null|false
+    {
+        $current = is_array($current) ? $current : [];
+        if ($current === []) {
+            // empty DB itinerary: fill from source (with descriptions when aligned)
+            if ($record->itinerary === []) {
+                return null;
+            }
+
+            return $this->buildItineraryPayload($record);
+        }
+        if ($record->itineraryDetails === []) {
+            return null;
+        }
+        if (count($record->itineraryDetails) !== count($current)) {
+            return false;
+        }
+
+        $changed = false;
+        $merged = [];
+        foreach (array_values($current) as $i => $entry) {
+            $title = is_array($entry) ? (string) ($entry['title'] ?? '') : (string) $entry;
+            $content = is_array($entry) ? ($entry['content'] ?? null) : null;
+            if (($content === null || $content === '') && $record->itineraryDetails[$i]['description'] !== '') {
+                $content = $record->itineraryDetails[$i]['description'];
+                $changed = true;
+            }
+            $merged[] = $content !== null && $content !== ''
+                ? ['title' => $title, 'content' => $content]
+                : $title;
+        }
+
+        return $changed ? $merged : null;
+    }
+
+    /** Itinerary column payload for new/empty records: titles + descriptions when aligned. */
+    private function buildItineraryPayload(ProgramData $record): array
+    {
+        if ($record->itineraryDetails !== []
+            && count($record->itineraryDetails) === count($record->itinerary)) {
+            return array_map(
+                fn ($title, $d) => ['title' => $title, 'content' => $d['description']],
+                $record->itinerary,
+                $record->itineraryDetails,
+            );
+        }
+
+        return $record->itinerary;
     }
 
     private function createNew(ProgramData $record, string $slug, array $options, array $detail): ?Model
@@ -270,7 +338,7 @@ class ProgramImporter
                 'map_frame' => $record->mapFrame,
                 'included' => $record->included,
                 'excluded' => $record->excluded,
-                'itinerary' => $record->itinerary,
+                'itinerary' => $this->buildItineraryPayload($record),
                 'languages' => $record->languages,
                 'category_id' => $category->id,
                 'location_id' => $location?->id,
@@ -324,7 +392,14 @@ class ProgramImporter
             return;
         }
 
-        foreach (['cover' => $record->cover, 'gallery' => $record->gallery] as $collection => $image) {
+        $images = ['cover' => $record->cover];
+        if ($record->gallery !== null) {
+            $images['gallery'] = $record->gallery;
+        } else {
+            $this->reporter->media($record, $slug, 'gallery', 'no-source-media', 'record has cover only, no gallery image');
+        }
+
+        foreach ($images as $collection => $image) {
             $problems = $this->mediaImporter->validateSource($image);
             if ($problems !== []) {
                 $this->reporter->media($record, $slug, $collection, 'failed', implode('; ', $problems));
@@ -371,7 +446,11 @@ class ProgramImporter
 
             return;
         }
-        foreach (['cover' => $record->cover, 'gallery' => $record->gallery] as $collection => $image) {
+        $images = ['cover' => $record->cover];
+        if ($record->gallery !== null) {
+            $images['gallery'] = $record->gallery;
+        }
+        foreach ($images as $collection => $image) {
             $problems = $this->mediaImporter->validateSource($image);
             $problems === []
                 ? $this->reporter->media($record, $slug, $collection, 'would-attach', 'after record creation')

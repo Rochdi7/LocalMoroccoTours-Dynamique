@@ -81,7 +81,7 @@
 
         <div class="headerMobile__right">
 
-            <a href="https://www.tripadvisor.fr/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
+            <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
                 target="_blank" class="tripadvisor-icon-mobile d-flex items-center ml-20">
                 <img src="/assets/images/icon/tripdavisor.svg" alt="Tripadvisor">
             </a>
@@ -106,7 +106,7 @@
             </a>
 
             <!-- Tripadvisor icon with flying hover effect -->
-            <a href="https://www.tripadvisor.fr/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
+            <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
                 target="_blank" class="ml-20 d-flex items-center tripadvisor-hover">
                 <img src="/assets/images/icon/tripdavisor.svg" alt="Tripadvisor">
             </a>

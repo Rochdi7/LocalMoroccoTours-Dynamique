@@ -72,7 +72,11 @@ class ToursDataParser
 
             if ($r->hasImages()) {
                 $matched++;
-                foreach (['cover' => $r->cover, 'gallery' => $r->gallery] as $role => $img) {
+                $images = ['cover' => $r->cover];
+                if ($r->gallery !== null) {
+                    $images['gallery'] = $r->gallery;
+                }
+                foreach ($images as $role => $img) {
                     if (! str_starts_with($img->path, 'assets/images/programs/')) {
                         $problems[] = "record {$r->index} ({$r->title}) {$role}: unexpected path prefix";
                     }
@@ -126,7 +130,7 @@ class ToursDataParser
 
                 if ($value === '|') {
                     [$key, $mode, $buf] = [$name, 'block', []];
-                } elseif ($value === '' && in_array($name, ['images', 'image_match'], true)) {
+                } elseif ($value === '' && in_array($name, ['images', 'image_match', 'itinerary_details'], true)) {
                     [$key, $mode, $buf] = [$name, 'nested', []];
                 } elseif ($value === '') {
                     [$key, $mode, $buf] = [$name, 'list', []];
@@ -281,6 +285,17 @@ class ToursDataParser
 
         $match = is_array($f['image_match'] ?? null) ? $f['image_match'] : [];
 
+        $details = [];
+        foreach ((array) ($f['itinerary_details'] ?? []) as $d) {
+            if (is_array($d) && isset($d['description']) && trim((string) $d['description']) !== '') {
+                $details[] = [
+                    'day' => (int) ($d['day'] ?? count($details) + 1),
+                    'title' => (string) ($d['title'] ?? ''),
+                    'description' => (string) $d['description'],
+                ];
+            }
+        }
+
         return new ProgramData(
             index: $index,
             section: (string) ($f['section'] ?? ''),
@@ -307,6 +322,7 @@ class ToursDataParser
             matchConfidence: (float) ($match['confidence'] ?? 0),
             matchEvidence: array_values(array_filter((array) ($match['evidence'] ?? []), 'is_string')),
             matchReviewNotes: is_string($match['review_notes'] ?? null) ? $match['review_notes'] : null,
+            itineraryDetails: $details,
         );
     }
 }

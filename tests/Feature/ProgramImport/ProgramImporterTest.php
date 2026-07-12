@@ -139,6 +139,98 @@ class ProgramImporterTest extends ProgramImportTestCase
         $this->assertSame('', Tour::first()->overview); // record content untouched
     }
 
+    public function test_itinerary_descriptions_added_without_touching_titles(): void
+    {
+        $def = $this->matchedTour();
+        $def['itinerary_details'] = [
+            ['title' => 'Go there', 'description' => 'Full day-one description from the legacy page.'],
+            ['title' => 'Come back', 'description' => 'Full day-two description from the legacy page.'],
+        ];
+        $fixture = $this->buildFixture([$def]);
+        $cat = TourCategory::create(['name' => 'X', 'slug' => 'x']);
+        $loc = Location::create(['name' => 'Y', 'slug' => 'y']);
+        Tour::create([
+            'title' => $def['title'], 'slug' => 'test-tour-to-merzouga',
+            'overview' => 'O', 'duration' => 'd', 'age_range' => '', 'base_price' => 0,
+            'category_id' => $cat->id, 'location_id' => $loc->id,
+            'included' => [], 'excluded' => [],
+            'itinerary' => ['Day 1: EXISTING custom title', 'Day 2: Another custom title'],
+            'languages' => [],
+        ]);
+
+        $this->runImport($fixture);
+
+        $it = Tour::firstOrFail()->itinerary;
+        $this->assertSame('Day 1: EXISTING custom title', $it[0]['title'], 'existing day title preserved verbatim');
+        $this->assertSame('Full day-one description from the legacy page.', $it[0]['content']);
+        $this->assertSame('Day 2: Another custom title', $it[1]['title']);
+    }
+
+    public function test_existing_itinerary_descriptions_never_overwritten(): void
+    {
+        $def = $this->matchedTour();
+        $def['itinerary_details'] = [
+            ['description' => 'NEW text that must not win.'],
+            ['description' => 'Second day new text.'],
+        ];
+        $fixture = $this->buildFixture([$def]);
+        $cat = TourCategory::create(['name' => 'X', 'slug' => 'x']);
+        $loc = Location::create(['name' => 'Y', 'slug' => 'y']);
+        Tour::create([
+            'title' => $def['title'], 'slug' => 'test-tour-to-merzouga',
+            'overview' => 'O', 'duration' => 'd', 'age_range' => '', 'base_price' => 0,
+            'category_id' => $cat->id, 'location_id' => $loc->id,
+            'included' => [], 'excluded' => [],
+            'itinerary' => [
+                ['title' => 'Day 1: T', 'content' => 'Manually written description.'],
+                ['title' => 'Day 2: U', 'content' => ''],
+            ],
+            'languages' => [],
+        ]);
+
+        $this->runImport($fixture);
+
+        $it = Tour::firstOrFail()->itinerary;
+        $this->assertSame('Manually written description.', $it[0]['content'], 'existing description preserved');
+        $this->assertSame('Second day new text.', $it[1]['content'], 'missing description filled');
+    }
+
+    public function test_itinerary_day_count_mismatch_is_not_merged(): void
+    {
+        $def = $this->matchedTour();
+        $def['itinerary_details'] = [['description' => 'Only one day of details.']];
+        $fixture = $this->buildFixture([$def]); // fixture itinerary has 2 days
+        $cat = TourCategory::create(['name' => 'X', 'slug' => 'x']);
+        $loc = Location::create(['name' => 'Y', 'slug' => 'y']);
+        Tour::create([
+            'title' => $def['title'], 'slug' => 'test-tour-to-merzouga',
+            'overview' => 'O', 'duration' => 'd', 'age_range' => '', 'base_price' => 0,
+            'category_id' => $cat->id, 'location_id' => $loc->id,
+            'included' => [], 'excluded' => [],
+            'itinerary' => ['Day 1: A', 'Day 2: B'], 'languages' => [],
+        ]);
+
+        $this->runImport($fixture);
+
+        $this->assertSame(['Day 1: A', 'Day 2: B'], Tour::firstOrFail()->itinerary, 'mismatched details rejected');
+    }
+
+    public function test_new_record_gets_itinerary_with_descriptions(): void
+    {
+        $def = $this->matchedTour();
+        $def['itinerary_details'] = [
+            ['description' => 'Day one story.'],
+            ['description' => 'Day two story.'],
+        ];
+        $fixture = $this->buildFixture([$def]);
+
+        $this->runImport($fixture);
+
+        $it = Tour::firstOrFail()->itinerary;
+        $this->assertStringContainsString('Aït Benhaddou', $it[0]['title']);
+        $this->assertSame('Day one story.', $it[0]['content']);
+    }
+
     public function test_sections_filter_and_trekking_defaults(): void
     {
         $trek = [

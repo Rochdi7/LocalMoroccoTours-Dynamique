@@ -2,54 +2,29 @@
 
 namespace Database\Seeders;
 
-use App\Models\Location;
-use App\Models\Trekking;
-use App\Models\TrekkingCategory;
-use Illuminate\Support\Str;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
-class TrekkingSeeder extends TourDataSeeder
+/**
+ * Thin wrapper: imports only the `trekking` section (3 records) from
+ * tours-data.md via the programs:import pipeline. No data is embedded here —
+ * tours-data.md is the single source of truth.
+ *
+ * Replaces the previous markdown-parsing TrekkingSeeder (which extended
+ * TourDataSeeder): the importer pipeline adds media attachment, hash
+ * verification, duplicate prevention and fill-only-missing updates.
+ * Existing trekking-specific values (difficulty_level, max_altitude) are
+ * preserved; for brand-new rows the importer defaults difficulty to Moderate.
+ */
+class TrekkingSeeder extends Seeder
 {
-    protected function section(): string
-    {
-        return 'trekking';
-    }
-
-    protected function modelClass(): string
-    {
-        return Trekking::class;
-    }
-
     public function run(): void
     {
-        $items = $this->items();
-
-        foreach ($items as $item) {
-            $category = TrekkingCategory::firstOrCreate(
-                ['name' => $item['category']],
-                ['slug' => Str::slug($item['category'])]
-            );
-
-            $location = null;
-            if (! empty($item['location'])) {
-                $location = Location::firstOrCreate(
-                    ['name' => $item['location']],
-                    ['slug' => Str::slug($item['location'])]
-                );
-            }
-
-            $payload = $this->basePayload($item, $category->id, $location?->id);
-
-            $difficulty = $item['difficulty_level'] ?? 'Moderate';
-            $payload['difficulty_level'] = in_array($difficulty, ['Easy', 'Moderate', 'Hard', 'Expert'], true)
-                ? $difficulty
-                : 'Moderate';
-            $payload['max_altitude'] = ($item['max_altitude'] ?? '') !== ''
-                ? (int) $item['max_altitude']
-                : null;
-
-            Trekking::create($payload);
-        }
-
-        $this->command?->info('Seeded ' . count($items) . ' trekking trips.');
+        Artisan::call('programs:import', [
+            '--apply' => true,
+            '--section' => ['trekking'],
+            '--no-interaction' => true,
+            '--report' => 'seeder-trekking-'.now()->format('Ymd-His-u'),
+        ], $this->command?->getOutput());
     }
 }
