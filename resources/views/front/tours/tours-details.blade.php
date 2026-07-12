@@ -131,13 +131,16 @@
                                  <div class="swiper-wrapper">
                                      @forelse ($gallery as $media)
                                          @php
+                                             $url = $media->hasGeneratedConversion('slider')
+                                                 ? $media->getUrl('slider')
+                                                 : $media->getUrl();
                                              $alt = $media->getCustomProperty('alt') ?? $tour->title;
                                              $title = $media->getCustomProperty('title') ?? $tour->title;
                                              $caption = $media->getCustomProperty('caption') ?? '';
                                              $desc = $media->getCustomProperty('description') ?? '';
                                          @endphp
                                          <div class="swiper-slide">
-                                             <img src="{{ $media->getUrl('slider') }}" alt="{{ $alt }}"
+                                             <img src="{{ $url }}" alt="{{ $alt }}"
                                                  title="{{ $title }}" data-caption="{{ $caption }}"
                                                  data-description="{{ $desc }}" class="img-cover rounded-12">
                                          </div>

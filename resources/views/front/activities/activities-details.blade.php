@@ -129,17 +129,25 @@
                                  data-nav-next="js-sliderMain-next" data-loop>
                                  <div class="swiper-wrapper">
                                      @php
+                                         // Cover image first, then any gallery images.
                                          $gallery = $activity->getMedia('gallery');
+                                         $cover = $activity->getFirstMedia('cover');
+                                         if ($cover) {
+                                             $gallery = $gallery->prepend($cover);
+                                         }
                                      @endphp
                                      @forelse ($gallery as $media)
                                          @php
+                                             $url = $media->hasGeneratedConversion('slider')
+                                                 ? $media->getUrl('slider')
+                                                 : $media->getUrl();
                                              $alt = $media->getCustomProperty('alt') ?? $activity->title;
                                              $title = $media->getCustomProperty('title') ?? $activity->title;
                                              $caption = $media->getCustomProperty('caption') ?? '';
                                              $desc = $media->getCustomProperty('description') ?? '';
                                          @endphp
                                          <div class="swiper-slide">
-                                             <img src="{{ $media->getUrl('slider') }}" alt="{{ $alt }}"
+                                             <img src="{{ $url }}" alt="{{ $alt }}"
                                                  title="{{ $title }}" data-caption="{{ $caption }}"
                                                  data-description="{{ $desc }}" class="img-cover rounded-12">
                                          </div>

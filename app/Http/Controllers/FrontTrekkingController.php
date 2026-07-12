@@ -81,7 +81,7 @@ class FrontTrekkingController extends Controller
                 break;
         }
 
-        $trekkings = $trekkings->paginate(2);
+        $trekkings = $trekkings->paginate(9);
 
         $trekIds = $trekkings->pluck('id');
 

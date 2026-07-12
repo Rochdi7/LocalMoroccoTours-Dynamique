@@ -4,8 +4,8 @@
     <section data-anim="fade" class="hero -type-1 -min">
         <div class="hero__bg">
             <img src="{{ asset('assets/images/hero/localmorocco-tours-guide-high-atlas-mountain-climb.webp') }}"
-                alt="Owner of LocalMorocco Tours guiding clients on a winter climb in the High Atlas Mountains of Morocco"
-                title="LocalMorocco Tours Guide with Clients in Morocco's High Atlas Mountains">
+                alt="Owner of AuthenticMoroccoAdventures guiding clients on a winter climb in the High Atlas Mountains of Morocco"
+                title="AuthenticMoroccoAdventures Guide with Clients in Morocco's High Atlas Mountains">
 
             <img src="{{ asset('assets/img/hero/1/shape.svg') }}" alt="decorative shape">
         </div>
@@ -20,7 +20,7 @@
 
                         <p class="hero__text">
                             Conquer breathtaking peaks and explore rugged trails in Morocco’s High Atlas. Experience
-                            unforgettable trekking adventures led by expert local guides from LocalMorocco Tours.
+                            unforgettable trekking adventures led by expert local guides from AuthenticMoroccoAdventures.
                         </p>
 
                         <form method="GET" action="{{ route('front.trekking.index') }}">
@@ -248,11 +248,13 @@
 
                         <!-- hidden SEO text -->
                         <div style="display: none;">
-                            Owner of LocalMorocco Tours guiding clients on a winter climb in the High Atlas Mountains of
+                            Owner of AuthenticMoroccoAdventures guiding clients on a winter climb in the High Atlas
+                            Mountains of
                             Morocco.
                         </div>
                         <div style="display: none;">
-                            Experience trekking adventures in Morocco’s High Atlas Mountains with LocalMorocco Tours, guided
+                            Experience trekking adventures in Morocco’s High Atlas Mountains with
+                            AuthenticMoroccoAdventures, guided
                             by local experts who lead climbers through breathtaking snowy peaks and stunning panoramic
                             views.
                         </div>
@@ -916,8 +918,8 @@
                                             </div>
                                         @endif
 
-                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping" data-id="{{ $trek->slug }}"
-                                            data-type="trekking"
+                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping"
+                                            data-id="{{ $trek->slug }}" data-type="trekking"
                                             style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
                                             <i class="icon-heart"></i>
                                         </button>
@@ -953,7 +955,8 @@
                                                 </div>
 
                                                 <div class="text-14 ml-10">
-                                                    <span class="fw-500">{{ number_format($trek->avg_rating ?? 0, 1) }}</span>
+                                                    <span
+                                                        class="fw-500">{{ number_format($trek->avg_rating ?? 0, 1) }}</span>
                                                     ({{ $reviewsCount }})
                                                 </div>
                                             @else

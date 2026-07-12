@@ -133,7 +133,12 @@
                                  data-nav-next="js-sliderMain-next" data-loop>
                                  <div class="swiper-wrapper">
                                      @php
+                                         // Cover image first, then any gallery images.
                                          $galleryImages = $trekking->getMedia('gallery');
+                                         $cover = $trekking->getFirstMedia('cover');
+                                         if ($cover) {
+                                             $galleryImages = $galleryImages->prepend($cover);
+                                         }
                                      @endphp
 
                                      @forelse ($galleryImages as $image)
