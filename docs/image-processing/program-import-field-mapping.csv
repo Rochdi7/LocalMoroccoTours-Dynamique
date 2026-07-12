@@ -1,0 +1,29 @@
+source_field,destination_model,destination_column,transformation,null_behavior,overwrite_policy,validation_rule
+title,Tour/Activity/Trekking,title,none,required,never (identity field),non-empty string
+title,Tour/Activity/Trekking,slug,Str::slug(title),required,never (upsert key),unique per table; must match existing row or create
+type,Tour,type,pass-through if in enum else 'multi_day' on create,default multi_day,fill-if-empty; --update-content replaces,enum('day_trip','multi_day')
+overview,Tour/Activity/Trekking,overview,multiline block preserved verbatim,required NOT NULL,fill-if-empty; --update-content replaces,non-empty on create
+highlights,Tour,highlights,json_encode(array) (text column; no cast),null when source list empty,fill-if-empty; --update-content replaces,valid JSON array string
+highlights,Activity/Trekking,highlights,raw array (model array cast),null when source list empty,fill-if-empty; --update-content replaces,array of strings
+duration,Tour/Activity/Trekking,duration,pass-through,required NOT NULL,fill-if-empty; --update-content replaces,non-empty string
+group_size,Tour/Activity/Trekking,group_size,blank -> null,nullable,fill-if-empty only,string or null
+age_range,Tour/Activity/Trekking,age_range,blank -> '' (NOT NULL column),'' on create,never updated (source always blank),string
+base_price,Tour/Activity/Trekking,base_price,blank -> 0 on create only,0 on create,NEVER updated on existing records,decimal >= 0
+languages,Tour/Activity/Trekking,languages,comma-split -> array (array cast onto varchar),empty array allowed,fill-if-empty; --update-content replaces,array of strings; JSON <= 255 chars
+included,Tour/Activity/Trekking,included,list -> array (JSON column),empty array allowed,fill-if-empty; --update-content replaces,array of strings
+excluded,Tour/Activity/Trekking,excluded,list -> array (JSON column),empty array allowed,fill-if-empty; --update-content replaces,array of strings
+itinerary,Tour/Activity/Trekking,itinerary,list -> array; colons/arrows/Unicode preserved,empty array allowed,fill-if-empty; --update-content replaces,array of strings
+bestseller,Tour/Activity/Trekking,bestseller_flag,'true'/'1'/'yes' -> true,false default,set on create only; never updated,boolean
+free_cancellation,Tour/Activity/Trekking,free_cancellation_flag,'true'/'1'/'yes' -> true,false default,set on create only; never updated,boolean
+map_frame,Tour/Activity/Trekking,map_frame,multiline iframe preserved verbatim,null when blank,fill-if-empty; --update-content replaces,contains </iframe> when present
+category,Tour,category_id,TourCategory firstOrCreate by exact name (slug=Str::slug),required FK,never rewired on existing records,category exists or is created
+category,Activity,category_id,ActivityCategory firstOrCreate by exact name,required FK,never rewired on existing records,category exists or is created
+category,Trekking,category_id,TrekkingCategory firstOrCreate by exact name,required FK,never rewired on existing records,category exists or is created
+location,Tour,location_id,Location firstOrCreate by exact name; blank -> 'Morocco' fallback,NOT NULL on tours,never rewired on existing records,location exists or is created
+location,Activity/Trekking,location_id,Location firstOrCreate by exact name; blank -> null,nullable,never rewired on existing records,location exists or is created
+(n/a),Trekking,difficulty_level,'Moderate' default on create (absent from source),required enum,never updated,enum('Easy','Moderate','Hard','Expert')
+(n/a),Tour/Activity/Trekking,booked_count,never written,-,NEVER,protected production value
+(n/a),Tour/Activity/Trekking,rating & reviews_count,never written,-,NEVER,protected production values
+images.cover,media (cover collection),spatie media row,addMedia()->preservingOriginal(); custom props alt/title/caption/description + provenance keys,skip when images null,attach only when collection empty or identical seed; --replace-seed-media replaces seed-managed only; manual uploads always preserved,file exists + inside public + WebP MIME + SHA-256 match + confidence >= 0.80
+images.gallery[0],media (gallery collection),spatie media row,same as cover,skip when images null,same as cover,same as cover
+image_match.confidence,media custom property,image_match_confidence,float pass-through,0 for unmatched,-,>= 0.80 required for attachment

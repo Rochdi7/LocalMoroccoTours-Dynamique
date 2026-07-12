@@ -18,7 +18,9 @@ class FrontTourController extends Controller
     public function index(Request $request)
     {
         $minPrice = Tour::min('base_price') ?? 0;
-        $maxPrice = Tour::max('base_price') ?? 0;
+        // Cap the filter slider at a sensible ceiling so outlier/mis-entered
+        // prices don't blow the range out (e.g. $100,000).
+        $maxPrice = min((int) (Tour::max('base_price') ?? 0), 5000);
 
         $durations = [
             '0-3 hours',
@@ -87,7 +89,9 @@ class FrontTourController extends Controller
             ->when(!empty($selectedLocations), function ($query) use ($selectedLocations) {
                 $query->whereIn('location_id', $selectedLocations);
             })
-            ->whereBetween('base_price', $selectedPriceRange);
+            ->when($request->filled('price'), function ($query) use ($selectedPriceRange) {
+                $query->whereBetween('base_price', $selectedPriceRange);
+            });
 
         switch ($sortBy) {
             case 'price_low_high':
@@ -166,7 +170,12 @@ class FrontTourController extends Controller
             ->withCount('reviews')
             ->where('slug', $slug)
             ->firstOrFail();
+        // Show the cover image as the first slide, followed by any gallery images.
         $gallery = $tour->getMedia('gallery');
+        $cover = $tour->getFirstMedia('cover');
+        if ($cover) {
+            $gallery = $gallery->prepend($cover);
+        }
 
 
         // Calculate average rating for this tour

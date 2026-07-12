@@ -324,7 +324,14 @@
                                          @endif
 
                                          <div class="roadmap__wrap">
-                                             <div class="roadmap__title">{{ $day }}</div>
+                                             @if (is_array($day))
+                                                 <div class="roadmap__title">{{ $day['title'] ?? '' }}</div>
+                                                 @if (!empty($day['content']))
+                                                     <div class="roadmap__content">{{ $day['content'] }}</div>
+                                                 @endif
+                                             @else
+                                                 <div class="roadmap__title">{{ $day }}</div>
+                                             @endif
                                          </div>
                                      </div>
                                  @endforeach
@@ -1151,10 +1158,14 @@
                          <div class="tourSingleSidebar">
 
                              {{-- PRICE --}}
-                             <div class="d-flex items-center">
-                                 <div>From</div>
-                                 <div class="text-20 fw-500 ml-10">${{ number_format($activity->base_price, 2) }}</div>
-                             </div>
+                             @if ($activity->base_price > 0)
+                                 <div class="d-flex items-center">
+                                     <div>From</div>
+                                     <div class="text-20 fw-500 ml-10">${{ number_format($activity->base_price, 2) }}</div>
+                                 </div>
+                             @else
+                                 <div class="text-18 fw-500">Contact us for price</div>
+                             @endif
 
                              {{-- WHY BOOK WITH US --}}
                              <ul class="ulList mt-15">
@@ -1176,11 +1187,13 @@
                              </div>
 
                              {{-- TOTAL --}}
-                             <div class="line mt-20 mb-20"></div>
-                             <div class="d-flex items-center justify-between">
-                                 <div class="text-18 fw-500">Total:</div>
-                                 <div class="text-18 fw-500">${{ number_format($activity->base_price, 2) }}</div>
-                             </div>
+                             @if ($activity->base_price > 0)
+                                 <div class="line mt-20 mb-20"></div>
+                                 <div class="d-flex items-center justify-between">
+                                     <div class="text-18 fw-500">Total:</div>
+                                     <div class="text-18 fw-500">${{ number_format($activity->base_price, 2) }}</div>
+                                 </div>
+                             @endif
 
                              {{-- BOOK BUTTON --}}
                              <button class="button -md -dark-1 col-12 bg-accent-1 text-white mt-20"
@@ -1269,9 +1282,13 @@
                                                  </div>
 
                                                  <div>
-                                                     From <span class="text-16 fw-500">
-                                                         ${{ number_format($similarActivity->base_price, 2) }}
-                                                     </span>
+                                                     @if ($similarActivity->base_price > 0)
+                                                         From <span class="text-16 fw-500">
+                                                             ${{ number_format($similarActivity->base_price, 2) }}
+                                                         </span>
+                                                     @else
+                                                         <span class="text-14 fw-500">Contact for price</span>
+                                                     @endif
                                                  </div>
                                              </div>
                                          </div>

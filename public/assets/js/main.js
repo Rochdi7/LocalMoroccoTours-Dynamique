@@ -454,7 +454,7 @@ function priceRangeSliderInit() {
       connect: true,
       range: {
         'min': 0,
-        'max': 100000
+        'max': 5000
       },
       format: {
         to: function (value) {

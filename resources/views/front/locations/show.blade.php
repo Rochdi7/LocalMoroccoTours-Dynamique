@@ -79,8 +79,12 @@
                                         </div>
 
                                         <div class="text-right text-white">
-                                            <div class="text-13 lh-14">From</div>
-                                            <div class="text-18 fw-500">${{ number_format($tour->base_price, 2) }}</div>
+                                            @if ($tour->base_price > 0)
+                                                <div class="text-13 lh-14">From</div>
+                                                <div class="text-18 fw-500">${{ number_format($tour->base_price, 2) }}</div>
+                                            @else
+                                                <div class="text-14 fw-500">Contact for price</div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

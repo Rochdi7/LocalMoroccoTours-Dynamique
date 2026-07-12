@@ -6391,6 +6391,25 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: 15px;
 }
 
+/* Ellipsis gap indicator: plain text, not a clickable-looking circle */
+.pagination__count > .pagination__dots {
+  width: auto;
+  min-width: 20px;
+  border-radius: 0;
+  color: var(--color-light-1, #b0b0c3);
+  pointer-events: none;
+  cursor: default;
+}
+
+.pagination__count > .pagination__dots:hover {
+  background-color: transparent;
+}
+
+/* Active page is a non-link span; keep the cursor from implying navigation */
+.pagination__count > span.is-active {
+  cursor: default;
+}
+
 .pagination.-type-1 {
   display: flex;
   align-items: center;
