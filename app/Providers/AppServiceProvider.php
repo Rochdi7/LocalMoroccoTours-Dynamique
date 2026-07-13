@@ -72,14 +72,24 @@ class AppServiceProvider extends ServiceProvider
                     '2-day-desert-tour-from-marrakech-to-ouarzazate-ait-benhaddou',
                     '2-day-marrakech-desert-tour-to-casablanca-rabat',
                     '2-day-desert-tour-from-marrakech-to-agadir-essaouira',
+                    // id 7 — renamed in production; keep old + new slug
                     'merzouga-desert-tour-from-marrakech-2-days',
+                    '2-day-desert-tour-from-marrakech-to-merzouga',
                     '2-day-sahara-desert-tour-from-marrakech-to-zagora',
+                    // id 10 — renamed in production; keep old + new slug
                     'marrakech-desert-tour-3-days-to-merzouga-dunes',
+                    '3-day-desert-tour-from-marrakech-to-merzouga-dunes',
+                    // id 11 — renamed in production; keep old + new slug
                     'marrakech-to-fes-desert-tour-3-days-via-sahara',
+                    '3-day-desert-tour-from-marrakech-to-fes-via-sahara',
+                    // id 9 — renamed in production; keep old + new slug
                     'sahara-desert-tour-from-marrakech-3-days-to-chigaga',
+                    '3-day-sahara-desert-tour-from-marrakech-to-chigaga',
                     '4-day-desert-tour-from-marrakech-to-merzouga',
                     '4-day-desert-tour-from-marrakech-via-sahara-to-chefchaouen',
+                    // id 14 — renamed in production; keep old + new slug
                     'luxury-sahara-desert-tour-from-marrakech-5-days',
+                    '5-day-luxury-sahara-desert-tour-from-marrakech',
                     '8-days-marrakech-zagora-merzouga',
                     '8-day-marrakech-sahara-desert-tour-to-fes-chefchaouen',
                     '11-day-morocco-desert-tour-from-marrakech',
