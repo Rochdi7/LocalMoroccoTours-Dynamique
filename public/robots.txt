@@ -1,4 +1,15 @@
 User-agent: *
 Allow: /
 
+# Admin dashboard & auth — not for indexing
+Disallow: /adminPanel
+Disallow: /login
+Disallow: /register
+Disallow: /password
+Disallow: /profile
+
+# Utility / non-content routes
+Disallow: /blog/search
+Disallow: /test-mail
+
 Sitemap: https://www.authenticmoroccoadventures.com/sitemap.xml

@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // Regenerate public/sitemap.xml daily so search engines see fresh URLs.
-        $schedule->command('sitemap:generate')->daily();
+        $schedule->command('sitemap:generate')
+            ->dailyAt('03:00')
+            ->withoutOverlapping();
     }
 
     /**

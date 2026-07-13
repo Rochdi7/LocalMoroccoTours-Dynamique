@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Tour;
 use App\Models\Trekking;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\URL as UrlFacade;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
@@ -17,8 +18,19 @@ class GenerateSitemap extends Command
 
     protected $description = 'Generate public/sitemap.xml from live tours, activities, treks, locations and blog posts';
 
+    /**
+     * Canonical production domain. The sitemap must always advertise this host,
+     * regardless of the local APP_URL used while generating.
+     */
+    private const BASE_URL = 'https://www.authenticmoroccoadventures.com';
+
     public function handle(): int
     {
+        // Force route() to build absolute URLs against the production domain,
+        // so a local/staging APP_URL never leaks into the published sitemap.
+        UrlFacade::forceRootUrl(self::BASE_URL);
+        UrlFacade::forceScheme('https');
+
         $sitemap = Sitemap::create();
 
         // Static pages

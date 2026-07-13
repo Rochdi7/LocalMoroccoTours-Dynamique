@@ -88,14 +88,7 @@
     </ul>
 </div>
 
-<div class="desktopNav__item">
-    <a href="{{ route('blog.index') }}">Blog</a>
-</div>
-<div class="desktopNav__item">
-    <a href="{{ route('front.contact') }}">Contact</a>
-</div>
-
-{{-- Help & Info dropdown --}}
+{{-- Help & Info dropdown (sits right after Atlas & Toubkal) --}}
 <div class="desktopNav__item">
     <a href="#">
         Help & Info <i class="icon-chevron-down"></i>
@@ -113,4 +106,11 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="desktopNav__item">
+    <a href="{{ route('blog.index') }}">Blog</a>
+</div>
+<div class="desktopNav__item">
+    <a href="{{ route('front.contact') }}">Contact</a>
 </div>
