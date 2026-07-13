@@ -5,7 +5,7 @@
             <a href="//index" class="b-brand text-primary">
                 <!-- ========   Change your logo from here   ============ -->
                 <img src="{{ asset('assets/images/logo/ama_logo_dark.png') }}" alt="logo image" class="logo-lg" />
-                <span class="badge bg-brand-color-2 rounded-pill ms-1 theme-version">v1.2.0</span>
+                <span class="badge bg-brand-color-2 rounded-pill ms-1 theme-version">v1.5.0</span>
             </a>
         </div>
         <div class="navbar-content">

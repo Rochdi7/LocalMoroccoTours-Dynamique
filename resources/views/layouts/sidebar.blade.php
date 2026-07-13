@@ -6,7 +6,7 @@
                 <!-- ========   Change your logo from here   ============ -->
                 <img src="{{ asset('assets/images/logo/' . (env('APP_DARK_LAYOUT') == 'true' ? 'ama_logo_white.png' : 'ama_logo_dark.png')) }}"
                     alt="logo image" class="logo-lg" style="height:36px;width:auto;max-width:180px;object-fit:contain;">
-                <span class="badge bg-brand-color-2 rounded-pill ms-1 theme-version">v1.2.0</span>
+                <span class="badge bg-brand-color-2 rounded-pill ms-1 theme-version">v1.5.0</span>
             </a>
         </div>
         <div class="navbar-content">

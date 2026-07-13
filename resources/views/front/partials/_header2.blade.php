@@ -16,48 +16,7 @@
 
                 <div class="xl:d-none ml-30">
                     <div class="desktopNav">
-                        <div class="desktopNav__item">
-                            <a href="{{ route('front.tours.index') }}">Tours</a>
-                        </div>
-                        <div class="desktopNav__item">
-                            <a href="{{ route('front.tours.index', ['type' => 'day_trip']) }}">Day Trips</a>
-                        </div>
-
-
-                        <div class="desktopNav__item">
-                            <a href="{{ route('front.activities.index') }}">Activities</a>
-                        </div>
-                        <div class="desktopNav__item">
-                            <a href="{{ route('front.trekking.index') }}">Trekking</a>
-                        </div>
-                        <div class="desktopNav__item">
-                            <a href="{{ route('blog.index') }}">Blog</a>
-                        </div>
-                        <div class="desktopNav__item">
-                            <a href="{{ route('front.contact') }}">Contact</a>
-                        </div>
-
-                        <!-- Help & Info dropdown - DESKTOP -->
-                        <div class="desktopNav__item">
-                            <a href="#">
-                                Help & Info
-                                <i class="icon-chevron-down"></i>
-                            </a>
-                            <div class="desktopNavSubnav">
-                                <div class="desktopNavSubnav__content">
-                                    <div class="desktopNavSubnav__item">
-                                        <a href="{{ route('front.about') }}">About</a>
-                                    </div>
-                                    <div class="desktopNavSubnav__item">
-                                        <a href="{{ route('front.help-center') }}">Help Center</a>
-                                    </div>
-                                    <div class="desktopNavSubnav__item">
-                                        <a href="{{ route('front.terms') }}">Terms & Conditions</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Help & Info dropdown -->
+                        @include('front.partials._nav_desktop_items')
                     </div>
                 </div>
             </div>
@@ -105,47 +64,9 @@
         <div class="menu__content">
             <ul class="menuNav js-navList">
                 <li class="menuNav__item">
-                    <a href="{{ route('front.tours.index') }}">Tours</a>
+                    <a href="{{ route('home') }}">Home</a>
                 </li>
-                <li class="menuNav__item">
-                    <a href="{{ route('front.tours.index', ['type' => 'day_trip']) }}">Day Trips</a>
-                </li>
-
-                <li class="menuNav__item">
-                    <a href="{{ route('front.activities.index') }}">Activities</a>
-                </li>
-                <li class="menuNav__item">
-                    <a href="{{ route('front.trekking.index') }}">Trekking</a>
-                </li>
-                <li class="menuNav__item">
-                    <a href="{{ route('blog.index') }}">Blog</a>
-                </li>
-                <li class="menuNav__item">
-                    <a href="{{ route('front.contact') }}">Contact</a>
-                </li>
-
-                <!-- Help & Info dropdown - MOBILE -->
-                <li class="menuNav__item -has-submenu js-has-submenu">
-                    <a>
-                        Help & Info
-                        <i class="icon-chevron-right"></i>
-                    </a>
-                    <ul class="submenu">
-                        <li class="submenu__item js-nav-list-back">
-                            <a>Back</a>
-                        </li>
-                        <li class="submenu__item">
-                            <a href="{{ route('front.about') }}">About</a>
-                        </li>
-                        <li class="submenu__item">
-                            <a href="{{ route('front.help-center') }}">Help Center</a>
-                        </li>
-                        <li class="submenu__item">
-                            <a href="{{ route('front.terms') }}">Terms & Conditions</a>
-                        </li>
-                    </ul>
-                </li>
-                <!-- End Help & Info dropdown -->
+                @include('front.partials._nav_mobile_items')
             </ul>
         </div>
 
@@ -242,6 +163,7 @@
     }
 </style>
 
+@include('front.partials._nav_megamenu_styles')
 
 <script>
     document.addEventListener("scroll", function() {

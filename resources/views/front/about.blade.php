@@ -53,15 +53,27 @@
 
     <section class="layout-pt-lg">
         <div data-anim-wrap class="container">
-            <div class="row y-gap-20 justify-between">
+            <div class="row y-gap-30 justify-between items-center">
 
                 <div data-anim-child="slide-up" class="col-lg-6">
-                    <h2 class="text-30 fw-700">
-                        Discover Authentic Morocco Adventures — Your Gateway to Authentic Moroccan Experiences
-                    </h2>
+                    <figure class="m-0">
+                        <img src="{{ asset('assets/images/hero/marrakech-medina-narrow-street-locals-morocco.avif') }}"
+                            alt="Locals walking through a narrow terracotta-walled street in the Marrakech medina, Morocco"
+                            title="Narrow street in the Marrakech medina, Morocco"
+                            class="rounded-12 w-100 h-auto" loading="lazy" width="960" height="640"
+                            style="object-fit: cover;">
+                        <figcaption class="visually-hidden">
+                            A traditional narrow alley in the old medina of Marrakech, with locals and terracotta walls
+                            capturing everyday Moroccan life.
+                        </figcaption>
+                    </figure>
                 </div>
 
                 <div data-anim-child="slide-up delay-2" class="col-lg-5">
+                    <h2 class="text-30 fw-700 mb-20">
+                        Discover Authentic Morocco Adventures — Your Gateway to Authentic Moroccan Experiences
+                    </h2>
+
                     <p>
                         At Authentic Morocco Adventures, we’re passionate about revealing Morocco’s vibrant spirit and hidden
                         treasures.
