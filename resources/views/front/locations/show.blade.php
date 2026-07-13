@@ -14,8 +14,8 @@
             <div class="row y-gap-30 pt-40 sm:pt-20">
                 @forelse($tours as $tour)
                     @php
-                        $media = $tour->getFirstMedia('tours');
-                        $imgUrl = $media?->getUrl() ?? asset('images/placeholder.png');
+                        $media = $tour->getFirstMedia('cover') ?? $tour->getFirstMedia('gallery');
+                        $imgUrl = $media?->getUrl() ?? asset('assets/images/default-image.png');
                         $alt = $media?->getCustomProperty('alt') ?? $tour->title;
                         $title = $media?->getCustomProperty('title') ?? $tour->title;
                     @endphp

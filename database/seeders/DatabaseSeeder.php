@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesPermissionsSeeder::class,
+            LocationSeeder::class,
             ProgramSeeder::class,
             RatingCategorySeeder::class,
         ]);

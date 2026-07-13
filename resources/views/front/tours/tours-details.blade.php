@@ -11,12 +11,6 @@
                          <span>{{ $tour->title }}</span>
                      </div>
                  </div>
-
-                 <div class="col-auto">
-                     <div class="text-14">
-                         {{ $tour->title }} - Tours & Excursions
-                     </div>
-                 </div>
              </div>
          </div>
      @endif
@@ -78,8 +72,12 @@
 
 
                                              <span>
-                                                 {{ number_format($tour->rating, 1) }}
-                                                 ({{ number_format($tour->reviews_count) }} reviews)
+                                                 @if ($tour->reviews_count > 0)
+                                                     {{ number_format($rating, 1) }}
+                                                     ({{ number_format($tour->reviews_count) }} reviews)
+                                                 @else
+                                                     New tour
+                                                 @endif
                                              </span>
                                          </div>
                                      </div>

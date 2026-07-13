@@ -45,6 +45,8 @@ class HomeController extends Controller
         // -----------------------
         $tours = Tour::with(['category', 'location', 'media'])
             ->withCount('reviews')
+            ->orderByDesc('bestseller_flag') // Popular first
+            ->latest('id')
             ->take(8)
             ->get();
 
@@ -55,6 +57,8 @@ class HomeController extends Controller
         // -----------------------
         $activities = Activity::with(['category', 'media'])
             ->withCount('reviews')
+            ->orderByDesc('bestseller_flag') // Popular first
+            ->latest('id')
             ->take(8)
             ->get();
 
@@ -65,6 +69,8 @@ class HomeController extends Controller
         // -----------------------
         $trekking = Trekking::with(['category', 'media'])
             ->withCount('reviews')
+            ->orderByDesc('bestseller_flag') // Popular first
+            ->latest('id')
             ->take(8)
             ->get();
 

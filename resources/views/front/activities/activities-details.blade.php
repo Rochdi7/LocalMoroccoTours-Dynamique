@@ -7,15 +7,8 @@
                  <div class="col-auto">
                      <div class="text-14">
                          <a href="{{ url('/') }}">Home</a> >
-                         <a href="{{ route('front.activities.index') }}">Tours</a> >
+                         <a href="{{ route('front.activities.index') }}">Activities</a> >
                          <span>{{ $activity->title }}</span>
-                     </div>
-                 </div>
-
-                 <div class="col-auto">
-                     <div class="text-14">
-                         {{ $activity->title }} - Activities & Experiences
-
                      </div>
                  </div>
              </div>
@@ -78,8 +71,12 @@
                                              </div>
 
                                              <span>
-                                                 {{ number_format($activity->rating, 1) }}
-                                                 ({{ number_format($activity->reviews_count) }} reviews)
+                                                 @if ($activity->reviews_count > 0)
+                                                     {{ number_format($rating, 1) }}
+                                                     ({{ number_format($activity->reviews_count) }} reviews)
+                                                 @else
+                                                     New activity
+                                                 @endif
                                              </span>
                                          </div>
                                      </div>
@@ -129,7 +126,7 @@
                                  data-nav-next="js-sliderMain-next" data-loop>
                                  <div class="swiper-wrapper">
                                      @php
-                                         $gallery = $activity->getMedia('gallery');
+                                         $gallery = $activity->getMedia('cover')->merge($activity->getMedia('gallery'));
                                      @endphp
                                      @forelse ($gallery as $media)
                                          @php

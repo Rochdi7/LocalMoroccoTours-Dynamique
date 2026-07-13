@@ -36,16 +36,91 @@
         .heroIntro__text  { min-height: 3em; }
 
         /* Reduced motion: skip typing, JS fills text instantly (see script). */
+
+        /* ---- Hero background carousel (crossfade) ---- */
+        /* The theme's .hero__bg img is only object-fit:cover (not positioned),
+           so three imgs would stack vertically. Absolutely position each slide
+           to overlap in the same box, then crossfade via opacity. */
+        .js-hero-carousel .heroSlide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .js-hero-carousel .heroSlide.is-active {
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            /* No crossfade animation; only the first (active) slide shows. */
+            .js-hero-carousel .heroSlide { transition: none; }
+        }
+
+        /* ---- "Popular" badge (Find Popular Tours/Activities/Trekking) ---- */
+        .popularBadge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px 6px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1;
+            letter-spacing: 0.02em;
+            color: #fff;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ff8a00 0%, #ff5e3a 100%);
+            box-shadow: 0 6px 16px rgba(255, 94, 58, 0.35);
+            backdrop-filter: saturate(1.2);
+            z-index: 2;
+        }
+        .popularBadge i {
+            font-size: 13px;
+            animation: popularFlameFlicker 1.6s ease-in-out infinite;
+        }
+        @keyframes popularFlameFlicker {
+            0%, 100% { transform: scale(1);    opacity: 1;   }
+            50%      { transform: scale(1.15); opacity: 0.85; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .popularBadge i { animation: none; }
+        }
+
+        /* ---- Marrakech CTA (mobile): add breathing room between the
+           "Explore Tours" button and the image stacked below it. The theme
+           reserves fixed bottom padding for the absolutely-positioned image;
+           bump it so the button no longer touches the image. ---- */
+        @media (max-width: 767px) {
+            .cta.-type-4 .cta__content { padding-bottom: 340px; }
+        }
+        @media (max-width: 575px) {
+            .cta.-type-4 .cta__content { padding-bottom: 250px; }
+        }
     </style>
 @endpush
 
 @section('content')
 
     <section data-anim-wrap class="hero -type-8">
-        <div data-anim-child="slide-up" class="hero__bg">
-            <img src="{{ asset('assets/images/hero/sahara-desert-luxury-camp-stargazing-morocco.webp') }}"
-                alt="Luxury Berber camp in the Sahara Desert" width="1920" height="860" fetchpriority="high"
-                decoding="async">
+        <div data-anim-child="slide-up" class="hero__bg js-hero-carousel">
+            <img class="heroSlide is-active"
+                src="{{ asset('assets/images/hero/sahara-desert-luxury-camp-stargazing-morocco.webp') }}"
+                alt="Luxury desert camp under the stars in the Sahara, Morocco" width="1920" height="860"
+                fetchpriority="high" decoding="async">
+            <img class="heroSlide"
+                src="{{ asset('assets/images/hero/morocco-sahara-camel-trek-sunset-merzouga.webp') }}"
+                alt="Camel trek at sunset in the Merzouga dunes, Morocco" width="1920" height="860"
+                loading="lazy" decoding="async">
+            <img class="heroSlide"
+                src="{{ asset('assets/images/hero/marrakech-palace-courtyard-riad-architecture-morocco.avif') }}"
+                alt="Marrakech palace courtyard with traditional riad architecture, Morocco" width="1920" height="860"
+                loading="lazy" decoding="async">
         </div>
 
         <div class="container">
@@ -241,6 +316,25 @@
                 // Kick off shortly after load so the hero image/reveal settles.
                 setTimeout(function () { run(0); }, 500);
             })();
+
+            // ---- Hero background carousel: auto-crossfade every 5s ----
+            (function () {
+                var carousel = document.querySelector('.js-hero-carousel');
+                if (!carousel) return;
+
+                var slides = Array.prototype.slice.call(carousel.querySelectorAll('.heroSlide'));
+                if (slides.length < 2) return; // nothing to rotate
+
+                var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (reduce) return; // honor reduced-motion: keep the first slide only
+
+                var current = 0;
+                setInterval(function () {
+                    slides[current].classList.remove('is-active');
+                    current = (current + 1) % slides.length;
+                    slides[current].classList.add('is-active');
+                }, 5000);
+            })();
         </script>
     @endpush
 
@@ -254,15 +348,27 @@
       </div>
     </div>
 
-    <div class="row y-gap-20 justify-between">
+    <div class="row y-gap-30 justify-between items-center">
 
       <div data-anim-child="slide-up" class="col-lg-6">
-        <h2 class="text-30 fw-700">
-          Discover Authentic Morocco Adventures — Your Gateway to Authentic Moroccan Experiences
-        </h2>
+        <figure class="m-0">
+          <img src="{{ asset('assets/images/hero/marrakech-medina-narrow-street-locals-morocco.avif') }}"
+            alt="Locals walking through a narrow terracotta-walled street in the Marrakech medina, Morocco"
+            title="Narrow street in the Marrakech medina, Morocco"
+            class="rounded-12 w-100 h-auto" loading="lazy" width="960" height="640"
+            style="object-fit: cover;">
+          <figcaption class="visually-hidden">
+            A traditional narrow alley in the old medina of Marrakech, with locals and terracotta walls capturing
+            everyday Moroccan life.
+          </figcaption>
+        </figure>
       </div>
 
       <div data-anim-child="slide-up delay-2" class="col-lg-5">
+        <h2 class="text-30 fw-700 mb-20">
+          Discover Authentic Morocco Adventures — Your Gateway to Authentic Moroccan Experiences
+        </h2>
+
         <p>
           At Authentic Morocco Adventures, we’re passionate about revealing Morocco’s vibrant spirit and hidden treasures.
           From the blue streets of Chefchaouen to the golden dunes of the Sahara, our expertly crafted tours immerse you
@@ -351,14 +457,16 @@
                                     height="600">
                             </div>
 
+                            {{-- Caption/description kept in the DOM for SEO but hidden
+                                 visually (visually-hidden, still read by crawlers/AT). --}}
                             @if ($caption)
-                                <div class="mt-10 text-12 text-muted">
+                                <div class="visually-hidden">
                                     <em>{{ $caption }}</em>
                                 </div>
                             @endif
 
                             @if ($desc)
-                                <div class="mt-5 text-14 text-gray-700">
+                                <div class="visually-hidden">
                                     {{ \Illuminate\Support\Str::limit($desc, 80) }}
                                 </div>
                             @endif
@@ -416,11 +524,8 @@
                                 </figcaption>
                             </figure>
 
-                            <img src="{{ asset('assets/img/cta/12/shape.svg') }}" alt="" role="presentation"
-                                loading="lazy">
-
-                            <img src="{{ asset('assets/img/cta/12/mobileShape.svg') }}" alt=""
-                                role="presentation" loading="lazy">
+                            {{-- Decorative torn-edge shape overlays removed so the image
+                                 renders as a clean rectangle. --}}
                         </div>
                     </div>
                 </div>
@@ -505,9 +610,8 @@
                                         </button>
 
                                         @if ($tour->bestseller_flag)
-                                            <div class="tourCard__bestseller"
-                                                style="position: absolute; top: 10px; right: 10px; background: #f39903; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
-                                                <i class="icon-fire mr-5"></i> Popular
+                                            <div class="tourCard__bestseller popularBadge">
+                                                <i class="icon-fire"></i> Popular
                                             </div>
                                         @endif
                                     </div>
@@ -659,9 +763,8 @@
                                         </button>
 
                                         @if ($activity->bestseller_flag)
-                                            <div class="tourCard__bestseller"
-                                                style="position: absolute; top: 10px; right: 10px; background: #f39903; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
-                                                <i class="icon-fire mr-5"></i> Popular
+                                            <div class="tourCard__bestseller popularBadge">
+                                                <i class="icon-fire"></i> Popular
                                             </div>
                                         @endif
                                     </div>
@@ -813,9 +916,8 @@
                                         </button>
 
                                         @if ($trek->bestseller_flag)
-                                            <div class="tourCard__bestseller"
-                                                style="position: absolute; top: 10px; right: 10px; background: #f39903; color: #fff; padding: 5px 8px; font-size: 12px; border-radius: 4px;">
-                                                <i class="icon-fire mr-5"></i> Popular
+                                            <div class="tourCard__bestseller popularBadge">
+                                                <i class="icon-fire"></i> Popular
                                             </div>
                                         @endif
                                     </div>

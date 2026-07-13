@@ -7,15 +7,8 @@
                  <div class="col-auto">
                      <div class="text-14">
                          <a href="{{ url('/') }}">Home</a> >
-                         <a href="{{ route('front.trekking.index') }}">Trekkings</a>
+                         <a href="{{ route('front.trekking.index') }}">Trekkings</a> >
                          <span>{{ $trekking->title }}</span>
-                     </div>
-                 </div>
-
-                 <div class="col-auto">
-                     <div class="text-14">
-                         {{ $trekking->title }} - Trekkings & Experiences
-
                      </div>
                  </div>
              </div>
@@ -81,8 +74,12 @@
                                              </div>
 
                                              <span class="text-dark-1 ml-10">
-                                                 {{ number_format($trekking->avg_rating ?? 0, 1) }}
-                                                 ({{ number_format($trekking->reviews_count ?? 0) }} reviews)
+                                                 @if (($trekking->reviews_count ?? 0) > 0)
+                                                     {{ number_format($rating, 1) }}
+                                                     ({{ number_format($trekking->reviews_count) }} reviews)
+                                                 @else
+                                                     New trek
+                                                 @endif
                                              </span>
 
                                          </div>

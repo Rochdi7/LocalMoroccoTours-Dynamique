@@ -184,7 +184,7 @@
                     <div>
                         © Copyright Authentic Morocco Adventures {{ date('Y') }} •
                         Developed by
-                        <a href="https://www.facebook.com/CodeSommet/" target="_blank" class="text-accent-1 fw-500">
+                        <a href="https://codesommet.com/" target="_blank" rel="noopener" class="text-accent-1 fw-500">
                             Code Sommet
                         </a>
                     </div>
