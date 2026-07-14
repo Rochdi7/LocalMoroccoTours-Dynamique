@@ -114,7 +114,7 @@ class FrontTourController extends Controller
                 break;
         }
 
-        $tours = $tours->paginate(5);
+        $tours = $tours->paginate(12);
 
         $tourIds = $tours->pluck('id');
 

@@ -37,7 +37,7 @@
 
             <div class="card-body pt-3">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle" id="category-table">
+                    <table class="table table-hover align-middle" id="pc-dt-simple">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -77,11 +77,7 @@
                     </table>
                 </div>
 
-                @if($categories instanceof \Illuminate\Pagination\LengthAwarePaginator && $categories->hasPages())
-                <div class="mt-3">
-                    {{ $categories->links() }}
-                </div>
-                @endif
+                {{-- Pagination handled client-side by the datatable (see @section('scripts')) --}}
             </div>
         </div>
     </div>
@@ -99,4 +95,7 @@
         }
     });
 </script>
+
+@include('admin.partials.datatable')
+
 @endsection

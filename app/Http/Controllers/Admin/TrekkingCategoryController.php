@@ -11,7 +11,7 @@ class TrekkingCategoryController extends Controller
 {
     public function index()
     {
-        $categories = TrekkingCategory::latest()->paginate(10);
+        $categories = TrekkingCategory::latest()->get();
         return view('admin.trekking_categories.index', compact('categories'));
     }
 

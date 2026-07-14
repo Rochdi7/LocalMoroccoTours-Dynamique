@@ -12,7 +12,7 @@ class ActivityController extends Controller
 {
     public function index()
     {
-        $activities = Activity::with(['category', 'media'])->paginate(10);
+        $activities = Activity::with(['category', 'media'])->latest()->get();
         return view('admin.activities.index', compact('activities'));
     }
 

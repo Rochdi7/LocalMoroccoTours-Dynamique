@@ -39,7 +39,7 @@
 
             <div class="card-body pt-3">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+                    <table class="table table-hover align-middle" id="pc-dt-simple">
                         <thead>
                             <tr>
                                 <th>Image</th>
@@ -91,11 +91,7 @@
                     </table>
                 </div>
 
-                @if($treks->hasPages())
-                    <div class="mt-3">
-                        {{ $treks->links() }}
-                    </div>
-                @endif
+                {{-- Pagination handled client-side by the datatable (see @section('scripts')) --}}
             </div>
         </div>
     </div>
@@ -112,4 +108,7 @@
         }
     });
 </script>
+
+@include('admin.partials.datatable')
+
 @endsection

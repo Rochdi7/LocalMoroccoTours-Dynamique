@@ -84,7 +84,7 @@
                         of Morocco.
                     </p>
 
-                    <a href="{{ route('front.tours.index') }}" class="button -sm -dark-1 bg-accent-1 text-white mt-30">
+                    <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}" class="button -sm -dark-1 bg-accent-1 text-white mt-30">
                         Explore Our Tours
                     </a>
 
@@ -245,7 +245,7 @@
                             Traveling under your own power and at your own pace helps you connect more meaningfully
                             with your destination—and have more fun!
                         </p>
-                        <a href="{{ route('front.tours.index') }}"
+                        <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}"
                             class="button -sm -dark-1 bg-accent-1 text-white mt-60 md:mt-30 d-inline-block"
                             style="width: 240px; text-align: center;">
                             Explore Our Tours

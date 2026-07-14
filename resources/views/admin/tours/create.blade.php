@@ -324,9 +324,9 @@
                             {{-- Itinerary --}}
                             <div class="mb-3 col-md-12">
                                 <label for="itinerary" class="form-label">Itinerary</label>
-                                <textarea name="itinerary" rows="5" class="form-control @error('itinerary') is-invalid @enderror">{{ old('itinerary') }}</textarea>
-                                <small class="text-muted">Separate days by new lines, e.g. Day 1: Arrival\nDay 2:
-                                    Sightseeing.</small>
+                                <textarea name="itinerary" rows="8" class="form-control @error('itinerary') is-invalid @enderror">{{ old('itinerary') }}</textarea>
+                                <small class="text-muted">One day per line. Use <strong>Title | Content</strong> to add a
+                                    description, e.g. <code>Day 1: Arrival in Marrakech | Transfer to your hotel.</code></small>
                                 @error('itinerary')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror

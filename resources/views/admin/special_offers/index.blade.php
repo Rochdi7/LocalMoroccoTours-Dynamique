@@ -119,4 +119,7 @@
             }
         });
     </script>
+
+@include('admin.partials.datatable')
+
 @endsection

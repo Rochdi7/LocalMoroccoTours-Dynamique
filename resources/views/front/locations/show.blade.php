@@ -1,6 +1,20 @@
 @extends('front.layouts.app2')
 
-@section('title', $location->name)
+@php
+    $seoTitle = ($location->name ?? 'Destination') . ' Tours & Travel Guide | Authentic Morocco Adventures';
+    $seoDesc = \Illuminate\Support\Str::limit(trim(strip_tags($location->seo_description ?: ($location->description ?? ''))), 155);
+    $seoDesc = $seoDesc !== '' ? $seoDesc : 'Explore ' . ($location->name ?? 'this destination') . ' with Authentic Morocco Adventures — tours, activities and local expert travel tips.';
+    $seoImage = optional($location->getFirstMedia('cover'))->getUrl() ?: null;
+@endphp
+
+@section('title', $seoTitle)
+@section('meta_description', $seoDesc)
+@section('og_type', 'article')
+@section('og_title', $seoTitle)
+@section('og_description', $seoDesc)
+@if ($seoImage)
+    @section('og_image', $seoImage)
+@endif
 
 @section('content')
     <section class="layout-pt-xl layout-pb-xl">

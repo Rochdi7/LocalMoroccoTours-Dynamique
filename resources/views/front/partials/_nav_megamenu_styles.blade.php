@@ -12,19 +12,23 @@
         position: relative;
     }
 
+    /* Panel look copied from the Viatours theme's .desktopNavSubnav__content:
+       12px radius, white bg, soft shadow, 1px border, 260px min-width. We keep the
+       brand accent for hover (blue) instead of the theme demo's orange. */
     .megaFlyout {
         position: absolute;
         top: 100%;
         left: 0;
         min-width: 260px;
         background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 10px 40px rgba(20, 17, 13, .14);
-        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, .08);
+        border: 1px solid var(--border, #E7E6E6);
+        padding: 16px 20px;
         opacity: 0;
         visibility: hidden;
         transform: translateY(8px);
-        transition: opacity .18s ease, transform .18s ease;
+        transition: opacity .2s ease, transform .2s ease;
         z-index: 300;
         list-style: none;
         margin: 0;
@@ -45,9 +49,9 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        padding: 9px 14px;
-        border-radius: 6px;
-        font-size: 14px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 15px;
         color: #14110d !important;
         white-space: nowrap;
         transition: background .15s ease, color .15s ease;
@@ -58,6 +62,7 @@
         color: var(--color-accent-2, #044cb8) !important;
     }
 
+    /* Chevron-right on parents, matching the theme's icon-chevron-right marker */
     .megaFlyout__li.-has-sub>a::after {
         content: "";
         width: 6px;
@@ -69,22 +74,23 @@
         opacity: .6;
     }
 
-    /* Third level opens to the right of its city group */
+    /* Third level opens to the right of its city group (theme: top:0; left:100%) */
     .megaFlyout__sub {
         position: absolute;
-        top: -10px;
+        top: -16px;
         left: 100%;
         min-width: 300px;
         max-height: 78vh;
         overflow-y: auto;
         background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 10px 40px rgba(20, 17, 13, .14);
-        padding: 10px;
+        border-radius: 12px;
+        box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, .08);
+        border: 1px solid var(--border, #E7E6E6);
+        padding: 16px 20px;
         opacity: 0;
         visibility: hidden;
         transform: translateX(8px);
-        transition: opacity .18s ease, transform .18s ease;
+        transition: opacity .2s ease, transform .2s ease;
         z-index: 310;
         list-style: none;
         margin: 0;
@@ -97,7 +103,7 @@
     }
 
     .megaFlyout__head {
-        padding: 6px 14px 4px;
+        padding: 4px 12px 8px;
         font-size: 11px;
         letter-spacing: .12em;
         text-transform: uppercase;
@@ -111,6 +117,41 @@
         overflow-y: auto;
     }
 
+    /* ---- Native theme dropdown (About) — match the flyout look above so both
+       dropdown systems read identically. The theme's own .desktopNavSubnav rules
+       already handle position/animation; we only align the panel + item styling
+       (radius, shadow, border, hover, spacing) to the megaFlyout above. ---- */
+    .header .desktopNav .desktopNavSubnav__content {
+        border-radius: 12px;
+        background-color: #fff;
+        box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, .08);
+        border: 1px solid var(--border, #E7E6E6);
+        min-width: 260px;
+        padding: 16px 20px;
+    }
+
+    .header .desktopNav .desktopNavSubnav__content>*+* {
+        padding-top: 0;
+    }
+
+    .header .desktopNav .desktopNavSubnav__item>a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 15px;
+        color: #14110d;
+        white-space: nowrap;
+        transition: background .15s ease, color .15s ease;
+    }
+
+    .header .desktopNav .desktopNavSubnav__item>a:hover {
+        background: rgba(4, 76, 184, .07);
+        color: var(--color-accent-2, #044cb8);
+    }
+
     /* If a city flyout would overflow the right edge, the last
        nav items flip their 3rd level to the left. */
     .megaNav__item.-flip .megaFlyout__sub {
@@ -121,5 +162,44 @@
 
     .megaNav__item.-flip .megaFlyout__li:hover>.megaFlyout__sub {
         transform: translateX(0);
+    }
+
+    /* ---- Mobile menu: keep the footer visible ----
+       Our menu has more nav items than the theme demo, so on shorter screens the
+       nav list + footer exceed the viewport and the footer (phone + socials) gets
+       cut off at the bottom. The theme's .menu__content is height:100% with no
+       scroll, so overflow just spills off-screen. Make the nav list flex-grow and
+       scroll internally, and keep the footer pinned so it never gets clipped. */
+    .menu__container {
+        overflow: hidden;
+    }
+
+    .menu__content {
+        flex: 1 1 auto;
+        height: auto;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .menu__footer {
+        flex-shrink: 0;
+    }
+
+    /* ---- Mobile menu footer social icons ----
+       The footer mixes the theme's icomoon icons (Facebook/Twitter/Instagram/
+       LinkedIn) with Bootstrap Icons (Pinterest/YouTube). Bootstrap's .bi inherit
+       the body's tall line-height (1.875), which vertically misaligns them next to
+       the icomoon icons. Force line-height:1 and equal sizing so all six icons in
+       the row line up and read at the same weight/size. Shared by both headers. */
+    .menu__footer .d-flex i {
+        font-size: 15px;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .menu__footer .d-flex i::before {
+        line-height: 1;
     }
 </style>

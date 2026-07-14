@@ -13,7 +13,7 @@ class TourController extends Controller
 {
     public function index()
     {
-        $tours = Tour::with(['category', 'location', 'media'])->paginate(10);
+        $tours = Tour::with(['category', 'location', 'media'])->latest()->get();
         return view('admin.tours.index', compact('tours'));
     }
 
@@ -76,14 +76,7 @@ class TourController extends Controller
                 : [];
         }
 
-        $validated['itinerary'] = !empty($validated['itinerary'])
-            ? array_filter(
-                array_map(
-                    'trim',
-                    preg_split('/\r\n|\r|\n/', $validated['itinerary'])
-                )
-            )
-            : [];
+        $validated['itinerary'] = $this->parseItinerary($validated['itinerary'] ?? null);
 
         $validated['highlights'] = json_encode($validated['highlights']);
         $validated['languages'] = json_encode($validated['languages']);
@@ -186,14 +179,7 @@ class TourController extends Controller
                 : [];
         }
 
-        $validated['itinerary'] = !empty($validated['itinerary'])
-            ? array_filter(
-                array_map(
-                    'trim',
-                    preg_split('/\r\n|\r|\n/', $validated['itinerary'])
-                )
-            )
-            : [];
+        $validated['itinerary'] = $this->parseItinerary($validated['itinerary'] ?? null);
 
         $validated['highlights'] = json_encode($validated['highlights']);
         $validated['languages'] = json_encode($validated['languages']);
@@ -282,5 +268,37 @@ class TourController extends Controller
         }
 
         return $slug;
+    }
+
+    /**
+     * Parse the itinerary textarea into an array of {title, content} days.
+     *
+     * Each non-empty line is one day. Use "Title | Content" to split the day's
+     * title from its description; a line without a pipe becomes a title-only day.
+     */
+    private function parseItinerary($value): array
+    {
+        if (empty($value)) {
+            return [];
+        }
+
+        $lines = array_filter(
+            array_map('trim', preg_split('/\r\n|\r|\n/', $value)),
+            fn ($line) => $line !== ''
+        );
+
+        $days = [];
+        foreach ($lines as $line) {
+            if (str_contains($line, '|')) {
+                [$title, $content] = array_map('trim', explode('|', $line, 2));
+            } else {
+                $title = $line;
+                $content = '';
+            }
+
+            $days[] = ['title' => $title, 'content' => $content];
+        }
+
+        return $days;
     }
 }

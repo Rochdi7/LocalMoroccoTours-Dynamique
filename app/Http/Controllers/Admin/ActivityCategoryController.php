@@ -11,7 +11,7 @@ class ActivityCategoryController extends Controller
 {
     public function index()
     {
-        $categories = ActivityCategory::latest()->paginate(10);
+        $categories = ActivityCategory::latest()->get();
         return view('admin.activity_categories.index', compact('categories'));
     }
 

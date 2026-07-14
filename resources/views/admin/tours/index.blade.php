@@ -86,9 +86,7 @@
                     </table>
                 </div>
 
-                <div class="mt-3">
-                    {{ $tours->links() }}
-                </div>
+                {{-- Pagination handled client-side by the datatable (see @section('scripts')) --}}
             </div>
         </div>
     </div>
@@ -106,4 +104,7 @@
         }
     });
 </script>
+
+@include('admin.partials.datatable')
+
 @endsection

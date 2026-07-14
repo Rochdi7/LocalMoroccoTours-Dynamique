@@ -14,35 +14,39 @@
 @section('content')
     @php
         // Helper function to convert JSON/array/string to comma-separated string
-        function toCommaSeparated($value)
-        {
-            if (is_array($value)) {
-                return implode(', ', $value);
-            }
-            if (is_string($value)) {
-                $decoded = json_decode($value, true);
-                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    return implode(', ', $decoded);
+        if (!function_exists('toCommaSeparated')) {
+            function toCommaSeparated($value)
+            {
+                if (is_array($value)) {
+                    return implode(', ', $value);
                 }
-                return $value;
+                if (is_string($value)) {
+                    $decoded = json_decode($value, true);
+                    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                        return implode(', ', $decoded);
+                    }
+                    return $value;
+                }
+                return '';
             }
-            return '';
         }
 
         // Helper function to convert JSON/array/string to newline-separated string
-        function toNewlineSeparated($value)
-        {
-            if (is_array($value)) {
-                return implode("\n", $value);
-            }
-            if (is_string($value)) {
-                $decoded = json_decode($value, true);
-                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    return implode("\n", $decoded);
+        if (!function_exists('toNewlineSeparated')) {
+            function toNewlineSeparated($value)
+            {
+                if (is_array($value)) {
+                    return implode("\n", $value);
                 }
-                return $value;
+                if (is_string($value)) {
+                    $decoded = json_decode($value, true);
+                    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                        return implode("\n", $decoded);
+                    }
+                    return $value;
+                }
+                return '';
             }
-            return '';
         }
 
         $highlights = old('highlights', toCommaSeparated($trekking->highlights));

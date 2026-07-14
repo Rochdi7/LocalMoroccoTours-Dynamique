@@ -78,6 +78,20 @@
                     <div class="card-body">
                         <div class="row">
 
+                            {{-- ✅ Current Cover Image --}}
+                            <div class="mb-3 col-md-12">
+                                <label class="form-label">Current Cover Image</label>
+                                @php $cover = $activity->getFirstMedia('cover'); @endphp
+                                @if ($cover)
+                                    <div>
+                                        <img src="{{ $cover->getUrl() }}" alt="{{ $activity->title ?? 'Current cover' }}"
+                                            class="img-thumbnail" style="max-width: 260px; height: auto;">
+                                    </div>
+                                @else
+                                    <p class="text-muted mb-0">No cover image uploaded yet.</p>
+                                @endif
+                            </div>
+
                             {{-- ✅ Upload New Cover Image --}}
                             <div class="mb-3 col-md-12">
                                 <label for="image" class="form-label">Upload New Cover Image</label>

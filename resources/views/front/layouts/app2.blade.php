@@ -26,7 +26,7 @@
 
     <!-- Google fonts (with font-display swap) -->
     <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
         rel="stylesheet">
 
     <!-- Bootstrap Icons CDN -->
@@ -193,6 +193,7 @@
 <script src="{{ asset('assets/js/main.min.js') }}" defer></script>
 <script src="{{ asset('assets/js/favorites.js') }}" defer></script>
 <script src="{{ asset('assets/js/slider-fix.js') }}" defer></script>
+<script src="{{ asset('assets/js/slider-autoscroll.js') }}" defer></script>
 
 @stack('scripts')
 

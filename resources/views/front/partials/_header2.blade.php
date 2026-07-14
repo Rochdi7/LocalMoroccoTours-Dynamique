@@ -74,13 +74,49 @@
             <i class="icon-headphone text-50"></i>
             <div class="text-20 lh-12 fw-500 mt-20">
                 <div>Speak to our expert at</div>
-                <div class="text-accent-1">+212 666-107312</div>
+                <div class="text-accent-1">+212 666 107 312</div>
             </div>
             <div class="d-flex items-center x-gap-10 pt-30">
-                <div><a class="d-block"><i class="icon-facebook"></i></a></div>
-                <div><a class="d-block"><i class="icon-twitter"></i></a></div>
-                <div><a class="d-block"><i class="icon-instagram"></i></a></div>
-                <div><a class="d-block"><i class="icon-linkedin"></i></a></div>
+                <div>
+                    <a href="https://web.facebook.com/authenticmoroccoadventures/" target="_blank" class="d-block"
+                        aria-label="Facebook">
+                        <i class="icon-facebook"></i>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="https://x.com/AMADMCmor" target="_blank" class="d-block" aria-label="Twitter (X)">
+                        <i class="icon-twitter"></i>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="https://www.instagram.com/authenticmoroccoadventures/" target="_blank" class="d-block"
+                        aria-label="Instagram">
+                        <i class="icon-instagram"></i>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="https://www.linkedin.com/in/authentic-moroccoadventures-99812a420/" target="_blank"
+                        class="d-block" aria-label="LinkedIn">
+                        <i class="icon-linkedin"></i>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="https://fr.pinterest.com/amoroccoadventures/" target="_blank" class="d-block text-dark"
+                        aria-label="Pinterest">
+                        <i class="bi bi-pinterest"></i>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="https://www.youtube.com/@AuthenticMoroccoAdventures" target="_blank"
+                        class="d-block text-dark" aria-label="YouTube">
+                        <i class="bi bi-youtube"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

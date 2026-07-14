@@ -13,7 +13,7 @@ class TrekkingController extends Controller
 {
     public function index()
     {
-        $treks = Trekking::with(['category', 'location', 'media'])->paginate(10);
+        $treks = Trekking::with(['category', 'location', 'media'])->latest()->get();
         return view('admin.trekking.index', compact('treks'));
     }
 

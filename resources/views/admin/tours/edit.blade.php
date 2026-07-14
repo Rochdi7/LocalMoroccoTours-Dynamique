@@ -13,34 +13,38 @@
 
 @section('content')
     @php
-        function toCommaSeparated($value)
-        {
-            if (is_array($value)) {
-                return implode(', ', $value);
-            }
-            if (is_string($value)) {
-                $decoded = json_decode($value, true);
-                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    return implode(', ', $decoded);
+        if (!function_exists('toCommaSeparated')) {
+            function toCommaSeparated($value)
+            {
+                if (is_array($value)) {
+                    return implode(', ', $value);
                 }
-                return $value;
+                if (is_string($value)) {
+                    $decoded = json_decode($value, true);
+                    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                        return implode(', ', $decoded);
+                    }
+                    return $value;
+                }
+                return '';
             }
-            return '';
         }
 
-        function toNewlineSeparated($value)
-        {
-            if (is_array($value)) {
-                return implode("\n", $value);
-            }
-            if (is_string($value)) {
-                $decoded = json_decode($value, true);
-                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                    return implode("\n", $decoded);
+        if (!function_exists('toNewlineSeparated')) {
+            function toNewlineSeparated($value)
+            {
+                if (is_array($value)) {
+                    return implode("\n", $value);
                 }
-                return $value;
+                if (is_string($value)) {
+                    $decoded = json_decode($value, true);
+                    if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                        return implode("\n", $decoded);
+                    }
+                    return $value;
+                }
+                return '';
             }
-            return '';
         }
 
         $highlights = old('highlights');
@@ -69,9 +73,25 @@
 
         $itinerary = old('itinerary');
         if (is_null($itinerary)) {
-            $itinerary = is_array($tour->itinerary)
-                ? implode("\n", $tour->itinerary)
-                : toNewlineSeparated($tour->itinerary);
+            $itineraryValue = $tour->itinerary;
+            if (is_string($itineraryValue)) {
+                $decoded = json_decode($itineraryValue, true);
+                $itineraryValue = json_last_error() === JSON_ERROR_NONE && is_array($decoded) ? $decoded : [];
+            }
+            $itineraryValue = is_array($itineraryValue) ? $itineraryValue : [];
+
+            $itineraryLines = [];
+            foreach ($itineraryValue as $day) {
+                if (is_array($day)) {
+                    $title = trim($day['title'] ?? '');
+                    $content = trim($day['content'] ?? '');
+                    $itineraryLines[] = $content !== '' ? $title . ' | ' . $content : $title;
+                } else {
+                    $itineraryLines[] = (string) $day;
+                }
+            }
+
+            $itinerary = implode("\n", $itineraryLines);
         }
     @endphp
 
@@ -453,9 +473,9 @@
                             {{-- Itinerary --}}
                             <div class="mb-3 col-md-12">
                                 <label for="itinerary" class="form-label">Itinerary</label>
-                                <textarea name="itinerary" rows="5" class="form-control @error('itinerary') is-invalid @enderror">{{ $itinerary }}</textarea>
-                                <small class="text-muted">Separate days by new lines, e.g. Day 1: Arrival\nDay 2:
-                                    Sightseeing.</small>
+                                <textarea name="itinerary" rows="8" class="form-control @error('itinerary') is-invalid @enderror">{{ $itinerary }}</textarea>
+                                <small class="text-muted">One day per line. Use <strong>Title | Content</strong> to add a
+                                    description, e.g. <code>Day 1: Arrival in Marrakech | Transfer to your hotel.</code></small>
                                 @error('itinerary')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror

@@ -12,7 +12,7 @@ class BlogCategoryController extends Controller
     public function index()
     {
         // Paginate results instead of get()
-        $categories = BlogCategory::latest()->paginate(10); // Show 10 per page
+        $categories = BlogCategory::latest()->get();
         return view('admin.blog_categories.index', compact('categories'));
     }
 

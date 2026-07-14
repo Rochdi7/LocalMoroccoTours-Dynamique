@@ -1,6 +1,20 @@
 @extends('front.layouts.app2')
 
-@section('title', $post->title)
+@php
+    $seoTitle = ($post->title ?? 'Blog') . ' | Authentic Morocco Adventures';
+    $seoDesc = \Illuminate\Support\Str::limit(trim(strip_tags($post->excerpt ?? '')), 155);
+    $seoDesc = $seoDesc !== '' ? $seoDesc : 'Read ' . ($post->title ?? 'this article') . ' on the Authentic Morocco Adventures blog — Morocco travel tips, guides and stories from local experts.';
+    $seoImage = ($post->getFirstMediaUrl('featured_image') ?: null);
+@endphp
+
+@section('title', $seoTitle)
+@section('meta_description', $seoDesc)
+@section('og_type', 'article')
+@section('og_title', $seoTitle)
+@section('og_description', $seoDesc)
+@if ($seoImage)
+    @section('og_image', $seoImage)
+@endif
 
 @section('content')
     {{-- HERO SECTION --}}
@@ -437,7 +451,7 @@
                                     <div class="row x-gap-20 y-gap-20">
                                         <div class="col-auto">
                                             <label
-                                                class="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column cursor-pointer">
+                                                class="size-130 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column cursor-pointer">
                                                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
                                                     <path fill-rule="evenodd" clip-rule="evenodd"
                                                         d="M11.6663 12.9167C10.5157 12.9167 9.58301 13.8494 9.58301 15C9.58301 16.1506 10.5157 17.0834 11.6663 17.0834C12.8169 17.0834 13.7497 16.1506 13.7497 15C13.7497 13.8494 12.8169 12.9167 11.6663 12.9167Z"
@@ -494,7 +508,7 @@
                                             const imgHtml = `
                                 <div class="col-auto">
                                     <div class="relative">
-                                        <img src="${e.target.result}" class="size-200 rounded-12 object-cover" alt="">
+                                        <img src="${e.target.result}" class="size-130 rounded-12 object-cover" alt="">
                                         <button type="button" class="absoluteIcon1 button -dark-1 js-remove-image">
                                             <i class="icon-delete text-18"></i>
                                         </button>

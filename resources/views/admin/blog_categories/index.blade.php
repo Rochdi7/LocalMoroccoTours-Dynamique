@@ -72,9 +72,7 @@
                     </table>
                 </div>
 
-                <div class="mt-3">
-                    {{ $categories->links() }}
-                </div>
+                {{-- Pagination handled client-side by the datatable (see @section('scripts')) --}}
             </div>
         </div>
     </div>
@@ -83,11 +81,6 @@
 @endsection
 
 @section('scripts')
-    <script type="module">
-        import { DataTable } from "/build/js/plugins/module.js";
-        window.dt = new DataTable("#pc-dt-simple");
-    </script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const toastEl = document.getElementById('liveToast');
@@ -97,4 +90,7 @@
             }
         });
     </script>
+
+@include('admin.partials.datatable')
+
 @endsection

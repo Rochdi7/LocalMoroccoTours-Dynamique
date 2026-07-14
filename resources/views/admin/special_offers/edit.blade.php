@@ -70,9 +70,20 @@
 
                         {{-- Image --}}
                         <div class="mb-3 col-md-6">
+                            <label class="form-label">Current Image</label>
+                            @php $offerImage = $specialOffer->getFirstMedia('special_offers'); @endphp
+                            @if ($offerImage)
+                                <div class="mb-2">
+                                    <img src="{{ $offerImage->getUrl() }}" alt="{{ $specialOffer->title ?? 'Current image' }}"
+                                        class="img-thumbnail" style="max-width: 220px; height: auto;">
+                                </div>
+                            @else
+                                <p class="text-muted">No image uploaded yet.</p>
+                            @endif
+
                             <label class="form-label">Replace Image (optional)</label>
                             <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
-                            <small class="text-muted">Current image: <code>{{ $specialOffer->image_path }}</code></small>
+                            <small class="text-muted">Upload a new image to replace the current one. Leave empty to keep it.</small>
                             @error('image')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror

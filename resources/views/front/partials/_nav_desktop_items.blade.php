@@ -5,7 +5,7 @@
 {{-- ===== MOROCCO TOURS (multi-day) grouped by city ===== --}}
 <div class="desktopNav__item megaNav__item">
     <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}">
-        Morocco Tours <i class="icon-chevron-down"></i>
+        Tours <i class="icon-chevron-down"></i>
     </a>
     <ul class="megaFlyout">
         @forelse ($navMultiDayByCity as $city => $tours)
@@ -25,7 +25,7 @@
             </li>
         @empty
             <li class="megaFlyout__li">
-                <a href="{{ route('front.tours.index') }}">All Tours</a>
+                <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}">All Tours</a>
             </li>
         @endforelse
     </ul>
@@ -74,10 +74,10 @@
     </ul>
 </div>
 
-{{-- ===== ATLAS & TOUBKAL (trekking, flat) ===== --}}
+{{-- ===== TREKKING (flat) ===== --}}
 <div class="desktopNav__item megaNav__item -flip">
     <a href="{{ route('front.trekking.index') }}">
-        Atlas & Toubkal <i class="icon-chevron-down"></i>
+        Trekking <i class="icon-chevron-down"></i>
     </a>
     <ul class="megaFlyout -flat">
         @foreach ($navTrekkings as $trek)
@@ -88,10 +88,10 @@
     </ul>
 </div>
 
-{{-- Help & Info dropdown (sits right after Atlas & Toubkal) --}}
+{{-- About dropdown (sits right after Trekking) --}}
 <div class="desktopNav__item">
-    <a href="#">
-        Help & Info <i class="icon-chevron-down"></i>
+    <a href="{{ route('front.about') }}">
+        About <i class="icon-chevron-down"></i>
     </a>
     <div class="desktopNavSubnav">
         <div class="desktopNavSubnav__content">

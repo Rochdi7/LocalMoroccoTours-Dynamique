@@ -1,5 +1,21 @@
  @extends('front.layouts.app2')
 
+ @php
+     $seoTitle = ($tour->title ?? 'Morocco Tour') . ' | Authentic Morocco Adventures';
+     $seoDesc = \Illuminate\Support\Str::limit(trim(strip_tags($tour->overview ?? '')), 155);
+     $seoDesc = $seoDesc !== '' ? $seoDesc : 'Book ' . ($tour->title ?? 'this Morocco tour') . ' with Authentic Morocco Adventures — a local expert guide for an authentic Morocco experience.';
+     $seoImage = ($tour->getFirstMediaUrl('cover') ?: null);
+ @endphp
+
+ @section('title', $seoTitle)
+ @section('meta_description', $seoDesc)
+ @section('og_type', 'article')
+ @section('og_title', $seoTitle)
+ @section('og_description', $seoDesc)
+ @if ($seoImage)
+     @section('og_image', $seoImage)
+ @endif
+
  @section('content')
      @if (!empty($tour))
          <div data-anim="fade" class="container">
@@ -1079,7 +1095,7 @@
                                      <div class="row x-gap-20 y-gap-20">
                                          <div class="col-auto">
                                              <label
-                                                 class="size-200 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column cursor-pointer">
+                                                 class="size-130 rounded-12 border-dash-1 bg-accent-1-05 flex-center flex-column cursor-pointer">
                                                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
                                                      <path fill-rule="evenodd" clip-rule="evenodd"
                                                          d="M11.6663 12.9167C10.5157 12.9167 9.58301 13.8494 9.58301 15C9.58301 16.1506 10.5157 17.0834 11.6663 17.0834C12.8169 17.0834 13.7497 16.1506 13.7497 15C13.7497 13.8494 12.8169 12.9167 11.6663 12.9167ZM7.08301 15C7.08301 12.4687 9.13504 10.4167 11.6663 10.4167C14.1976 10.4167 16.2497 12.4687 16.2497 15C16.2497 17.5314 14.1976 19.5834 11.6663 19.5834C9.13504 19.5834 7.08301 17.5314 7.08301 15Z"
@@ -1139,7 +1155,7 @@
                                          const imgHtml = `
                                 <div class="col-auto">
                                     <div class="relative">
-                                        <img src="${e.target.result}" class="size-200 rounded-12 object-cover" alt="">
+                                        <img src="${e.target.result}" class="size-130 rounded-12 object-cover" alt="">
                                         <button type="button" class="absoluteIcon1 button -dark-1 js-remove-image">
                                             <i class="icon-delete text-18"></i>
                                         </button>
@@ -1262,8 +1278,8 @@
                                          class="tourCard -type-1 py-10 px-10 border-1 rounded-12 bg-white -hover-shadow">
                                          <div class="tourCard__header">
                                              <div class="tourCard__image ratio ratio-28:20">
-                                                 <img src="{{ $similarTour->getFirstMediaUrl('tour_images') ?: asset('assets/images/default-image.png') }}"
-                                                     alt="{{ $similarTour->title }}" class="img-ratio rounded-12">
+                                                 <img src="{{ $similarTour->getFirstMediaUrl('cover') ?: ($similarTour->getFirstMediaUrl('gallery') ?: asset('assets/images/default-image.png')) }}"
+                                                     alt="{{ $similarTour->title }}" class="img-ratio rounded-12" loading="lazy">
                                              </div>
 
                                                                                       </div>

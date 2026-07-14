@@ -53,6 +53,19 @@ class HomeController extends Controller
         $tours = $this->attachAverageRatings($tours, Tour::class);
 
         // -----------------------
+        // DAY TRIPS
+        // -----------------------
+        $dayTrips = Tour::with(['category', 'location', 'media'])
+            ->where('type', 'day_trip')
+            ->withCount('reviews')
+            ->orderByDesc('bestseller_flag') // Popular first
+            ->latest('id')
+            ->take(8)
+            ->get();
+
+        $dayTrips = $this->attachAverageRatings($dayTrips, Tour::class);
+
+        // -----------------------
         // ACTIVITIES
         // -----------------------
         $activities = Activity::with(['category', 'media'])
@@ -92,6 +105,7 @@ class HomeController extends Controller
             'specialOffers'       => $specialOffers,
             'tourCategories'      => $tourCategories,
             'tours'               => $tours,
+            'dayTrips'            => $dayTrips,
             'activities'          => $activities,
             'trekking'            => $trekking,
             'posts'               => $posts,

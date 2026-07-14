@@ -1,16 +1,16 @@
 {{-- Shared mobile menu items (same depth as desktop). Used by _header
      and _header2. Each city expands to its full tour list. --}}
 
-{{-- Morocco Tours -> city -> tours --}}
+{{-- Tours -> city -> tours --}}
 <li class="menuNav__item -has-submenu js-has-submenu">
     <a>
-        Morocco Tours
+        Tours
         <i class="icon-chevron-right"></i>
     </a>
     <ul class="submenu">
         <li class="submenu__item js-nav-list-back"><a>Back</a></li>
         <li class="submenu__item">
-            <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}">All Morocco Tours</a>
+            <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}">All Tours</a>
         </li>
         @foreach ($navMultiDayByCity as $city => $tours)
             <li class="submenu__item -has-submenu js-has-submenu">
@@ -90,10 +90,10 @@
     </ul>
 </li>
 
-{{-- Atlas & Toubkal -> treks --}}
+{{-- Trekking -> treks --}}
 <li class="menuNav__item -has-submenu js-has-submenu">
     <a>
-        Atlas & Toubkal
+        Trekking
         <i class="icon-chevron-right"></i>
     </a>
     <ul class="submenu">
@@ -109,20 +109,10 @@
     </ul>
 </li>
 
-<li class="menuNav__item">
-    <a href="{{ route('front.locations.index') }}">Destinations</a>
-</li>
-<li class="menuNav__item">
-    <a href="{{ route('blog.index') }}">Blog</a>
-</li>
-<li class="menuNav__item">
-    <a href="{{ route('front.contact') }}">Contact</a>
-</li>
-
-{{-- Help & Info --}}
+{{-- About (dropdown) --}}
 <li class="menuNav__item -has-submenu js-has-submenu">
     <a>
-        Help & Info
+        About
         <i class="icon-chevron-right"></i>
     </a>
     <ul class="submenu">
@@ -137,4 +127,14 @@
             <a href="{{ route('front.terms') }}">Terms & Conditions</a>
         </li>
     </ul>
+</li>
+
+<li class="menuNav__item">
+    <a href="{{ route('blog.index') }}">Blog</a>
+</li>
+<li class="menuNav__item">
+    <a href="{{ route('front.contact') }}">Contact</a>
+</li>
+<li class="menuNav__item">
+    <a href="{{ route('front.locations.index') }}">Destinations</a>
 </li>

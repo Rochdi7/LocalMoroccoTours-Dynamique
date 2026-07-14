@@ -11,7 +11,7 @@ class TourCategoryController extends Controller
 {
     public function index()
     {
-        $categories = TourCategory::latest()->paginate(10);
+        $categories = TourCategory::latest()->get();
         return view('admin.tour-categories.index', compact('categories'));
     }
 

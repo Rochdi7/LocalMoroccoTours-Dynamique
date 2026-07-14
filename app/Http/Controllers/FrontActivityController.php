@@ -95,7 +95,7 @@ class FrontActivityController extends Controller
                 break;
         }
 
-        $activities = $activities->paginate(5);
+        $activities = $activities->paginate(12);
 
         $activityIds = $activities->pluck('id');
 

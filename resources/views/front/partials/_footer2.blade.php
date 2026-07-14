@@ -20,6 +20,18 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Tripadvisor Travelers' Choice 2026 award. Light footer: keep the
+                             badge art black (noir) as-is — no filter. --}}
+                        <div class="mt-20">
+                            <img src="{{ asset('assets/images/authentic-morocco-adventures-tripadvisor-travelers-choice-2026-award.webp') }}"
+                                alt="Authentic Morocco Adventures — Tripadvisor Travelers' Choice 2026 award winner"
+                                title="Authentic Morocco Adventures — Tripadvisor Travelers' Choice 2026"
+                                width="300" loading="lazy"
+                                data-caption="Authentic Morocco Adventures — Tripadvisor Travelers' Choice 2026 award"
+                                data-description="Authentic Morocco Adventures was recognized with the Tripadvisor Travelers' Choice 2026 award for its Morocco tours, activities and trekking experiences."
+                                style="width: 300px; max-width: 100%; height: auto;">
+                        </div>
                     </div>
 
                     <div class="col-auto">
@@ -70,11 +82,50 @@
                                     <i class="bi bi-youtube"></i>
                                 </a>
 
+                                {{-- Tripadvisor (light footer: keep the brand teal SVG as-is). --}}
+                                <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d6868602-Reviews-Authentic_Morocco_Adventures-Marrakech_Marrakech_Safi.html"
+                                    target="_blank" rel="noopener" class="d-flex align-items-center" aria-label="Tripadvisor">
+                                    <img src="{{ asset('assets/images/icon/tripdavisor.svg') }}" alt="Tripadvisor"
+                                        style="width: 20px; height: 20px;">
+                                </a>
+
+                            </div>
+                        </div>
+
+                        {{-- Trusted by the World's Leading Travel Brands. Light footer: keep the
+                             logos in their original dark colour (no inversion). --}}
+                        <div class="footer-trusted-brands mt-20">
+                            <div class="footer-trusted-brands__title text-accent-1 text-14 fw-500 mb-10">
+                                Trusted by the World&rsquo;s Leading Travel Brands
+                            </div>
+                            <div class="footer-trusted-brands__logos d-flex items-center flex-wrap x-gap-20 y-gap-10">
+                                <img src="{{ asset('assets/images/clients/bokun.webp') }}" alt="Bókun" loading="lazy" class="footer-brand-logo">
+                                <img src="{{ asset('assets/images/clients/tourhub.png') }}" alt="Tourhub" loading="lazy" class="footer-brand-logo">
+                                <img src="{{ asset('assets/images/clients/tourradar.svg') }}" alt="TourRadar" loading="lazy" class="footer-brand-logo">
+                                <img src="{{ asset('assets/images/clients/tripadvisor.svg') }}" alt="Tripadvisor" loading="lazy" class="footer-brand-logo">
+                                <a href="https://fr.trustpilot.com/review/authenticmoroccoadventures.com" target="_blank" rel="noopener" aria-label="Read our reviews on Trustpilot" class="d-flex align-items-center">
+                                    <img src="{{ asset('assets/images/clients/trustpilot-seeklogo.svg') }}" alt="Trustpilot" loading="lazy" class="footer-brand-logo">
+                                </a>
+                                <img src="{{ asset('assets/images/clients/viator-seeklogo-2.svg') }}" alt="Viator" loading="lazy" class="footer-brand-logo">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <style>
+                .footer-trusted-brands__logos { max-width: 420px; }
+                .footer-brand-logo {
+                    height: 26px;
+                    width: auto;
+                    max-width: 90px;
+                    object-fit: contain;
+                    vertical-align: middle;
+                }
+                @media (max-width: 991px) {
+                    .footer-trusted-brands__logos { max-width: none; }
+                }
+            </style>
 
             <div class="footer__content">
                 <div class="row y-gap-40 justify-between">

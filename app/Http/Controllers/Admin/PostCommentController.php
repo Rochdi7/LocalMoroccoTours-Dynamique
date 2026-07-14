@@ -14,7 +14,7 @@ class PostCommentController extends Controller
     {
         $comments = PostComment::with('post', 'user', 'parent')
             ->latest('created_at')
-            ->paginate(15);
+            ->get();
 
         return view('admin.post_comments.index', compact('comments'));
     }

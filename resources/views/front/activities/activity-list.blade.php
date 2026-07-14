@@ -853,23 +853,6 @@
                         <div class="col-auto">
                             <div>{{ $activities->total() }} results</div>
                         </div>
-
-                        <div class="col-auto">
-                            <div class="dropdown -type-2 js-dropdown js-form-dd" data-main-value="">
-                                <div class="dropdown__button js-button">
-                                    <span>Sort by: </span>
-                                    <span class="js-title">{{ request('sort_by', 'Featured') }}</span>
-                                    <i class="icon-chevron-down"></i>
-                                </div>
-
-                                <div class="dropdown__menu js-menu-items">
-                                    <a href="{{ route('front.tours.index', ['sort_by' => 'price_low_high']) }}"
-                                        class="dropdown__item {{ request('sort_by') == 'price_low_high' ? 'is-active' : '' }}">Low</a>
-                                    <a href="{{ route('front.tours.index', ['sort_by' => 'price_high_low']) }}"
-                                        class="dropdown__item {{ request('sort_by') == 'price_high_low' ? 'is-active' : '' }}">High</a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
 
@@ -885,119 +868,82 @@
                                 $desc = $cover?->getCustomProperty('description') ?? '';
                             @endphp
 
-                            <div class="col-12">
-                                <div class="tourCard -type-2">
-                                    <div class="tourCard__image">
-                                        <img src="{{ $coverUrl }}" alt="{{ $alt }}"
-                                            title="{{ $title }}" data-caption="{{ $caption }}"
-                                            data-description="{{ $desc }}" class="img-ratio rounded-12">
+                            @php
+                                $reviewsCount = (int) ($activity->reviews_count ?? 0);
+                                $rating = $activity->avg_rating ?? 0;
+                            @endphp
 
-                                        @if ($activity->discount > 0)
-                                            <div class="tourCard__badge">
-                                                <div class="bg-accent-1 rounded-12 text-white lh-11 text-13 px-15 py-10">
-                                                    {{ $activity->discount }} % OFF
-                                                </div>
-                                            </div>
-                                        @endif
-
-                                        <div class="tourCard__favorite">
-                                            <button class="tourCard__favorite js-favorite-btn swiper-no-swiping"
-                                                data-id="{{ $activity->id }}" data-type="activity"
-                                                style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
-                                                <i class="icon-heart"></i>
-                                            </button>
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="tourCard -type-1 py-10 px-10 border-1 rounded-12 -hover-shadow bg-white relative">
+                                    <div class="tourCard__header">
+                                        <div class="tourCard__image ratio ratio-28:20">
+                                            <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                                title="{{ $title }}" data-caption="{{ $caption }}"
+                                                data-description="{{ $desc }}" class="img-ratio rounded-12"
+                                                loading="lazy" width="560" height="400">
                                         </div>
+
+                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping"
+                                            data-id="{{ $activity->id }}" data-type="activity"
+                                            aria-label="Add {{ $activity->title }} to favorites">
+                                            <i class="icon-heart"></i>
+                                        </button>
                                     </div>
 
-                                    <div class="tourCard__content">
-                                        <div class="tourCard__location">
-                                            <i class="icon-pin"></i>
+                                    <div class="tourCard__content px-10 pt-10">
+                                        <div class="tourCard__location d-flex items-center text-13 text-light-2">
+                                            <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
                                             {{ $activity->location->name ?? 'Marrakech' }}
                                         </div>
 
-                                        <h3 class="tourCard__title mt-5">
-                                            <span>{{ $activity->title }}</span>
+                                        <h3 class="tourCard__title text-16 fw-500 mt-5">
+                                            <a href="{{ route('front.activities.show', $activity->slug) }}" class="text-dark-1">
+                                                <span>{{ Str::limit($activity->title, 50) }}</span>
+                                            </a>
                                         </h3>
 
-                                        @php
-                                            $reviewsCount = (int) ($activity->reviews_count ?? 0);
-                                            $rating = round($activity->avg_rating ?? 0);
-                                        @endphp
-
-                                        <div class="d-flex items-center mt-5">
+                                        <div class="tourCard__rating d-flex items-center text-13 mt-5">
                                             @if ($reviewsCount > 0)
-                                                <div class="d-flex items-center x-gap-5">
-                                                    <div class="d-flex items-center x-gap-5">
-                                                        @for ($i = 1; $i <= 5; $i++)
-                                                            @if ($i <= $rating)
-                                                                <i class="icon-star text-yellow-2 text-12"></i>
-                                                            @else
-                                                                <i class="icon-star text-light-2 text-12"></i>
-                                                            @endif
-                                                        @endfor
-                                                    </div>
+                                                <div class="d-flex x-gap-5">
+                                                    @php
+                                                        $fullStars = floor($rating);
+                                                        $halfStar = $rating - $fullStars >= 0.5;
+                                                        $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                    @endphp
+
+                                                    @for ($i = 0; $i < $fullStars; $i++)
+                                                        <div><i class="icon-star text-10 text-yellow-2"></i></div>
+                                                    @endfor
+                                                    @if ($halfStar)
+                                                        <div><i class="icon-star-half text-10 text-yellow-2"></i></div>
+                                                    @endif
+                                                    @for ($i = 0; $i < $emptyStars; $i++)
+                                                        <div><i class="icon-star text-10 text-light-2"></i></div>
+                                                    @endfor
                                                 </div>
 
-                                                <div class="text-14 ml-10">
-                                                    <span class="fw-500">{{ number_format($activity->avg_rating ?? 0, 1) }}</span>
-                                                    ({{ $reviewsCount }})
-                                                </div>
+                                                <span class="text-dark-1 ml-10">
+                                                    {{ number_format($rating, 1) }} ({{ $reviewsCount }})
+                                                </span>
                                             @else
-                                                <div class="text-14 text-accent-1 fw-500">New activity</div>
+                                                <span class="text-accent-1 fw-500">New activity</span>
                                             @endif
                                         </div>
 
-                                        <p class="tourCard__text mt-5">
-                                            {{ Str::limit($activity->overview, 100) }}
-                                        </p>
-
-                                        <div class="row x-gap-20 y-gap-5 pt-30">
-                                            <div class="col-auto">
-                                                <div class="text-14 text-accent-1">
-                                                    <i class="icon-price-tag mr-10"></i>
-                                                    Best Price Guarantee
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="text-14">
-                                                    <i class="icon-check mr-10"></i>
-                                                    Free Cancellation
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="tourCard__info">
-                                        <div>
-                                            <div class="d-flex items-center text-14">
-                                                <i class="icon-clock mr-10"></i>
+                                        <div class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                                            <div class="d-flex items-center">
+                                                <i class="icon-clock text-16 mr-5"></i>
                                                 {{ $activity->duration }}
                                             </div>
 
-                                            <div class="tourCard__price">
+                                            <div>
                                                 @if ($activity->base_price > 0)
-                                                    <div>${{ number_format($activity->base_price, 2) }}</div>
-
-                                                    <div class="d-flex items-center">
-                                                        From
-                                                        <span class="text-20 fw-500 ml-5">
-                                                            ${{ number_format($activity->discounted_base_price, 2) }}
-                                                        </span>
-                                                    </div>
+                                                    From <span class="text-16 fw-500">${{ number_format($activity->base_price, 2) }}</span>
                                                 @else
-                                                    <div class="d-flex items-center"
-                                                        style="text-decoration:none; color:var(--color-dark-1);">
-                                                        <span class="text-16 fw-500">Contact for price</span>
-                                                    </div>
+                                                    <span class="text-14 fw-500">Contact for price</span>
                                                 @endif
                                             </div>
                                         </div>
-
-                                        <a href="{{ route('front.activities.show', $activity->slug) }}"
-                                            class="button -outline-accent-1 text-accent-1">
-                                            View Details
-                                            <i class="icon-arrow-top-right ml-10"></i>
-                                        </a>
                                     </div>
                                 </div>
                             </div>

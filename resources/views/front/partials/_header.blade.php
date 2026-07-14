@@ -26,6 +26,16 @@
                             height: 36px;
                             max-width: 160px;
                         }
+
+                        /* The header is transparent over the hero by default, which
+                           makes the white logo/menu icon lose contrast depending on
+                           which hero slide is behind them. On mobile there's no
+                           scroll-triggered ".-is-sticky" background yet (user hasn't
+                           scrolled), so give the bar a permanent solid dark-blue
+                           background instead of relying on the hero image. */
+                        .header.-type-8 {
+                            background: var(--color-dark-1);
+                        }
                     }
 
                     .header.-type-8 .desktopNav__item>a {
