@@ -7,14 +7,14 @@
     <style>
         /* ---- Hero typewriter effect (homepage) ---- */
         /* Force the heroIntro visible even though it sits inside the theme's
-           data-anim-child reveal wrapper, so the JS typewriter is what plays. */
+               data-anim-child reveal wrapper, so the JS typewriter is what plays. */
         .heroIntro {
             opacity: 1 !important;
             transform: none !important;
         }
 
         /* Blinking caret that trails the typed text. It's a span the JS keeps
-           at the end of whichever line is currently typing. */
+               at the end of whichever line is currently typing. */
         .heroCaret {
             display: inline-block;
             width: 3px;
@@ -23,31 +23,67 @@
             animation: heroCaretBlink 0.7s steps(1) infinite;
             vertical-align: text-bottom;
         }
-        .heroIntro__title .heroCaret { height: 0.9em; }
-        .heroIntro__text  .heroCaret { height: 1em; }
+
+        .heroIntro__title .heroCaret {
+            height: 0.9em;
+        }
+
+        .heroIntro__text .heroCaret {
+            height: 1em;
+        }
 
         @keyframes heroCaretBlink {
-            0%, 50%   { opacity: 1; }
-            50.01%, 100% { opacity: 0; }
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            50.01%,
+            100% {
+                opacity: 0;
+            }
         }
 
         /* Reserve height so the hero doesn't jump as text types in. */
-        .heroIntro__title { min-height: 1.1em; }
-        .heroIntro__text  { min-height: 3em; }
+        .heroIntro__title {
+            min-height: 1.1em;
+        }
+
+        .heroIntro__text {
+            min-height: 3em;
+        }
 
         /* Reduce the hero title size (theme default is 70px) for a calmer,
-           more balanced hero. Keep the theme's responsive step-down. */
-        .hero.-type-8 .hero__title { font-size: 56px; }
-        @media (max-width: 991px) { .hero.-type-8 .hero__title { font-size: 48px; } }
-        @media (max-width: 767px) { .hero.-type-8 .hero__title { font-size: 34px; } }
-        @media (max-width: 575px) { .hero.-type-8 .hero__title { font-size: 26px; } }
+               more balanced hero. Keep the theme's responsive step-down. */
+        .hero.-type-8 .hero__title {
+            font-size: 56px;
+        }
+
+        @media (max-width: 991px) {
+            .hero.-type-8 .hero__title {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero.-type-8 .hero__title {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .hero.-type-8 .hero__title {
+                font-size: 26px;
+            }
+        }
 
         /* Reduced motion: skip typing, JS fills text instantly (see script). */
 
         /* ---- Hero background carousel (crossfade) ---- */
         /* The theme's .hero__bg img is only object-fit:cover (not positioned),
-           so three imgs would stack vertically. Absolutely position each slide
-           to overlap in the same box, then crossfade via opacity. */
+               so three imgs would stack vertically. Absolutely position each slide
+               to overlap in the same box, then crossfade via opacity. */
         .js-hero-carousel .heroSlide {
             position: absolute;
             top: 0;
@@ -58,13 +94,17 @@
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
         }
+
         .js-hero-carousel .heroSlide.is-active {
             opacity: 1;
         }
 
         @media (prefers-reduced-motion: reduce) {
+
             /* No crossfade animation; only the first (active) slide shows. */
-            .js-hero-carousel .heroSlide { transition: none; }
+            .js-hero-carousel .heroSlide {
+                transition: none;
+            }
         }
 
         /* ---- "Popular" badge (Find Popular Tours/Activities/Trekking) ---- */
@@ -87,34 +127,53 @@
             backdrop-filter: saturate(1.2);
             z-index: 2;
         }
+
         .popularBadge i {
             font-size: 13px;
             animation: popularFlameFlicker 1.6s ease-in-out infinite;
         }
+
         @keyframes popularFlameFlicker {
-            0%, 100% { transform: scale(1);    opacity: 1;   }
-            50%      { transform: scale(1.15); opacity: 0.85; }
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.15);
+                opacity: 0.85;
+            }
         }
+
         @media (prefers-reduced-motion: reduce) {
-            .popularBadge i { animation: none; }
+            .popularBadge i {
+                animation: none;
+            }
         }
 
         /* ---- Marrakech CTA (mobile): add breathing room between the
-           "Explore Tours" button and the image stacked below it. The theme
-           reserves fixed bottom padding for the absolutely-positioned image;
-           bump it so the button no longer touches the image. ---- */
+               "Explore Tours" button and the image stacked below it. The theme
+               reserves fixed bottom padding for the absolutely-positioned image;
+               bump it so the button no longer touches the image. ---- */
         @media (max-width: 767px) {
-            .cta.-type-4 .cta__content { padding-bottom: 340px; }
+            .cta.-type-4 .cta__content {
+                padding-bottom: 340px;
+            }
         }
+
         @media (max-width: 575px) {
-            .cta.-type-4 .cta__content { padding-bottom: 250px; }
+            .cta.-type-4 .cta__content {
+                padding-bottom: 250px;
+            }
         }
 
         /* ---- Hero Search button hover ----
-           The theme's .button.-dark-1:hover forces a bright blue (--color-blue-1
-           #0040a1), which clashes with the button's dark-navy (accent-2 #05073C)
-           base. Keep the hover in our dark-blue palette: deepen slightly instead
-           of switching to the bright blue. */
+               The theme's .button.-dark-1:hover forces a bright blue (--color-blue-1
+               #0040a1), which clashes with the button's dark-navy (accent-2 #05073C)
+               base. Keep the hover in our dark-blue palette: deepen slightly instead
+               of switching to the bright blue. */
         .searchForm__button .button.-dark-1:hover {
             background-color: #0a1052 !important;
             border-color: #0a1052;
@@ -122,72 +181,101 @@
         }
 
         /* ---- Hero search-bar labels (Where / When / Tour Type) ----
-           Use the brand gold accent-1 (#C49539) for the field labels. */
+               Use the brand gold accent-1 (#C49539) for the field labels. */
         .searchFormItem__content h5 {
             color: #C49539;
         }
 
         /* ---- Hero search bar ----
-           DESKTOP / TABLET: restored to the theme default — the search bar
-           sits inside the hero (no seam-float). The seam-overlap treatment is
-           now MOBILE-ONLY (see the max-width:767px block below), which is the
-           layout that was requested to stay as-is on phones. On desktop the
-           .heroSearchOverlap / .heroAboutSpacer classes are inert. */
+               DESKTOP / TABLET: restored to the theme default — the search bar
+               sits inside the hero (no seam-float). The seam-overlap treatment is
+               now MOBILE-ONLY (see the max-width:767px block below), which is the
+               layout that was requested to stay as-is on phones. On desktop the
+               .heroSearchOverlap / .heroAboutSpacer classes are inert. */
 
         @media (max-width: 767px) {
+
             /* --- Mobile: float the search bar on the seam between the hero and
-               the About section (kept as the current phone layout). --- */
+                   the About section (kept as the current phone layout). --- */
             .hero.-type-8 {
                 min-height: 620px;
                 display: flex;
                 padding-bottom: 40px;
             }
-            .hero.-type-8 > .container {
+
+            .hero.-type-8>.container {
                 width: 100%;
                 align-self: stretch;
                 display: flex;
             }
-            .hero.-type-8 > .container > .row {
+
+            .hero.-type-8>.container>.row {
                 width: 100%;
                 align-items: stretch;
             }
+
             .hero.-type-8 .hero__content {
                 height: 100%;
                 justify-content: flex-start;
             }
 
             /* The theme reorders .hero__content children on mobile; with our
-               DOM order (title first, search last) that would move the search
-               bar back to the top. Force the natural order. */
-            .hero.-type-8 .hero__content > *:nth-child(1) { order: 1; }
-            .hero.-type-8 .hero__content > *:nth-child(2) { order: 2; }
+                   DOM order (title first, search last) that would move the search
+                   bar back to the top. Force the natural order. */
+            .hero.-type-8 .hero__content>*:nth-child(1) {
+                order: 1;
+            }
+
+            .hero.-type-8 .hero__content>*:nth-child(2) {
+                order: 2;
+            }
 
             /* Horizontal centering fix: on mobile the theme column
-               (.col-lg-8/.col-md-10) doesn't span the full container width, so
-               the search bar sat flush-left with an uneven gap on the right.
-               Force the column + row to full width so the bar is symmetric
-               within the container's 15px side padding. */
-            .hero.-type-8 > .container > .row { justify-content: center; margin-left: 0; margin-right: 0; }
-            .hero.-type-8 > .container > .row > [class*="col-"] {
+                   (.col-lg-8/.col-md-10) doesn't span the full container width, so
+                   the search bar sat flush-left with an uneven gap on the right.
+                   Force the column + row to full width so the bar is symmetric
+                   within the container's 15px side padding. */
+            .hero.-type-8>.container>.row {
+                justify-content: center;
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .hero.-type-8>.container>.row>[class*="col-"] {
                 flex: 0 0 100%;
                 max-width: 100%;
                 padding-left: 0;
                 padding-right: 0;
             }
-            .hero.-type-8 .hero__content { align-items: stretch; text-align: center; }
+
+            .hero.-type-8 .hero__content {
+                align-items: stretch;
+                text-align: center;
+            }
 
             /* On mobile the search bar is tall (stacked). Pull it down by ~half
-               its height so its CENTER sits on the hero's bottom seam (half in
-               the hero, half in the section below). */
+                   its height so its CENTER sits on the hero's bottom seam (half in
+                   the hero, half in the section below). */
             .heroSearchOverlap {
                 width: 100%;
-                margin-top: auto;      /* push to the bottom of the hero */
-                margin-bottom: -191px; /* overlap ~half the bar into the next section */
+                margin-top: auto;
+                /* push to the bottom of the hero */
+                margin-bottom: -191px;
+                /* overlap ~half the bar into the next section */
                 z-index: 6;
                 position: relative;
             }
-            .heroSearchOverlap > form { width: 100%; max-width: 100%; margin-left: auto; margin-right: auto; }
-            .heroAboutSpacer { padding-top: 205px; }
+
+            .heroSearchOverlap>form {
+                width: 100%;
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .heroAboutSpacer {
+                padding-top: 205px;
+            }
         }
     </style>
 @endpush
@@ -200,10 +288,9 @@
                 src="{{ asset('assets/images/hero/sahara-desert-luxury-camp-stargazing-morocco.webp') }}"
                 alt="Luxury desert camp under the stars in the Sahara, Morocco" width="1920" height="860"
                 fetchpriority="high" decoding="async">
-            <img class="heroSlide"
-                src="{{ asset('assets/images/hero/morocco-sahara-camel-trek-sunset-merzouga.webp') }}"
-                alt="Camel trek at sunset in the Merzouga dunes, Morocco" width="1920" height="860"
-                loading="lazy" decoding="async">
+            <img class="heroSlide" src="{{ asset('assets/images/hero/morocco-sahara-camel-trek-sunset-merzouga.webp') }}"
+                alt="Camel trek at sunset in the Merzouga dunes, Morocco" width="1920" height="860" loading="lazy"
+                decoding="async">
             <img class="heroSlide"
                 src="{{ asset('assets/images/hero/marrakech-palace-courtyard-riad-architecture-morocco.avif') }}"
                 alt="Marrakech palace courtyard with traditional riad architecture, Morocco" width="1920" height="860"
@@ -221,7 +308,8 @@
                                 data-text="Find Next Place To Visit">Find Next Place To Visit</h1>
                             <div class="hero__text text-white mt-10 heroIntro__text js-typewriter"
                                 data-text="Discover amazing places at exclusive deals. Eat, Shop, Visit interesting places around the world.">
-                                Discover amazing places at exclusive deals. Eat, Shop, Visit interesting places around the world.</div>
+                                Discover amazing places at exclusive deals. Eat, Shop, Visit interesting places around the
+                                world.</div>
                         </div>
 
                         {{-- SEARCH FILTER — theme-default placement inside the hero on
@@ -259,7 +347,8 @@
                                                             </div>
                                                         @empty
                                                             <div class="searchFormItemDropdown__item">
-                                                                <span class="text-14 text-light-1">No destinations available yet</span>
+                                                                <span class="text-14 text-light-1">No destinations available
+                                                                    yet</span>
                                                             </div>
                                                         @endforelse
                                                     </div>
@@ -322,7 +411,8 @@
                                                             </div>
                                                         @empty
                                                             <div class="searchFormItemDropdown__item">
-                                                                <span class="text-14 text-light-1">No tour types available yet</span>
+                                                                <span class="text-14 text-light-1">No tour types available
+                                                                    yet</span>
                                                             </div>
                                                         @endforelse
                                                     </div>
@@ -334,8 +424,7 @@
 
                                     {{-- SEARCH BUTTON --}}
                                     <div class="searchForm__button">
-                                        <button type="submit"
-                                            class="button -dark-1 bg-accent-2 text-white">
+                                        <button type="submit" class="button -dark-1 bg-accent-2 text-white">
                                             <i class="icon-search text-16 mr-10"></i>
                                             Search
                                         </button>
@@ -358,7 +447,7 @@
 
     @push('scripts')
         <script>
-            (function () {
+            (function() {
                 var els = Array.prototype.slice.call(document.querySelectorAll('.heroIntro .js-typewriter'));
                 if (!els.length) return;
 
@@ -368,7 +457,7 @@
                 if (reduce) return;
 
                 // Clear each line and prep a caret; hold the real text in data-text.
-                els.forEach(function (el) {
+                els.forEach(function(el) {
                     el.textContent = '';
                 });
 
@@ -400,15 +489,19 @@
                 function run(idx) {
                     if (idx >= els.length) return;
                     var isLast = idx === els.length - 1;
-                    typeLine(els[idx], isLast ? null : function () { run(idx + 1); });
+                    typeLine(els[idx], isLast ? null : function() {
+                        run(idx + 1);
+                    });
                 }
 
                 // Kick off shortly after load so the hero image/reveal settles.
-                setTimeout(function () { run(0); }, 500);
+                setTimeout(function() {
+                    run(0);
+                }, 500);
             })();
 
             // ---- Hero background carousel: auto-crossfade every 5s ----
-            (function () {
+            (function() {
                 var carousel = document.querySelector('.js-hero-carousel');
                 if (!carousel) return;
 
@@ -419,7 +512,7 @@
                 if (reduce) return; // honor reduced-motion: keep the first slide only
 
                 var current = 0;
-                setInterval(function () {
+                setInterval(function() {
                     slides[current].classList.remove('is-active');
                     current = (current + 1) % slides.length;
                     slides[current].classList.add('is-active');
@@ -429,62 +522,66 @@
     @endpush
 
     <section class="layout-pt-lg heroAboutSpacer">
-  <div data-anim-wrap class="container">
+        <div data-anim-wrap class="container">
 
-    {{-- ABOUT US SECTION TITLE --}}
-    <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10 mb-40">
-      <div class="col-auto">
-        <h2 class="text-30 md:text-24">About Us</h2>
-      </div>
-    </div>
+            {{-- ABOUT US SECTION TITLE --}}
+            <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10 mb-40">
+                <div class="col-auto">
+                    <h2 class="text-30 md:text-24">About Us</h2>
+                </div>
+            </div>
 
-    <div class="row y-gap-30 justify-between items-center">
+            <div class="row y-gap-30 justify-between items-center">
 
-      <div data-anim-child="slide-up" class="col-lg-6">
-        <figure class="m-0">
-          <img src="{{ asset('assets/images/hero/marrakech-medina-narrow-street-locals-morocco.avif') }}"
-            alt="Locals walking through a narrow terracotta-walled street in the Marrakech medina, Morocco"
-            title="Narrow street in the Marrakech medina, Morocco"
-            class="rounded-12 w-100 h-auto" loading="lazy" width="960" height="640"
-            style="object-fit: cover;">
-          <figcaption class="visually-hidden">
-            A traditional narrow alley in the old medina of Marrakech, with locals and terracotta walls capturing
-            everyday Moroccan life.
-          </figcaption>
-        </figure>
-      </div>
+                <div data-anim-child="slide-up" class="col-lg-6">
+                    <figure class="m-0">
+                        <img src="{{ asset('assets/images/hero/chefchaouen-blue-city-aerial-drone-view-morocco.avif') }}"
+                            alt="Locals walking through a narrow terracotta-walled street in the Marrakech medina, Morocco"
+                            title="Narrow street in the Marrakech medina, Morocco" class="rounded-12 w-100 h-auto"
+                            loading="lazy" width="960" height="640" style="object-fit: cover;">
+                        <figcaption class="visually-hidden">
+                            A traditional narrow alley in the old medina of Marrakech, with locals and terracotta walls
+                            capturing
+                            everyday Moroccan life.
+                        </figcaption>
+                    </figure>
+                </div>
 
-      <div data-anim-child="slide-up delay-2" class="col-lg-5">
-        <h2 class="text-24 md:text-20 fw-700 mb-20" style="color: #C49539;">
-          Discover Authentic Morocco Adventures — Your Gateway to Authentic Moroccan Experiences
-        </h2>
+                <div data-anim-child="slide-up delay-2" class="col-lg-5">
+                    <h2 class="text-24 md:text-20 fw-700 mb-20" style="color: #C49539;">
+                        Discover Authentic Morocco Adventures — Your Gateway to Authentic Moroccan Experiences
+                    </h2>
 
-        <p>
-          At Authentic Morocco Adventures, we’re passionate about revealing Morocco’s vibrant spirit and hidden treasures.
-          From the blue streets of Chefchaouen to the golden dunes of the Sahara, our expertly crafted tours immerse you
-          in authentic culture, stunning landscapes, and unforgettable moments.
-          <br><br>
-          Let our local team guide you beyond the usual paths, creating memories that capture the true essence of Morocco.
-        </p>
+                    <p>
+                        At Authentic Morocco Adventures, we’re passionate about revealing Morocco’s vibrant spirit and
+                        hidden treasures.
+                        From the blue streets of Chefchaouen to the golden dunes of the Sahara, our expertly crafted tours
+                        immerse you
+                        in authentic culture, stunning landscapes, and unforgettable moments.
+                        <br><br>
+                        Let our local team guide you beyond the usual paths, creating memories that capture the true essence
+                        of Morocco.
+                    </p>
 
-        <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}" class="button -sm -dark-1 bg-accent-1 text-white mt-30">
-          Explore Our Tours
-        </a>
-      </div>
+                    <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}"
+                        class="button -sm -dark-1 bg-accent-1 text-white mt-30">
+                        Explore Our Tours
+                    </a>
+                </div>
 
-    </div>
-  </div>
-</section>
+            </div>
+        </div>
+    </section>
 
 
     @if ($specialOffers->isNotEmpty())
-    <section class="layout-pt-xl">
-        <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
-                <div class="col-auto">
-                    <h2 class="text-30 md:text-24">Special Offers</h2>
+        <section class="layout-pt-xl">
+            <div data-anim-wrap class="container">
+                <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
+                    <div class="col-auto">
+                        <h2 class="text-30 md:text-24">Special Offers</h2>
+                    </div>
                 </div>
-            </div>
 
                 <div class="specialCardGrid row y-gap-30 md:y-gap-20 pt-40 sm:pt-20">
                     @foreach ($specialOffers as $offer)
@@ -507,89 +604,90 @@
                         </div>
                     @endforeach
                 </div>
-        </div>
-    </section>
+            </div>
+        </section>
     @endif
 
     @if ($locationsForSection->isNotEmpty())
-    <section class="layout-pt-xl layout-pb-xl">
-        <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-end">
-                <div class="col-auto">
-                    <h2 class="text-30">Morocco Destinations</h2>
-                </div>
-                <div class="col-auto">
-                    <a href="{{ route('front.locations.index') }}" class="buttonArrow d-flex items-center">
-                        <span>See all</span>
-                        <i class="icon-arrow-top-right text-16 ml-10"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
-                <div class="overflow-hidden js-section-slider" data-gap="30"
-                    data-slider-cols="xl-5 lg-4 md-2 sm-1 base-1" data-nav-prev="js-slider5-prev"
-                    data-nav-next="js-slider5-next">
-
-                    <div class="swiper-wrapper">
-                        @foreach ($locationsForSection as $location)
-                            @php
-                                $media = $location->getFirstMedia('locations');
-                                $imgUrl = $media?->getUrl() ?? asset('assets/images/aga1.jpg');
-                                $alt = $media?->getCustomProperty('alt') ?? $location->name;
-                                $title = $media?->getCustomProperty('title') ?? $location->name;
-                                $caption = $media?->getCustomProperty('caption') ?? '';
-                                $desc = $media?->getCustomProperty('description') ?? '';
-                            @endphp
-
-                            <div class="swiper-slide">
-                                <a href="{{ route('front.locations.show', $location->slug) }}"
-                                    class="featureCard -type-7 -hover-image-scale d-block" title="{{ $title }}"
-                                    aria-label="Explore {{ $location->name }}">
-                                    <div class="featureCard__image ratio ratio-23:30 -hover-image-scale__image rounded-12">
-                                        <img src="{{ $imgUrl }}" alt="{{ $alt }}" title="{{ $title }}"
-                                            class="img-ratio rounded-12 w-100 h-auto" loading="lazy" width="460"
-                                            height="600">
-                                    </div>
-
-                                    {{-- Caption/description kept in the DOM for SEO but hidden
-                                         visually (visually-hidden, still read by crawlers/AT). --}}
-                                    @if ($caption)
-                                        <div class="visually-hidden">
-                                            <em>{{ $caption }}</em>
-                                        </div>
-                                    @endif
-
-                                    @if ($desc)
-                                        <div class="visually-hidden">
-                                            {{ \Illuminate\Support\Str::limit($desc, 80) }}
-                                        </div>
-                                    @endif
-
-                                    <div class="mt-20">
-                                        <h3 class="text-18 fw-500">{{ $location->name }}</h3>
-                                        <div class="text-14 lh-13 mt-5">
-                                            {{ $location->tours_count }}
-                                            {{ \Illuminate\Support\Str::plural('Tour', $location->tours_count) }}
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        @endforeach
+        <section class="layout-pt-xl layout-pb-xl">
+            <div data-anim-wrap class="container">
+                <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-end">
+                    <div class="col-auto">
+                        <h2 class="text-30">Morocco Destinations</h2>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('front.locations.index') }}" class="buttonArrow d-flex items-center">
+                            <span>See all</span>
+                            <i class="icon-arrow-top-right text-16 ml-10"></i>
+                        </a>
                     </div>
                 </div>
 
-                <div class="navAbsolute">
-                    <button class="navAbsolute__button bg-white js-slider5-prev" aria-label="Previous slide">
-                        <i class="icon-arrow-left text-14"></i>
-                    </button>
-                    <button class="navAbsolute__button bg-white js-slider5-next" aria-label="Next slide">
-                        <i class="icon-arrow-right text-14"></i>
-                    </button>
+                <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
+                    <div class="overflow-hidden js-section-slider" data-gap="30"
+                        data-slider-cols="xl-5 lg-4 md-2 sm-1 base-1" data-nav-prev="js-slider5-prev"
+                        data-nav-next="js-slider5-next">
+
+                        <div class="swiper-wrapper">
+                            @foreach ($locationsForSection as $location)
+                                @php
+                                    $media = $location->getFirstMedia('locations');
+                                    $imgUrl = $media?->getUrl() ?? asset('assets/images/aga1.jpg');
+                                    $alt = $media?->getCustomProperty('alt') ?? $location->name;
+                                    $title = $media?->getCustomProperty('title') ?? $location->name;
+                                    $caption = $media?->getCustomProperty('caption') ?? '';
+                                    $desc = $media?->getCustomProperty('description') ?? '';
+                                @endphp
+
+                                <div class="swiper-slide">
+                                    <a href="{{ route('front.locations.show', $location->slug) }}"
+                                        class="featureCard -type-7 -hover-image-scale d-block"
+                                        title="{{ $title }}" aria-label="Explore {{ $location->name }}">
+                                        <div
+                                            class="featureCard__image ratio ratio-23:30 -hover-image-scale__image rounded-12">
+                                            <img src="{{ $imgUrl }}" alt="{{ $alt }}"
+                                                title="{{ $title }}" class="img-ratio rounded-12 w-100 h-auto"
+                                                loading="lazy" width="460" height="600">
+                                        </div>
+
+                                        {{-- Caption/description kept in the DOM for SEO but hidden
+                                         visually (visually-hidden, still read by crawlers/AT). --}}
+                                        @if ($caption)
+                                            <div class="visually-hidden">
+                                                <em>{{ $caption }}</em>
+                                            </div>
+                                        @endif
+
+                                        @if ($desc)
+                                            <div class="visually-hidden">
+                                                {{ \Illuminate\Support\Str::limit($desc, 80) }}
+                                            </div>
+                                        @endif
+
+                                        <div class="mt-20">
+                                            <h3 class="text-18 fw-500">{{ $location->name }}</h3>
+                                            <div class="text-14 lh-13 mt-5">
+                                                {{ $location->tours_count }}
+                                                {{ \Illuminate\Support\Str::plural('Tour', $location->tours_count) }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="navAbsolute">
+                        <button class="navAbsolute__button bg-white js-slider5-prev" aria-label="Previous slide">
+                            <i class="icon-arrow-left text-14"></i>
+                        </button>
+                        <button class="navAbsolute__button bg-white js-slider5-next" aria-label="Next slide">
+                            <i class="icon-arrow-right text-14"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
 
@@ -660,594 +758,603 @@
 
     <!-- Tours Section -->
     @if ($tours->isNotEmpty())
-    <section class="layout-pt-xl">
-        <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
-                <div class="col-auto">
-                    <h2 class="text-30 md:text-24">Best Morocco Tours</h2>
+        <section class="layout-pt-xl">
+            <div data-anim-wrap class="container">
+                <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
+                    <div class="col-auto">
+                        <h2 class="text-30 md:text-24">Best Morocco Tours</h2>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('front.tours.index') }}" class="buttonArrow d-flex items-center">
+                            <span>See all</span>
+                            <i class="icon-arrow-top-right text-16 ml-10"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ route('front.tours.index') }}" class="buttonArrow d-flex items-center">
-                        <span>See all</span>
-                        <i class="icon-arrow-top-right text-16 ml-10"></i>
-                    </a>
-                </div>
-            </div>
 
-            <div class="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300">
-                @foreach ($tours as $tour)
-                    @php
-                        $cover = $tour->getFirstMedia('cover');
-                        $coverUrl = $cover?->getUrl() ?? null;
+                <div class="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300">
+                    @foreach ($tours as $tour)
+                        @php
+                            $cover = $tour->getFirstMedia('cover');
+                            $coverUrl = $cover?->getUrl() ?? null;
 
-                        if (!$coverUrl) {
-                            $galleryImage = $tour->getFirstMedia('gallery');
-                            $coverUrl = $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
-                            $media = $galleryImage;
-                        } else {
-                            $media = $cover;
-                        }
+                            if (!$coverUrl) {
+                                $galleryImage = $tour->getFirstMedia('gallery');
+                                $coverUrl = $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
+                                $media = $galleryImage;
+                            } else {
+                                $media = $cover;
+                            }
 
-                        $alt = $media?->getCustomProperty('alt') ?? $tour->title;
-                        $title = $media?->getCustomProperty('title') ?? $tour->title;
-                        $caption = $media?->getCustomProperty('caption') ?? '';
-                        $desc = $media?->getCustomProperty('description') ?? '';
+                            $alt = $media?->getCustomProperty('alt') ?? $tour->title;
+                            $title = $media?->getCustomProperty('title') ?? $tour->title;
+                            $caption = $media?->getCustomProperty('caption') ?? '';
+                            $desc = $media?->getCustomProperty('description') ?? '';
 
-                        $reviewsCount = (int) ($tour->reviews_count ?? 0);
-                        $rating = $tour->avg_rating ?? 0;
-                    @endphp
+                            $reviewsCount = (int) ($tour->reviews_count ?? 0);
+                            $rating = $tour->avg_rating ?? 0;
+                        @endphp
 
-                    <div data-anim-child="slide-up delay-{{ $loop->iteration }}" class="col-lg-3 col-md-6">
-                        <div class="tourCard -type-1 py-10 px-10 border-1 rounded-12 -hover-shadow bg-white relative">
-                            <div class="tourCard__header">
-                                <div class="tourCard__image ratio ratio-28:20">
-                                    <img src="{{ $coverUrl }}" alt="{{ $alt }}"
-                                        title="{{ $title }}" data-caption="{{ $caption }}"
-                                        data-description="{{ $desc }}" class="img-ratio rounded-12"
-                                        loading="lazy" width="560" height="400">
-                                </div>
-
-                                <button class="tourCard__favorite js-favorite-btn" data-id="{{ $tour->id }}"
-                                    data-type="tour" aria-label="Add {{ $tour->title }} to favorites">
-                                    <i class="icon-heart"></i>
-                                </button>
-
-                                @if ($tour->bestseller_flag)
-                                    <div class="tourCard__bestseller popularBadge">
-                                        <i class="icon-fire"></i> Popular
+                        <div data-anim-child="slide-up delay-{{ $loop->iteration }}" class="col-lg-3 col-md-6">
+                            <div class="tourCard -type-1 py-10 px-10 border-1 rounded-12 -hover-shadow bg-white relative">
+                                <div class="tourCard__header">
+                                    <div class="tourCard__image ratio ratio-28:20">
+                                        <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                            title="{{ $title }}" data-caption="{{ $caption }}"
+                                            data-description="{{ $desc }}" class="img-ratio rounded-12"
+                                            loading="lazy" width="560" height="400">
                                     </div>
-                                @endif
-                            </div>
 
-                            <div class="tourCard__content px-10 pt-10">
-                                @if (!empty($tour->location?->name))
-                                    <div class="tourCard__location d-flex items-center text-13 text-light-2">
-                                        <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                                        {{ $tour->location->name }}
-                                    </div>
-                                @endif
+                                    <button class="tourCard__favorite js-favorite-btn" data-id="{{ $tour->id }}"
+                                        data-type="tour" aria-label="Add {{ $tour->title }} to favorites">
+                                        <i class="icon-heart"></i>
+                                    </button>
 
-                                <h3 class="tourCard__title text-16 fw-500 mt-5">
-                                    <a href="{{ route('front.tours.show', $tour->slug) }}" class="text-dark-1">
-                                        <span>{{ Str::limit($tour->title, 50) }}</span>
-                                    </a>
-                                </h3>
-
-                                <div class="tourCard__rating mt-5">
-                                    @if ($reviewsCount > 0)
-                                        <div class="d-flex items-center">
-                                            <div class="d-flex x-gap-5 pr-10">
-                                                @php
-                                                    $fullStars = floor($rating);
-                                                    $halfStar = $rating - $fullStars >= 0.5;
-                                                    $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
-                                                @endphp
-
-                                                @for ($i = 0; $i < $fullStars; $i++)
-                                                    <i class="icon-star text-10 text-yellow-2"></i>
-                                                @endfor
-
-                                                @if ($halfStar)
-                                                    <i class="icon-star-half text-10 text-yellow-2"></i>
-                                                @endif
-
-                                                @for ($i = 0; $i < $emptyStars; $i++)
-                                                    <i class="icon-star text-10 text-light-2"></i>
-                                                @endfor
-                                            </div>
-
-                                            <span class="text-dark-1 text-13">
-                                                {{ number_format($rating, 1) }} ({{ $reviewsCount }})
-                                            </span>
+                                    @if ($tour->bestseller_flag)
+                                        <div class="tourCard__bestseller popularBadge">
+                                            <i class="icon-fire"></i> Popular
                                         </div>
-                                    @else
-                                        <span class="text-accent-1 text-13 fw-500">New tour</span>
                                     @endif
                                 </div>
 
-                                <div class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                                    <div class="d-flex items-center">
-                                        <i class="icon-clock text-16 mr-5"></i>
-                                        {{ $tour->duration }}
+                                <div class="tourCard__content px-10 pt-10">
+                                    @if (!empty($tour->location?->name))
+                                        <div class="tourCard__location d-flex items-center text-13 text-light-2">
+                                            <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                                            {{ $tour->location->name }}
+                                        </div>
+                                    @endif
+
+                                    <h3 class="tourCard__title text-16 fw-500 mt-5">
+                                        <a href="{{ route('front.tours.show', $tour->slug) }}" class="text-dark-1">
+                                            <span>{{ Str::limit($tour->title, 50) }}</span>
+                                        </a>
+                                    </h3>
+
+                                    <div class="tourCard__rating mt-5">
+                                        @if ($reviewsCount > 0)
+                                            <div class="d-flex items-center">
+                                                <div class="d-flex x-gap-5 pr-10">
+                                                    @php
+                                                        $fullStars = floor($rating);
+                                                        $halfStar = $rating - $fullStars >= 0.5;
+                                                        $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                    @endphp
+
+                                                    @for ($i = 0; $i < $fullStars; $i++)
+                                                        <i class="icon-star text-10 text-yellow-2"></i>
+                                                    @endfor
+
+                                                    @if ($halfStar)
+                                                        <i class="icon-star-half text-10 text-yellow-2"></i>
+                                                    @endif
+
+                                                    @for ($i = 0; $i < $emptyStars; $i++)
+                                                        <i class="icon-star text-10 text-light-2"></i>
+                                                    @endfor
+                                                </div>
+
+                                                <span class="text-dark-1 text-13">
+                                                    {{ number_format($rating, 1) }} ({{ $reviewsCount }})
+                                                </span>
+                                            </div>
+                                        @else
+                                            <span class="text-accent-1 text-13 fw-500">New tour</span>
+                                        @endif
                                     </div>
 
-                                    <div>
-                                        @if ($tour->base_price > 0)
-                                            From
-                                            <span class="text-16 fw-500">
-                                                ${{ number_format($tour->base_price, 2) }}
-                                            </span>
-                                        @else
-                                            <span class="text-14 fw-500">Contact for price</span>
-                                        @endif
+                                    <div
+                                        class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                                        <div class="d-flex items-center">
+                                            <i class="icon-clock text-16 mr-5"></i>
+                                            {{ $tour->duration }}
+                                        </div>
+
+                                        <div>
+                                            @if ($tour->base_price > 0)
+                                                From
+                                                <span class="text-16 fw-500">
+                                                    ${{ number_format($tour->base_price, 2) }}
+                                                </span>
+                                            @else
+                                                <span class="text-14 fw-500">Contact for price</span>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
     <!-- Day Trips Section -->
     @if ($dayTrips->isNotEmpty())
-    <section class="layout-pt-xl">
-        <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center y-gap-10">
-                <div class="col-auto">
-                    <h2 class="text-30">Best Morocco Day Trips</h2>
+        <section class="layout-pt-xl">
+            <div data-anim-wrap class="container">
+                <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center y-gap-10">
+                    <div class="col-auto">
+                        <h2 class="text-30">Best Morocco Day Trips</h2>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('front.tours.index', ['type' => 'day_trip']) }}"
+                            class="buttonArrow d-flex items-center">
+                            <span>See all</span>
+                            <i class="icon-arrow-top-right text-16 ml-10"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ route('front.tours.index', ['type' => 'day_trip']) }}" class="buttonArrow d-flex items-center">
-                        <span>See all</span>
-                        <i class="icon-arrow-top-right text-16 ml-10"></i>
-                    </a>
-                </div>
-            </div>
 
-            <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
-                <div class="overflow-hidden js-section-slider" data-gap="30"
-                    data-slider-cols="xl-4 lg-3 md-2 sm-1 base-1" data-nav-prev="js-slider4-prev"
-                    data-nav-next="js-slider4-next">
+                <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
+                    <div class="overflow-hidden js-section-slider" data-gap="30"
+                        data-slider-cols="xl-4 lg-3 md-2 sm-1 base-1" data-nav-prev="js-slider4-prev"
+                        data-nav-next="js-slider4-next">
 
-                    <div class="swiper-wrapper">
-                        @foreach ($dayTrips as $tour)
-                            @php
-                                $cover = $tour->getFirstMedia('cover');
-                                $coverUrl = $cover?->getUrl() ?? null;
+                        <div class="swiper-wrapper">
+                            @foreach ($dayTrips as $tour)
+                                @php
+                                    $cover = $tour->getFirstMedia('cover');
+                                    $coverUrl = $cover?->getUrl() ?? null;
 
-                                if (!$coverUrl) {
-                                    $galleryImage = $tour->getFirstMedia('gallery');
-                                    $coverUrl = $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
-                                    $media = $galleryImage;
-                                } else {
-                                    $media = $cover;
-                                }
+                                    if (!$coverUrl) {
+                                        $galleryImage = $tour->getFirstMedia('gallery');
+                                        $coverUrl =
+                                            $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
+                                        $media = $galleryImage;
+                                    } else {
+                                        $media = $cover;
+                                    }
 
-                                $alt = $media?->getCustomProperty('alt') ?? $tour->title;
-                                $title = $media?->getCustomProperty('title') ?? $tour->title;
-                                $caption = $media?->getCustomProperty('caption') ?? '';
-                                $desc = $media?->getCustomProperty('description') ?? '';
-                            @endphp
+                                    $alt = $media?->getCustomProperty('alt') ?? $tour->title;
+                                    $title = $media?->getCustomProperty('title') ?? $tour->title;
+                                    $caption = $media?->getCustomProperty('caption') ?? '';
+                                    $desc = $media?->getCustomProperty('description') ?? '';
+                                @endphp
 
-                            <div class="swiper-slide">
-                                <div class="tourCard -type-1 d-block bg-white relative">
-                                    <div class="tourCard__header">
-                                        <div class="tourCard__image ratio ratio-28:20">
-                                            <img src="{{ $coverUrl }}" alt="{{ $alt }}"
-                                                title="{{ $title }}" data-caption="{{ $caption }}"
-                                                data-description="{{ $desc }}" class="img-ratio rounded-12"
-                                                loading="lazy" width="560" height="400">
-                                        </div>
-
-                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping" data-id="{{ $tour->id }}"
-                                            data-type="tour" aria-label="Add {{ $tour->title }} to favorites"
-                                            style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
-                                            <i class="icon-heart"></i>
-                                        </button>
-
-                                        @if ($tour->bestseller_flag)
-                                            <div class="tourCard__bestseller popularBadge">
-                                                <i class="icon-fire"></i> Popular
+                                <div class="swiper-slide">
+                                    <div class="tourCard -type-1 d-block bg-white relative">
+                                        <div class="tourCard__header">
+                                            <div class="tourCard__image ratio ratio-28:20">
+                                                <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                                    title="{{ $title }}" data-caption="{{ $caption }}"
+                                                    data-description="{{ $desc }}" class="img-ratio rounded-12"
+                                                    loading="lazy" width="560" height="400">
                                             </div>
-                                        @endif
-                                    </div>
 
-                                    <div class="tourCard__content pt-10">
-                                        @if (!empty($tour->location?->name))
-                                            <div class="tourCard__location d-flex items-center text-13 text-light-2">
-                                                <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                                                {{ $tour->location->name }}
-                                            </div>
-                                        @endif
+                                            <button class="tourCard__favorite js-favorite-btn swiper-no-swiping"
+                                                data-id="{{ $tour->id }}" data-type="tour"
+                                                aria-label="Add {{ $tour->title }} to favorites"
+                                                style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
+                                                <i class="icon-heart"></i>
+                                            </button>
 
-                                        <h3 class="tourCard__title text-16 fw-500 mt-5">
-                                            <a href="{{ route('front.tours.show', $tour->slug) }}" class="text-dark-1">
-                                                <span>{{ Str::limit($tour->title, 50) }}</span>
-                                            </a>
-                                        </h3>
-
-                                        @php
-                                            $reviewsCount = (int) ($tour->reviews_count ?? 0);
-                                            $rating = $tour->avg_rating ?? 0;
-                                        @endphp
-
-                                        <div class="tourCard__rating mt-5">
-                                            @if ($reviewsCount > 0)
-                                                <div class="d-flex items-center">
-                                                    <div class="d-flex x-gap-5 pr-10">
-                                                        @php
-                                                            $fullStars = floor($rating);
-                                                            $halfStar = $rating - $fullStars >= 0.5;
-                                                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
-                                                        @endphp
-
-                                                        @for ($i = 0; $i < $fullStars; $i++)
-                                                            <i class="icon-star text-10 text-yellow-2"></i>
-                                                        @endfor
-
-                                                        @if ($halfStar)
-                                                            <i class="icon-star-half text-10 text-yellow-2"></i>
-                                                        @endif
-
-                                                        @for ($i = 0; $i < $emptyStars; $i++)
-                                                            <i class="icon-star text-10 text-light-2"></i>
-                                                        @endfor
-                                                    </div>
-
-                                                    <span class="text-dark-1 text-13">
-                                                        {{ number_format($rating, 1) }} ({{ $reviewsCount }})
-                                                    </span>
+                                            @if ($tour->bestseller_flag)
+                                                <div class="tourCard__bestseller popularBadge">
+                                                    <i class="icon-fire"></i> Popular
                                                 </div>
-                                            @else
-                                                <span class="text-accent-1 text-13 fw-500">New tour</span>
                                             @endif
                                         </div>
 
-                                        <div
-                                            class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                                            <div class="d-flex items-center">
-                                                <i class="icon-clock text-16 mr-5"></i>
-                                                {{ $tour->duration }}
+                                        <div class="tourCard__content pt-10">
+                                            @if (!empty($tour->location?->name))
+                                                <div class="tourCard__location d-flex items-center text-13 text-light-2">
+                                                    <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                                                    {{ $tour->location->name }}
+                                                </div>
+                                            @endif
+
+                                            <h3 class="tourCard__title text-16 fw-500 mt-5">
+                                                <a href="{{ route('front.tours.show', $tour->slug) }}"
+                                                    class="text-dark-1">
+                                                    <span>{{ Str::limit($tour->title, 50) }}</span>
+                                                </a>
+                                            </h3>
+
+                                            @php
+                                                $reviewsCount = (int) ($tour->reviews_count ?? 0);
+                                                $rating = $tour->avg_rating ?? 0;
+                                            @endphp
+
+                                            <div class="tourCard__rating mt-5">
+                                                @if ($reviewsCount > 0)
+                                                    <div class="d-flex items-center">
+                                                        <div class="d-flex x-gap-5 pr-10">
+                                                            @php
+                                                                $fullStars = floor($rating);
+                                                                $halfStar = $rating - $fullStars >= 0.5;
+                                                                $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                            @endphp
+
+                                                            @for ($i = 0; $i < $fullStars; $i++)
+                                                                <i class="icon-star text-10 text-yellow-2"></i>
+                                                            @endfor
+
+                                                            @if ($halfStar)
+                                                                <i class="icon-star-half text-10 text-yellow-2"></i>
+                                                            @endif
+
+                                                            @for ($i = 0; $i < $emptyStars; $i++)
+                                                                <i class="icon-star text-10 text-light-2"></i>
+                                                            @endfor
+                                                        </div>
+
+                                                        <span class="text-dark-1 text-13">
+                                                            {{ number_format($rating, 1) }} ({{ $reviewsCount }})
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <span class="text-accent-1 text-13 fw-500">New tour</span>
+                                                @endif
                                             </div>
 
-                                            <div>
-                                                @if ($tour->base_price > 0)
-                                                    From
-                                                    <span class="text-16 fw-500">
-                                                        ${{ number_format($tour->base_price, 2) }}
-                                                    </span>
-                                                @else
-                                                    <span class="text-14 fw-500">Contact for price</span>
-                                                @endif
+                                            <div
+                                                class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                                                <div class="d-flex items-center">
+                                                    <i class="icon-clock text-16 mr-5"></i>
+                                                    {{ $tour->duration }}
+                                                </div>
+
+                                                <div>
+                                                    @if ($tour->base_price > 0)
+                                                        From
+                                                        <span class="text-16 fw-500">
+                                                            ${{ number_format($tour->base_price, 2) }}
+                                                        </span>
+                                                    @else
+                                                        <span class="text-14 fw-500">Contact for price</span>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="navAbsolute">
+                        <button class="navAbsolute__button bg-white js-slider4-prev" aria-label="Previous slide">
+                            <i class="icon-arrow-left text-14"></i>
+                        </button>
+                        <button class="navAbsolute__button bg-white js-slider4-next" aria-label="Next slide">
+                            <i class="icon-arrow-right text-14"></i>
+                        </button>
                     </div>
                 </div>
-
-                <div class="navAbsolute">
-                    <button class="navAbsolute__button bg-white js-slider4-prev" aria-label="Previous slide">
-                        <i class="icon-arrow-left text-14"></i>
-                    </button>
-                    <button class="navAbsolute__button bg-white js-slider4-next" aria-label="Next slide">
-                        <i class="icon-arrow-right text-14"></i>
-                    </button>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
     <!-- Activities Section -->
     @if ($activities->isNotEmpty())
-    <section class="layout-pt-xl">
-        <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center">
-                <div class="col-auto">
-                    <h2 class="text-30">Marrakech Activities</h2>
+        <section class="layout-pt-xl">
+            <div data-anim-wrap class="container">
+                <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center">
+                    <div class="col-auto">
+                        <h2 class="text-30">Marrakech Activities</h2>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('front.activities.index') }}" class="buttonArrow d-flex items-center">
+                            <span>See all</span>
+                            <i class="icon-arrow-top-right text-16 ml-10"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ route('front.activities.index') }}" class="buttonArrow d-flex items-center">
-                        <span>See all</span>
-                        <i class="icon-arrow-top-right text-16 ml-10"></i>
-                    </a>
-                </div>
-            </div>
 
-            <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
-                <div class="overflow-hidden js-section-slider" data-gap="30"
-                    data-slider-cols="xl-4 lg-3 md-2 sm-1 base-1" data-nav-prev="js-slider2-prev"
-                    data-nav-next="js-slider2-next">
+                <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
+                    <div class="overflow-hidden js-section-slider" data-gap="30"
+                        data-slider-cols="xl-4 lg-3 md-2 sm-1 base-1" data-nav-prev="js-slider2-prev"
+                        data-nav-next="js-slider2-next">
 
-                    <div class="swiper-wrapper">
-                        @foreach ($activities as $activity)
-                            @php
-                                $cover = $activity->getFirstMedia('cover');
-                                $coverUrl = $cover?->getUrl() ?? null;
+                        <div class="swiper-wrapper">
+                            @foreach ($activities as $activity)
+                                @php
+                                    $cover = $activity->getFirstMedia('cover');
+                                    $coverUrl = $cover?->getUrl() ?? null;
 
-                                if (!$coverUrl) {
-                                    $galleryImage = $activity->getFirstMedia('gallery');
-                                    $coverUrl = $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
-                                    $media = $galleryImage;
-                                } else {
-                                    $media = $cover;
-                                }
+                                    if (!$coverUrl) {
+                                        $galleryImage = $activity->getFirstMedia('gallery');
+                                        $coverUrl =
+                                            $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
+                                        $media = $galleryImage;
+                                    } else {
+                                        $media = $cover;
+                                    }
 
-                                $alt = $media?->getCustomProperty('alt') ?? $activity->title;
-                                $title = $media?->getCustomProperty('title') ?? $activity->title;
-                                $caption = $media?->getCustomProperty('caption') ?? '';
-                                $desc = $media?->getCustomProperty('description') ?? '';
-                            @endphp
+                                    $alt = $media?->getCustomProperty('alt') ?? $activity->title;
+                                    $title = $media?->getCustomProperty('title') ?? $activity->title;
+                                    $caption = $media?->getCustomProperty('caption') ?? '';
+                                    $desc = $media?->getCustomProperty('description') ?? '';
+                                @endphp
 
-                            <div class="swiper-slide">
-                                <div class="tourCard -type-1 d-block bg-white relative">
-                                    <div class="tourCard__header">
-                                        <div class="tourCard__image ratio ratio-28:20">
-                                            <img src="{{ $coverUrl }}" alt="{{ $alt }}"
-                                                title="{{ $title }}" loading="lazy" width="560"
-                                                height="400" data-caption="{{ $caption }}"
-                                                data-description="{{ $desc }}" class="img-ratio rounded-12">
-                                        </div>
-
-                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping" data-id="{{ $activity->id }}"
-                                            data-type="activity" aria-label="Add {{ $activity->title }} to favorites"
-                                            style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
-                                            <i class="icon-heart"></i>
-                                        </button>
-
-                                        @if ($activity->bestseller_flag)
-                                            <div class="tourCard__bestseller popularBadge">
-                                                <i class="icon-fire"></i> Popular
+                                <div class="swiper-slide">
+                                    <div class="tourCard -type-1 d-block bg-white relative">
+                                        <div class="tourCard__header">
+                                            <div class="tourCard__image ratio ratio-28:20">
+                                                <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                                    title="{{ $title }}" loading="lazy" width="560"
+                                                    height="400" data-caption="{{ $caption }}"
+                                                    data-description="{{ $desc }}" class="img-ratio rounded-12">
                                             </div>
-                                        @endif
-                                    </div>
 
-                                    <div class="tourCard__content pt-10">
-                                        @if (!empty($activity->location?->name))
-                                            <div class="tourCard__location d-flex items-center text-13 text-light-2">
-                                                <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                                                {{ $activity->location->name }}
-                                            </div>
-                                        @endif
+                                            <button class="tourCard__favorite js-favorite-btn swiper-no-swiping"
+                                                data-id="{{ $activity->id }}" data-type="activity"
+                                                aria-label="Add {{ $activity->title }} to favorites"
+                                                style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
+                                                <i class="icon-heart"></i>
+                                            </button>
 
-                                        <h3 class="tourCard__title text-16 fw-500 mt-5">
-                                            <a href="{{ route('front.activities.show', $activity->slug) }}"
-                                                class="text-dark-1">
-                                                <span>{{ Str::limit($activity->title, 50) }}</span>
-                                            </a>
-                                        </h3>
-
-                                        @php
-                                            $reviewsCount = (int) ($activity->reviews_count ?? 0);
-                                            $rating = $activity->avg_rating ?? 0;
-                                        @endphp
-
-                                        <div class="tourCard__rating mt-5">
-                                            @if ($reviewsCount > 0)
-                                                <div class="d-flex items-center">
-                                                    <div class="d-flex x-gap-5 pr-10">
-                                                        @php
-                                                            $fullStars = floor($rating);
-                                                            $halfStar = $rating - $fullStars >= 0.5;
-                                                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
-                                                        @endphp
-
-                                                        @for ($i = 0; $i < $fullStars; $i++)
-                                                            <i class="icon-star text-10 text-yellow-2"></i>
-                                                        @endfor
-
-                                                        @if ($halfStar)
-                                                            <i class="icon-star-half text-10 text-yellow-2"></i>
-                                                        @endif
-
-                                                        @for ($i = 0; $i < $emptyStars; $i++)
-                                                            <i class="icon-star text-10 text-light-2"></i>
-                                                        @endfor
-                                                    </div>
-
-                                                    <span class="text-dark-1 text-13">
-                                                        {{ number_format($rating, 1) }} ({{ $reviewsCount }})
-                                                    </span>
+                                            @if ($activity->bestseller_flag)
+                                                <div class="tourCard__bestseller popularBadge">
+                                                    <i class="icon-fire"></i> Popular
                                                 </div>
-                                            @else
-                                                <span class="text-accent-1 text-13 fw-500">New activity</span>
                                             @endif
                                         </div>
 
-                                        <div
-                                            class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                                            <div class="d-flex items-center">
-                                                <i class="icon-clock text-16 mr-5"></i>
-                                                {{ $activity->duration }}
+                                        <div class="tourCard__content pt-10">
+                                            @if (!empty($activity->location?->name))
+                                                <div class="tourCard__location d-flex items-center text-13 text-light-2">
+                                                    <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                                                    {{ $activity->location->name }}
+                                                </div>
+                                            @endif
+
+                                            <h3 class="tourCard__title text-16 fw-500 mt-5">
+                                                <a href="{{ route('front.activities.show', $activity->slug) }}"
+                                                    class="text-dark-1">
+                                                    <span>{{ Str::limit($activity->title, 50) }}</span>
+                                                </a>
+                                            </h3>
+
+                                            @php
+                                                $reviewsCount = (int) ($activity->reviews_count ?? 0);
+                                                $rating = $activity->avg_rating ?? 0;
+                                            @endphp
+
+                                            <div class="tourCard__rating mt-5">
+                                                @if ($reviewsCount > 0)
+                                                    <div class="d-flex items-center">
+                                                        <div class="d-flex x-gap-5 pr-10">
+                                                            @php
+                                                                $fullStars = floor($rating);
+                                                                $halfStar = $rating - $fullStars >= 0.5;
+                                                                $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                            @endphp
+
+                                                            @for ($i = 0; $i < $fullStars; $i++)
+                                                                <i class="icon-star text-10 text-yellow-2"></i>
+                                                            @endfor
+
+                                                            @if ($halfStar)
+                                                                <i class="icon-star-half text-10 text-yellow-2"></i>
+                                                            @endif
+
+                                                            @for ($i = 0; $i < $emptyStars; $i++)
+                                                                <i class="icon-star text-10 text-light-2"></i>
+                                                            @endfor
+                                                        </div>
+
+                                                        <span class="text-dark-1 text-13">
+                                                            {{ number_format($rating, 1) }} ({{ $reviewsCount }})
+                                                        </span>
+                                                    </div>
+                                                @else
+                                                    <span class="text-accent-1 text-13 fw-500">New activity</span>
+                                                @endif
                                             </div>
 
-                                            <div>
-                                                @if ($activity->base_price > 0)
-                                                    From
-                                                    <span class="text-16 fw-500">
-                                                        ${{ number_format($activity->base_price, 2) }}
-                                                    </span>
-                                                @else
-                                                    <span class="text-14 fw-500">Contact for price</span>
-                                                @endif
+                                            <div
+                                                class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                                                <div class="d-flex items-center">
+                                                    <i class="icon-clock text-16 mr-5"></i>
+                                                    {{ $activity->duration }}
+                                                </div>
+
+                                                <div>
+                                                    @if ($activity->base_price > 0)
+                                                        From
+                                                        <span class="text-16 fw-500">
+                                                            ${{ number_format($activity->base_price, 2) }}
+                                                        </span>
+                                                    @else
+                                                        <span class="text-14 fw-500">Contact for price</span>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="navAbsolute">
+                        <button class="navAbsolute__button bg-white js-slider2-prev" aria-label="Previous slide">
+                            <i class="icon-arrow-left text-14"></i>
+                        </button>
+                        <button class="navAbsolute__button bg-white js-slider2-next" aria-label="Next slide">
+                            <i class="icon-arrow-right text-14"></i>
+                        </button>
                     </div>
                 </div>
-
-                <div class="navAbsolute">
-                    <button class="navAbsolute__button bg-white js-slider2-prev" aria-label="Previous slide">
-                        <i class="icon-arrow-left text-14"></i>
-                    </button>
-                    <button class="navAbsolute__button bg-white js-slider2-next" aria-label="Next slide">
-                        <i class="icon-arrow-right text-14"></i>
-                    </button>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
     <!-- Trekking Section -->
     @if ($trekking->isNotEmpty())
-    <section class="layout-pt-xl">
-        <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center">
-                <div class="col-auto">
-                    <h2 class="text-30">Morocco Treking Tours</h2>
+        <section class="layout-pt-xl">
+            <div data-anim-wrap class="container">
+                <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-center">
+                    <div class="col-auto">
+                        <h2 class="text-30">Morocco Treking Tours</h2>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('front.trekking.index') }}" class="buttonArrow d-flex items-center">
+                            <span>See all</span>
+                            <i class="icon-arrow-top-right text-16 ml-10"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ route('front.trekking.index') }}" class="buttonArrow d-flex items-center">
-                        <span>See all</span>
-                        <i class="icon-arrow-top-right text-16 ml-10"></i>
-                    </a>
-                </div>
-            </div>
 
-            <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
-                <div class="overflow-hidden js-section-slider" data-gap="30"
-                    data-slider-cols="xl-4 lg-3 md-2 sm-1 base-1" data-nav-prev="js-slider3-prev"
-                    data-nav-next="js-slider3-next">
+                <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
+                    <div class="overflow-hidden js-section-slider" data-gap="30"
+                        data-slider-cols="xl-4 lg-3 md-2 sm-1 base-1" data-nav-prev="js-slider3-prev"
+                        data-nav-next="js-slider3-next">
 
-                    <div class="swiper-wrapper">
-                        @foreach ($trekking as $trek)
-                            @php
-                                $cover = $trek->getFirstMedia('cover');
-                                $coverUrl = $cover?->getUrl() ?? null;
+                        <div class="swiper-wrapper">
+                            @foreach ($trekking as $trek)
+                                @php
+                                    $cover = $trek->getFirstMedia('cover');
+                                    $coverUrl = $cover?->getUrl() ?? null;
 
-                                if (!$coverUrl) {
-                                    $galleryImage = $trek->getFirstMedia('gallery');
-                                    $coverUrl = $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
-                                } else {
-                                    $media = $cover;
-                                }
+                                    if (!$coverUrl) {
+                                        $galleryImage = $trek->getFirstMedia('gallery');
+                                        $coverUrl =
+                                            $galleryImage?->getUrl() ?? asset('assets/images/default-image.png');
+                                    } else {
+                                        $media = $cover;
+                                    }
 
-                                $alt = $media?->getCustomProperty('alt') ?? $trek->title;
-                                $title = $media?->getCustomProperty('title') ?? $trek->title;
-                                $caption = $media?->getCustomProperty('caption') ?? '';
-                                $desc = $media?->getCustomProperty('description') ?? '';
-                            @endphp
+                                    $alt = $media?->getCustomProperty('alt') ?? $trek->title;
+                                    $title = $media?->getCustomProperty('title') ?? $trek->title;
+                                    $caption = $media?->getCustomProperty('caption') ?? '';
+                                    $desc = $media?->getCustomProperty('description') ?? '';
+                                @endphp
 
-                            <div class="swiper-slide">
-                                <div class="tourCard -type-1 d-block bg-white relative">
-                                    <div class="tourCard__header">
-                                        <div class="tourCard__image ratio ratio-28:20">
-                                            <img src="{{ $coverUrl }}" alt="{{ $alt }}"
-                                                title="{{ $title }}" loading="lazy" width="560"
-                                                height="400" data-caption="{{ $caption }}"
-                                                data-description="{{ $desc }}" class="img-ratio rounded-12">
-                                        </div>
-
-                                        <button class="tourCard__favorite js-favorite-btn swiper-no-swiping" data-id="{{ $trek->id }}"
-                                            data-type="trekking" aria-label="Add {{ $trek->title }} to favorites"
-                                            style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
-                                            <i class="icon-heart"></i>
-                                        </button>
-
-                                        @if ($trek->bestseller_flag)
-                                            <div class="tourCard__bestseller popularBadge">
-                                                <i class="icon-fire"></i> Popular
+                                <div class="swiper-slide">
+                                    <div class="tourCard -type-1 d-block bg-white relative">
+                                        <div class="tourCard__header">
+                                            <div class="tourCard__image ratio ratio-28:20">
+                                                <img src="{{ $coverUrl }}" alt="{{ $alt }}"
+                                                    title="{{ $title }}" loading="lazy" width="560"
+                                                    height="400" data-caption="{{ $caption }}"
+                                                    data-description="{{ $desc }}" class="img-ratio rounded-12">
                                             </div>
-                                        @endif
-                                    </div>
 
-                                    <div class="tourCard__content pt-10">
-                                        @if (!empty($trek->location?->name))
-                                            <div class="tourCard__location d-flex items-center text-13 text-light-2">
-                                                <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
-                                                {{ $trek->location->name }}
-                                            </div>
-                                        @endif
+                                            <button class="tourCard__favorite js-favorite-btn swiper-no-swiping"
+                                                data-id="{{ $trek->id }}" data-type="trekking"
+                                                aria-label="Add {{ $trek->title }} to favorites"
+                                                style="position: absolute; bottom: -17px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: white; display: flex; justify-content: center; align-items: center; box-shadow: 0px 10px 40px rgba(0,0,0,0.05); z-index: 2;">
+                                                <i class="icon-heart"></i>
+                                            </button>
 
-                                        <h3 class="tourCard__title text-16 fw-500 mt-5">
-                                            <a href="{{ route('front.trekking.show', $trek->slug) }}"
-                                                class="text-dark-1">
-                                                <span>{{ Str::limit($trek->title, 50) }}</span>
-                                            </a>
-                                        </h3>
-
-                                        @php
-                                            $reviewsCount = (int) ($trek->reviews_count ?? 0);
-                                            $rating = $trek->avg_rating ?? 0;
-                                        @endphp
-
-                                        <div class="tourCard__rating mt-5">
-                                            @if ($reviewsCount > 0)
-                                                <div class="d-flex items-center">
-                                                    <div class="d-flex x-gap-5 pr-10">
-                                                        @php
-                                                            $fullStars = floor($rating);
-                                                            $halfStar = $rating - $fullStars >= 0.5;
-                                                            $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
-                                                        @endphp
-
-                                                        @for ($i = 0; $i < $fullStars; $i++)
-                                                            <i class="icon-star text-10 text-yellow-2"></i>
-                                                        @endfor
-
-                                                        @if ($halfStar)
-                                                            <i class="icon-star-half text-10 text-yellow-2"></i>
-                                                        @endif
-
-                                                        @for ($i = 0; $i < $emptyStars; $i++)
-                                                            <i class="icon-star text-10 text-light-2"></i>
-                                                        @endfor
-                                                    </div>
-
-                                                    <span class="text-dark-1 text-13">
-                                                        {{ number_format($rating, 1) }} ({{ $reviewsCount }})
-                                                    </span>
+                                            @if ($trek->bestseller_flag)
+                                                <div class="tourCard__bestseller popularBadge">
+                                                    <i class="icon-fire"></i> Popular
                                                 </div>
-                                            @else
-                                                <span class="text-accent-1 text-13 fw-500">New trek</span>
                                             @endif
                                         </div>
 
-                                        <div
-                                            class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
-                                            <div class="d-flex items-center">
-                                                <i class="icon-clock text-16 mr-5"></i>
-                                                {{ $trek->duration }}
-                                            </div>
-                                            <div>
-                                                @if ($trek->base_price > 0)
-                                                    From
-                                                    <span class="text-16 fw-500">
-                                                        ${{ number_format($trek->base_price, 2) }}
-                                                    </span>
+                                        <div class="tourCard__content pt-10">
+                                            @if (!empty($trek->location?->name))
+                                                <div class="tourCard__location d-flex items-center text-13 text-light-2">
+                                                    <i class="icon-pin d-flex text-16 text-light-2 mr-5"></i>
+                                                    {{ $trek->location->name }}
+                                                </div>
+                                            @endif
+
+                                            <h3 class="tourCard__title text-16 fw-500 mt-5">
+                                                <a href="{{ route('front.trekking.show', $trek->slug) }}"
+                                                    class="text-dark-1">
+                                                    <span>{{ Str::limit($trek->title, 50) }}</span>
+                                                </a>
+                                            </h3>
+
+                                            @php
+                                                $reviewsCount = (int) ($trek->reviews_count ?? 0);
+                                                $rating = $trek->avg_rating ?? 0;
+                                            @endphp
+
+                                            <div class="tourCard__rating mt-5">
+                                                @if ($reviewsCount > 0)
+                                                    <div class="d-flex items-center">
+                                                        <div class="d-flex x-gap-5 pr-10">
+                                                            @php
+                                                                $fullStars = floor($rating);
+                                                                $halfStar = $rating - $fullStars >= 0.5;
+                                                                $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+                                                            @endphp
+
+                                                            @for ($i = 0; $i < $fullStars; $i++)
+                                                                <i class="icon-star text-10 text-yellow-2"></i>
+                                                            @endfor
+
+                                                            @if ($halfStar)
+                                                                <i class="icon-star-half text-10 text-yellow-2"></i>
+                                                            @endif
+
+                                                            @for ($i = 0; $i < $emptyStars; $i++)
+                                                                <i class="icon-star text-10 text-light-2"></i>
+                                                            @endfor
+                                                        </div>
+
+                                                        <span class="text-dark-1 text-13">
+                                                            {{ number_format($rating, 1) }} ({{ $reviewsCount }})
+                                                        </span>
+                                                    </div>
                                                 @else
-                                                    <span class="text-14 fw-500">Contact for price</span>
+                                                    <span class="text-accent-1 text-13 fw-500">New trek</span>
                                                 @endif
+                                            </div>
+
+                                            <div
+                                                class="d-flex justify-between items-center border-1-top text-13 text-dark-1 pt-10 mt-10">
+                                                <div class="d-flex items-center">
+                                                    <i class="icon-clock text-16 mr-5"></i>
+                                                    {{ $trek->duration }}
+                                                </div>
+                                                <div>
+                                                    @if ($trek->base_price > 0)
+                                                        From
+                                                        <span class="text-16 fw-500">
+                                                            ${{ number_format($trek->base_price, 2) }}
+                                                        </span>
+                                                    @else
+                                                        <span class="text-14 fw-500">Contact for price</span>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="navAbsolute">
+                        <button class="navAbsolute__button bg-white js-slider3-prev" aria-label="Previous slide">
+                            <i class="icon-arrow-left text-14"></i>
+                        </button>
+                        <button class="navAbsolute__button bg-white js-slider3-next" aria-label="Next slide">
+                            <i class="icon-arrow-right text-14"></i>
+                        </button>
                     </div>
                 </div>
-
-                <div class="navAbsolute">
-                    <button class="navAbsolute__button bg-white js-slider3-prev" aria-label="Previous slide">
-                        <i class="icon-arrow-left text-14"></i>
-                    </button>
-                    <button class="navAbsolute__button bg-white js-slider3-next" aria-label="Next slide">
-                        <i class="icon-arrow-right text-14"></i>
-                    </button>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
     <style>
@@ -1258,14 +1365,15 @@
     <script></script>
     <style>
         /* Fix "Why Choose" horizontal swipe on mobile — make columns
-           real scroll items so users can switch to the cards on the right. */
+               real scroll items so users can switch to the cards on the right. */
         @media (max-width: 575px) {
             #whyChoose .mobile-css-slider {
                 -webkit-overflow-scrolling: touch;
                 scroll-padding-left: 15px;
                 padding-bottom: 10px;
             }
-            #whyChoose .mobile-css-slider > [class*="col-"] {
+
+            #whyChoose .mobile-css-slider>[class*="col-"] {
                 flex: 0 0 auto;
                 width: 280px;
                 max-width: 280px;
@@ -1291,7 +1399,8 @@
                         </div>
                         <h3 class="featureIcon__title text-18 fw-500 mt-30">Ultimate Flexibility</h3>
                         <p class="featureIcon__text mt-10">
-                            Explore Morocco your way. With Authentic Morocco Adventures, enjoy free cancellation and payment options
+                            Explore Morocco your way. With Authentic Morocco Adventures, enjoy free cancellation and payment
+                            options
                             to suit your plans and budget.
                         </p>
                     </div>
@@ -1321,7 +1430,8 @@
                         </div>
                         <h3 class="featureIcon__title text-18 fw-500 mt-30">Quality at Our Core</h3>
                         <p class="featureIcon__text mt-10">
-                            Authentic Morocco Adventures is committed to quality. Exceptional guides, authentic experiences, and
+                            Authentic Morocco Adventures is committed to quality. Exceptional guides, authentic experiences,
+                            and
                             glowing reviews ensure your trip exceeds expectations.
                         </p>
                     </div>
@@ -1336,7 +1446,8 @@
                         </div>
                         <h3 class="featureIcon__title text-18 fw-500 mt-30">Award-Winning Support</h3>
                         <p class="featureIcon__text mt-10">
-                            New plans? New adventures? No problem. Our Authentic Morocco Adventures team is here to support your
+                            New plans? New adventures? No problem. Our Authentic Morocco Adventures team is here to support
+                            your
                             Morocco journey 24/7.
                         </p>
                     </div>
@@ -1351,7 +1462,8 @@
         <section data-anim-wrap class="relative layout-pt-xl layout-pb-xl">
             <div data-anim-child="slide-up delay-1" class="sectionBg md:d-none">
                 <img src="{{ asset('assets/img/testimonials/1/1.png') }}"
-                    alt="Background graphic featuring Authentic Morocco Adventures theme" loading="lazy" role="presentation">
+                    alt="Background graphic featuring Authentic Morocco Adventures theme" loading="lazy"
+                    role="presentation">
             </div>
 
             <div data-anim-child="slide-up delay-3" class="container">
@@ -1392,7 +1504,8 @@
                                             Incredible Desert Tour!
                                         </div>
                                         <div class="text-20 fw-500 mt-20">
-                                            My family and I booked a desert adventure with Authentic Morocco Adventures. Riding
+                                            My family and I booked a desert adventure with Authentic Morocco Adventures.
+                                            Riding
                                             camels through the dunes at sunset was magical. Truly the best way to see
                                             Morocco!
                                         </div>
@@ -1427,7 +1540,8 @@
                                             Authentic Moroccan Culture
                                         </div>
                                         <div class="text-20 fw-500 mt-20">
-                                            Thanks to Authentic Morocco Adventures, I discovered hidden spots in Marrakech. The
+                                            Thanks to Authentic Morocco Adventures, I discovered hidden spots in Marrakech.
+                                            The
                                             guides were knowledgeable and passionate about sharing Moroccan culture.
                                         </div>
                                         <div class="mt-20 md:mt-40">
@@ -1461,7 +1575,8 @@
                                             Seamless Planning
                                         </div>
                                         <div class="text-20 fw-500 mt-20">
-                                            I was worried about planning my trip to Morocco, but Authentic Morocco Adventures made it
+                                            I was worried about planning my trip to Morocco, but Authentic Morocco
+                                            Adventures made it
                                             so easy. From transport to accommodations, everything was perfectly arranged.
                                         </div>
                                         <div class="mt-20 md:mt-40">
@@ -1495,7 +1610,8 @@
                                             Hidden Gems
                                         </div>
                                         <div class="text-20 fw-500 mt-20">
-                                            I’ve visited Morocco before, but Authentic Morocco Adventures showed me places I’d never
+                                            I’ve visited Morocco before, but Authentic Morocco Adventures showed me places
+                                            I’d never
                                             seen. A truly authentic experience that felt personalized and unique.
                                         </div>
                                         <div class="mt-20 md:mt-40">
@@ -1529,7 +1645,8 @@
                                             Professional Team
                                         </div>
                                         <div class="text-20 fw-500 mt-20">
-                                            The team at Authentic Morocco Adventures was so professional and friendly. They answered
+                                            The team at Authentic Morocco Adventures was so professional and friendly. They
+                                            answered
                                             all my questions and made me feel safe and excited about exploring Morocco.
                                         </div>
                                         <div class="mt-20 md:mt-40">
@@ -1552,53 +1669,53 @@
     </div>
 
     @if ($posts->isNotEmpty())
-    <section class="layout-pt-xl layout-pb-xl">
-        <div data-anim-wrap class="container">
-            <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
-                <div class="col-auto">
-                    <h2 class="text-30 md:text-24">Travel Articles</h2>
-                </div>
-                <div class="col-auto">
-                    <a href="{{ route('blog.index') }}" class="buttonArrow d-flex items-center">
-                        <span>See all</span>
-                        <i class="icon-arrow-top-right text-16 ml-10"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div data-anim-child="slide-up delay-2" class="row y-gap-30 pt-40 sm:pt-20">
-                @foreach ($posts as $post)
-                    <div class="col-lg-4 col-md-6">
-                        <a href="{{ route('blog.show', $post->slug) }}" class="blogCard -type-1">
-                            <div class="blogCard__image ratio ratio-41:30">
-                                <img src="{{ $post->featured_image_url }}" alt="{{ $post->title }}" loading="lazy"
-                                    width="410" height="300" class="img-ratio rounded-12">
-                                @if ($post->category)
-                                    <div class="blogCard__badge">
-                                        {{ $post->category->name }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="blogCard__content mt-30">
-                                <div class="blogCard__info text-14">
-                                    <div class="lh-13">
-                                        {{ $post->published_at ? $post->published_at->format('F d, Y') : 'N/A' }}
-                                    </div>
-                                    <div class="blogCard__line"></div>
-                                    <div class="lh-13">
-                                        By {{ $post->author->name ?? 'N/A' }}
-                                    </div>
-                                </div>
-                                <h3 class="blogCard__title text-18 fw-500 mt-10">
-                                    {{ $post->title }}
-                                </h3>
-                            </div>
+        <section class="layout-pt-xl layout-pb-xl">
+            <div data-anim-wrap class="container">
+                <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
+                    <div class="col-auto">
+                        <h2 class="text-30 md:text-24">Travel Articles</h2>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('blog.index') }}" class="buttonArrow d-flex items-center">
+                            <span>See all</span>
+                            <i class="icon-arrow-top-right text-16 ml-10"></i>
                         </a>
                     </div>
-                @endforeach
+                </div>
+
+                <div data-anim-child="slide-up delay-2" class="row y-gap-30 pt-40 sm:pt-20">
+                    @foreach ($posts as $post)
+                        <div class="col-lg-4 col-md-6">
+                            <a href="{{ route('blog.show', $post->slug) }}" class="blogCard -type-1">
+                                <div class="blogCard__image ratio ratio-41:30">
+                                    <img src="{{ $post->featured_image_url }}" alt="{{ $post->title }}"
+                                        loading="lazy" width="410" height="300" class="img-ratio rounded-12">
+                                    @if ($post->category)
+                                        <div class="blogCard__badge">
+                                            {{ $post->category->name }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="blogCard__content mt-30">
+                                    <div class="blogCard__info text-14">
+                                        <div class="lh-13">
+                                            {{ $post->published_at ? $post->published_at->format('F d, Y') : 'N/A' }}
+                                        </div>
+                                        <div class="blogCard__line"></div>
+                                        <div class="lh-13">
+                                            By {{ $post->author->name ?? 'N/A' }}
+                                        </div>
+                                    </div>
+                                    <h3 class="blogCard__title text-18 fw-500 mt-10">
+                                        {{ $post->title }}
+                                    </h3>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
 

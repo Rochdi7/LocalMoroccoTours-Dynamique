@@ -1,3 +1,96 @@
+{{-- Mobile-only top contact bar (phone + email). Hidden on desktop (≥768px). --}}
+<div class="mobileTopBar">
+    <a href="tel:+212666107312" class="mobileTopBar__item" aria-label="Call us">
+        <i class="bi bi-telephone-fill"></i>
+        <span>+212 666 107 312</span>
+    </a>
+    <a href="mailto:authenticmoroccoadventures@gmail.com" class="mobileTopBar__item" aria-label="Email us">
+        <i class="bi bi-envelope-fill"></i>
+        <span>authenticmoroccoadventures@gmail.com</span>
+    </a>
+</div>
+
+<style>
+    .mobileTopBar {
+        display: none;
+    }
+
+    @media (max-width: 767px) {
+        .mobileTopBar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            gap: 12px;
+            background: var(--color-accent-2, #05073C);
+            color: #fff;
+            padding: 7px 10px;
+            font-size: 11px;
+            line-height: 1.2;
+            /* Fixed at the very top; the header (also fixed) is pushed down below
+               it so both stay pinned while scrolling and never overlap. */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .mobileTopBar__item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #fff !important;
+            white-space: nowrap;
+            min-width: 0;
+        }
+
+        .mobileTopBar__item i {
+            flex-shrink: 0;
+        }
+
+        .mobileTopBar__item span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Extra-narrow phones: shrink a touch more so both items stay on one line. */
+        @media (max-width: 360px) {
+            .mobileTopBar {
+                font-size: 10px;
+                gap: 8px;
+            }
+        }
+
+        .mobileTopBar__item i {
+            font-size: 12px;
+            color: var(--color-accent-1, #C49539);
+        }
+
+        /* Push the fixed header down so it sits below the top contact bar. */
+        .header.-type-8 {
+            top: var(--mobileTopBarH, 38px);
+        }
+    }
+</style>
+
+<script>
+    // Keep the fixed header positioned exactly below the mobile top bar, whatever
+    // its measured height (it can wrap on very narrow phones). Runs on mobile only.
+    (function () {
+        var bar = document.querySelector('.mobileTopBar');
+        if (!bar) return;
+        function sync() {
+            var h = window.innerWidth <= 767 ? bar.offsetHeight : 0;
+            document.documentElement.style.setProperty('--mobileTopBarH', h + 'px');
+        }
+        sync();
+        window.addEventListener('resize', sync);
+        window.addEventListener('load', sync);
+    })();
+</script>
+
 <header class="header -type-8 js-header">
     <div data-anim="fade delay-3" class="header__container container">
         <div class="headerMobile__left">

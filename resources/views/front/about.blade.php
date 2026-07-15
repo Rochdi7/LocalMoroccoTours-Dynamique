@@ -6,11 +6,12 @@
 
     <style>
         /* Mobile-only: give the About hero paragraph breathing room so it
-           doesn't collide with the decorative curved shape at the bottom. */
+               doesn't collide with the decorative curved shape at the bottom. */
         @media (max-width: 767px) {
             .pageHeader.-type-1 .pageHeader__content {
                 padding-bottom: 40px;
             }
+
             .pageHeader.-type-1 .pageHeader__text {
                 margin-bottom: 30px;
             }
@@ -42,7 +43,8 @@
                         </h1>
 
                         <p class="pageHeader__text">
-                            Journey into the vivid blue streets of Chefchaouen and beyond with Authentic Morocco Adventures — your
+                            Journey into the vivid blue streets of Chefchaouen and beyond with Authentic Morocco Adventures
+                            — your
                             trusted guide to authentic Moroccan experiences.
                         </p>
                     </div>
@@ -58,11 +60,10 @@
 
                 <div data-anim-child="slide-up" class="col-lg-6">
                     <figure class="m-0">
-                        <img src="{{ asset('assets/images/hero/marrakech-medina-narrow-street-locals-morocco.avif') }}"
+                        <img src="{{ asset('assets/images/hero/chefchaouen-blue-city-aerial-drone-view-morocco.avif') }}"
                             alt="Locals walking through a narrow terracotta-walled street in the Marrakech medina, Morocco"
-                            title="Narrow street in the Marrakech medina, Morocco"
-                            class="rounded-12 w-100 h-auto" loading="lazy" width="960" height="640"
-                            style="object-fit: cover;">
+                            title="Narrow street in the Marrakech medina, Morocco" class="rounded-12 w-100 h-auto"
+                            loading="lazy" width="960" height="640" style="object-fit: cover;">
                         <figcaption class="visually-hidden">
                             A traditional narrow alley in the old medina of Marrakech, with locals and terracotta walls
                             capturing everyday Moroccan life.
@@ -76,7 +77,8 @@
                     </h2>
 
                     <p>
-                        At Authentic Morocco Adventures, we’re passionate about revealing Morocco’s vibrant spirit and hidden
+                        At Authentic Morocco Adventures, we’re passionate about revealing Morocco’s vibrant spirit and
+                        hidden
                         treasures.
                         From the blue streets of Chefchaouen to the golden dunes of the Sahara, our expertly crafted tours
                         immerse you in authentic culture, stunning landscapes, and unforgettable moments.
@@ -85,7 +87,8 @@
                         of Morocco.
                     </p>
 
-                    <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}" class="button -sm -dark-1 bg-accent-1 text-white mt-30">
+                    <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}"
+                        class="button -sm -dark-1 bg-accent-1 text-white mt-30">
                         Explore Our Tours
                     </a>
 
@@ -204,27 +207,28 @@
         </div>
     </section>
 
-<style>
-@media (max-width: 767px) {
-  .layout-pt-xl {
-    margin-top: 0 !important;
-    margin-bottom: 20px;
-  }
-}
+    <style>
+        @media (max-width: 767px) {
+            .layout-pt-xl {
+                margin-top: 0 !important;
+                margin-bottom: 20px;
+            }
+        }
 
-/* Video section: its background image is position:absolute with a negative
-   z-index, and the .video wrapper has z-index:0. On large screens this let the
-   image bleed under the following "Why Choose" section. Isolate the video
-   section into its own stacking context and lift the following section above it. */
-.video {
-  isolation: isolate;
-}
-.about-why-choose {
-  position: relative;
-  z-index: 1;
-  background: var(--color-white, #fff);
-}
-</style>
+        /* Video section: its background image is position:absolute with a negative
+       z-index, and the .video wrapper has z-index:0. On large screens this let the
+       image bleed under the following "Why Choose" section. Isolate the video
+       section into its own stacking context and lift the following section above it. */
+        .video {
+            isolation: isolate;
+        }
+
+        .about-why-choose {
+            position: relative;
+            z-index: 1;
+            background: var(--color-white, #fff);
+        }
+    </style>
 
     <section data-anim="fade" class="layout-pt-xl relative">
         <div class="relative xl:unset container">
@@ -382,7 +386,8 @@
                                         professional arrangements for his Morocco trip.</div>
                                     <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">Seamless Planning</div>
                                     <div class="text-20 fw-500 mt-20">
-                                        I was worried about planning my trip to Morocco, but Authentic Morocco Adventures made it
+                                        I was worried about planning my trip to Morocco, but Authentic Morocco Adventures
+                                        made it
                                         so easy. From transport to accommodations, everything was perfectly arranged.
                                     </div>
                                     <div class="mt-20 md:mt-40">
@@ -411,7 +416,8 @@
                                         in Morocco with Authentic Morocco Adventures.</div>
                                     <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">Hidden Gems</div>
                                     <div class="text-20 fw-500 mt-20">
-                                        I’ve visited Morocco before, but Authentic Morocco Adventures showed me places I’d never
+                                        I’ve visited Morocco before, but Authentic Morocco Adventures showed me places I’d
+                                        never
                                         seen. A truly authentic experience that felt personalized and unique.
                                     </div>
                                     <div class="mt-20 md:mt-40">
@@ -440,7 +446,8 @@
                                         experience traveling with Authentic Morocco Adventures.</div>
                                     <div class="text-18 fw-500 text-accent-1 mt-60 md:mt-40">Professional Team</div>
                                     <div class="text-20 fw-500 mt-20">
-                                        The team at Authentic Morocco Adventures was so professional and friendly. They answered
+                                        The team at Authentic Morocco Adventures was so professional and friendly. They
+                                        answered
                                         all my questions and made me feel safe and excited about exploring Morocco.
                                     </div>
                                     <div class="mt-20 md:mt-40">
@@ -528,8 +535,8 @@
 
     <style>
         /* .button.-md {
-                padding: 27px 30px;
-            } */
+                    padding: 27px 30px;
+                } */
 
         .alert {
             padding: 15px;

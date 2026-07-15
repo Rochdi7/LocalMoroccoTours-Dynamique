@@ -2,36 +2,42 @@
 
 @section('title', 'Contact Us | Authentic Morocco Adventures')
 
-@push('styles')
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-/>
-@endpush
-
 @section('content')
 
-<div data-anim="fade" class="map relative mt-header ml-60 mr-60 md:ml-0 md:mr-0">
-  <div class="map__content rounded-12 md:rounded-0 js-map-single" style="overflow: hidden;">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108703.09881241457!2d-8.007853099999998!3d31.634621449999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdafee8d96179e51%3A0x5950b6534f87adb8!2sMarrakesh!5e0!3m2!1sen!2sma!4v1752535473627!5m2!1sen!2sma"
-      width="100%"
-      height="600"
-      style="border:0; border-radius: 12px;"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
-  </div>
+<section data-anim="fade" class="pageHeader -type-1">
+    <div class="pageHeader__bg">
+        <figure style="margin: 0; width: 100%; height: 100%;">
+            <img src="{{ asset('assets/images/hero/contact-authentic-morocco-adventures-marrakech.webp') }}"
+                alt="Intricately carved stucco and zellige tilework on the walls of a historic Marrakech madrasa, Morocco"
+                title="Ornate Moroccan craftsmanship inside a historic Marrakech madrasa." loading="eager"
+                width="1280" height="966"
+                style="object-fit: cover; object-position: center center; width: 100%; height: 100%; display: block;">
+            <figcaption class="visually-hidden">
+                Hand-carved stucco arches and detailed zellige mosaics line the walls of a centuries-old
+                Marrakech madrasa — a glimpse of the authentic Moroccan heritage the Authentic Morocco
+                Adventures team loves to share with travellers who reach out.
+            </figcaption>
+        </figure>
+        <img src="{{ asset('assets/img/hero/1/shape.svg') }}" alt="Decorative shape">
+    </div>
 
-  <div class="map__shape">
-    <svg width="1800" height="40" viewBox="0 0 1800 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M0 25.747C0 25.747 46.3491 19.4287 88.8889 18.9879C132.063 18.5471 168.889 18.9879 221.587 21.1919C293.333 24.1307 431.746 36.0327 505.397 29.5674C579.048 23.1021 582.222 22.8083 619.683 18.694C661.587 13.992 746.667 4.58795 852.063 5.02877C964.444 5.46958 1168.25 29.4205 1252.06 28.245C1260.95 28.098 1293.97 27.0695 1318.73 25.3062C1342.86 23.5429 1378.41 19.7226 1426.67 18.4001C1446.98 17.8124 1479.37 16.7838 1516.83 17.0777C1526.35 17.2246 1556.83 17.6654 1593.02 19.4287C1629.21 21.1919 1662.86 23.9838 1693.33 24.8654C1758.73 26.4817 1800 24.1307 1800 24.1307V40H0V25.747Z"
-        fill="white" />
-    </svg>
-  </div>
-</div>
+    <div class="container">
+        <div class="row justify-center">
+            <div class="col-12">
+                <div class="pageHeader__content text-center">
+                    <h1 class="pageHeader__title">
+                        Contact Authentic Morocco Adventures
+                    </h1>
+
+                    <p class="pageHeader__text">
+                        Have a question or ready to plan your Moroccan adventure? Reach out to our local
+                        team — we'd love to help you craft the perfect trip.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
 <section class="layout-pt-lg">
@@ -216,24 +222,5 @@
         </div>
     </div>
 </section>
-
-@push('scripts')
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var map = L.map('map-canvas').setView([31.6256934, -7.9368677], 12);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    L.marker([31.6256934, -7.9368677])
-      .addTo(map)
-      .bindPopup('Marrakesh 40000')
-      .openPopup();
-  });
-</script>
-@endpush
 
 @endsection
