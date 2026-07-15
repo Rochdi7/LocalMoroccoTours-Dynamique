@@ -12,6 +12,7 @@ use App\Models\Trekking;
 use App\Models\TrekkingCategory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -47,6 +48,11 @@ class ProgramImporter
         private readonly ProgramImportReporter $reporter,
     ) {}
 
+    private ?string $contentBackupPath = null;
+
+    /** @var list<string> */
+    private array $contentInvariantChanges = [];
+
     /**
      * @param  list<ProgramData>  $records
      * @param  array{dry_run: bool, sections: list<string>, slug: ?string, only_new: bool,
@@ -55,6 +61,12 @@ class ProgramImporter
      */
     public function run(array $records, array $options): void
     {
+        if (($options['content_only'] ?? false) === true) {
+            $this->runContentOnly($records, $options);
+
+            return;
+        }
+
         $processed = 0;
 
         foreach ($records as $record) {
@@ -78,6 +90,374 @@ class ProgramImporter
                 ]);
             }
         }
+    }
+
+    public function contentBackupPath(): ?string
+    {
+        return $this->contentBackupPath;
+    }
+
+    /** @return list<string> */
+    public function contentInvariantChanges(): array
+    {
+        return $this->contentInvariantChanges;
+    }
+
+    /** @param list<ProgramData> $records */
+    private function runContentOnly(array $records, array $options): void
+    {
+        $dryRun = (bool) $options['dry_run'];
+        $processed = 0;
+        $plans = [];
+        $blocked = false;
+
+        foreach ($records as $record) {
+            if ($options['sections'] !== [] && ! in_array($record->section, $options['sections'], true)) {
+                continue;
+            }
+            $slug = Str::slug($record->title);
+            if ($options['slug'] !== null && $slug !== $options['slug']) {
+                continue;
+            }
+            if ($options['limit'] !== null && $processed >= $options['limit']) {
+                break;
+            }
+            $processed++;
+
+            try {
+                $match = $this->findContentOnlyMatch($record, $slug);
+                if ($match === null) {
+                    $blocked = true;
+
+                    continue;
+                }
+
+                /** @var Model $model */
+                $model = $match['model'];
+                $payload = $this->buildContentOnlyPayload($record, $model);
+                if ($payload === false) {
+                    $blocked = true;
+                    $this->reporter->record($record, $slug, 'failed', [
+                        'destination_model' => class_basename($model),
+                        'record_id' => $model->id,
+                        'errors' => ['itinerary_details cannot be safely merged into the existing itinerary shape/day count'],
+                    ]);
+
+                    continue;
+                }
+
+                $detail = [
+                    'destination_model' => class_basename($model),
+                    'record_id' => $model->id,
+                    'notes' => 'match: '.$match['method'].'; allowed fields: '.($payload === [] ? 'none' : implode(', ', array_keys($payload))),
+                ];
+                if (($match['warning'] ?? null) !== null) {
+                    $detail['warnings'] = [$match['warning']];
+                }
+
+                if ($dryRun) {
+                    $this->reporter->record($record, $slug, $payload === [] ? 'skipped' : 'would-update', $detail);
+                }
+
+                $plans[] = [
+                    'record' => $record,
+                    'slug' => $slug,
+                    'model' => $model,
+                    'payload' => $payload,
+                    'detail' => $detail,
+                    'invariants' => $this->captureContentInvariants($model),
+                ];
+            } catch (Throwable $e) {
+                $blocked = true;
+                $this->reporter->record($record, $slug, 'failed', [
+                    'errors' => ['unexpected: '.$e->getMessage()],
+                ]);
+            }
+        }
+
+        if (! $dryRun && ($blocked || $processed !== count($records) || count($plans) !== $processed)) {
+            foreach ($plans as $plan) {
+                $this->reporter->record($plan['record'], $plan['slug'], 'skipped', $plan['detail'] + [
+                    'warnings' => ['content-only apply blocked: all parsed records must match safely before any write'],
+                ]);
+            }
+
+            return;
+        }
+
+        if ($dryRun) {
+            return;
+        }
+
+        $this->writeContentBackup($plans);
+
+        DB::transaction(function () use ($plans) {
+            foreach ($plans as $plan) {
+                /** @var Model $model */
+                $model = $plan['model'];
+                if ($plan['payload'] !== []) {
+                    $model->fill($plan['payload'])->save();
+                }
+            }
+        });
+
+        foreach ($plans as $plan) {
+            /** @var Model $model */
+            $model = $plan['model'];
+            $model->refresh();
+            $after = $this->captureContentInvariants($model);
+            if ($after !== $plan['invariants']) {
+                $this->contentInvariantChanges[] = sprintf(
+                    '%s:%s protected fields changed',
+                    $plan['record']->section,
+                    $plan['slug']
+                );
+            }
+
+            $this->reporter->record(
+                $plan['record'],
+                $plan['slug'],
+                $plan['payload'] === [] ? 'skipped' : 'updated',
+                $plan['detail']
+            );
+        }
+    }
+
+    /** @return array{model: Model, method: string, warning?: string}|null */
+    private function findContentOnlyMatch(ProgramData $record, string $slug): ?array
+    {
+        $modelClass = self::SECTION_MODEL[$record->section] ?? null;
+        if ($modelClass === null) {
+            $this->reporter->record($record, $slug, 'failed', ['errors' => ["unknown section '{$record->section}'"]]);
+
+            return null;
+        }
+
+        /** @var Model|null $existing */
+        $existing = $modelClass::where('slug', $slug)->first();
+        if ($existing !== null) {
+            return ['model' => $existing, 'method' => 'slug'];
+        }
+
+        $titleColumns = $modelClass === Tour::class
+            ? ['id', 'title', 'slug', 'type']
+            : ['id', 'title', 'slug'];
+
+        $titleMatches = $modelClass::query()
+            ->get($titleColumns)
+            ->filter(function ($m) use ($record) {
+                if ($this->normalizeTitle($m->title) !== $this->normalizeTitle($record->title)) {
+                    return false;
+                }
+
+                return ! ($m instanceof Tour) || $record->type === null || $m->type === $record->type;
+            })
+            ->values();
+
+        if ($titleMatches->count() === 1) {
+            return [
+                'model' => $titleMatches->first(),
+                'method' => 'normalized-title',
+                'warning' => "no slug match; matched by normalized title and preserved existing slug '{$titleMatches->first()->slug}'",
+            ];
+        }
+
+        $this->reporter->record($record, $slug, 'conflict', [
+            'destination_model' => class_basename($modelClass),
+            'warnings' => [$titleMatches->isEmpty()
+                ? 'no existing record matched by slug or normalized title'
+                : 'multiple existing records matched by normalized title'],
+        ]);
+
+        return null;
+    }
+
+    /** @return array<string, mixed>|false */
+    private function buildContentOnlyPayload(ProgramData $record, Model $model): array|false
+    {
+        $payload = [];
+        if ($record->overview !== '' && $model->getAttribute('overview') !== $record->overview) {
+            $payload['overview'] = $record->overview;
+        }
+
+        $itinerary = $this->replaceItineraryDetails($record, $model->getAttribute('itinerary'));
+        if ($itinerary === false) {
+            return false;
+        }
+        if ($itinerary !== null && $model->getAttribute('itinerary') != $itinerary) {
+            $payload['itinerary'] = $itinerary;
+        }
+
+        return $payload;
+    }
+
+    /** @return array<int, mixed>|null|false */
+    private function replaceItineraryDetails(ProgramData $record, mixed $current): array|null|false
+    {
+        if ($record->itineraryDetails === []) {
+            return null;
+        }
+
+        $current = is_array($current) ? array_values($current) : [];
+        if ($current === [] || count($current) !== count($record->itineraryDetails)) {
+            return false;
+        }
+
+        $changed = false;
+        $merged = [];
+        foreach ($current as $i => $entry) {
+            if (! is_array($entry)) {
+                return false;
+            }
+
+            $detail = $record->itineraryDetails[$i];
+            if (array_key_exists('day', $entry) && (int) $entry['day'] !== (int) $detail['day']) {
+                return false;
+            }
+
+            if ($detail['title'] !== '' && ($entry['title'] ?? '') !== $detail['title']) {
+                $entry['title'] = $detail['title'];
+                $changed = true;
+            }
+
+            if ($detail['description'] !== '') {
+                $contentKey = array_key_exists('content', $entry)
+                    ? 'content'
+                    : (array_key_exists('description', $entry) ? 'description' : 'content');
+                if (($entry[$contentKey] ?? '') !== $detail['description']) {
+                    $entry[$contentKey] = $detail['description'];
+                    $changed = true;
+                }
+            }
+
+            $merged[] = $entry;
+        }
+
+        return $changed ? $merged : null;
+    }
+
+    /** @param list<array{model: Model, payload: array, record: ProgramData, slug: string}> $plans */
+    private function writeContentBackup(array $plans): void
+    {
+        $dir = storage_path('app/import-backups');
+        File::ensureDirectoryExists($dir);
+        $this->contentBackupPath = $dir.'/program-content-before-apply-'.now()->format('Ymd-His').'.json';
+
+        File::put($this->contentBackupPath, json_encode([
+            'generated_at' => now()->toIso8601String(),
+            'scope' => 'program-content-only',
+            'fields' => ['overview', 'itinerary'],
+            'records' => array_map(function ($plan) {
+                /** @var Model $model */
+                $model = $plan['model'];
+
+                return [
+                    'section' => $plan['record']->section,
+                    'model' => $model::class,
+                    'id' => $model->id,
+                    'slug' => $model->getAttribute('slug'),
+                    'title' => $model->getAttribute('title'),
+                    'overview' => $model->getAttribute('overview'),
+                    'itinerary' => $model->getAttribute('itinerary'),
+                ];
+            }, $plans),
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+    }
+
+    /** @return array<string, mixed> */
+    private function captureContentInvariants(Model $model): array
+    {
+        $columns = [
+            'id', 'title', 'slug', 'type', 'duration', 'group_size', 'age_range',
+            'base_price', 'difficulty_level', 'max_altitude', 'bestseller_flag',
+            'free_cancellation_flag', 'booked_count', 'rating', 'reviews_count',
+            'category_id', 'location_id', 'highlights', 'included', 'excluded',
+            'languages', 'map_frame',
+        ];
+
+        $protected = [];
+        foreach ($columns as $column) {
+            if (array_key_exists($column, $model->getAttributes())) {
+                $protected[$column] = $model->getRawOriginal($column);
+            }
+        }
+
+        return [
+            'model' => $model::class,
+            'id' => $model->id,
+            'protected_columns' => $protected,
+            'media' => DB::table('media')
+                ->where('model_type', $model::class)
+                ->where('model_id', $model->id)
+                ->orderBy('id')
+                ->get(['id', 'collection_name', 'file_name', 'order_column'])
+                ->map(fn ($m) => (array) $m)
+                ->all(),
+            'reviews_count_actual' => DB::table('reviews')
+                ->where('reviewable_type', $model::class)
+                ->where('reviewable_id', $model->id)
+                ->count(),
+        ];
+    }
+
+    /** @return array<string, int> */
+    public function restoreContentBackup(string $path, bool $dryRun): array
+    {
+        $path = str_contains($path, ':') || str_starts_with($path, '/')
+            ? $path : base_path($path);
+        $summary = ['would-restore' => 0, 'restored' => 0, 'unchanged' => 0, 'failed' => 0];
+
+        if (! is_file($path)) {
+            return ['failed' => 1];
+        }
+
+        $backup = json_decode((string) file_get_contents($path), true);
+        if (! is_array($backup) || ($backup['scope'] ?? null) !== 'program-content-only' || ! is_array($backup['records'] ?? null)) {
+            return ['failed' => 1];
+        }
+
+        $restore = function () use ($backup, $dryRun, &$summary) {
+            foreach ($backup['records'] as $row) {
+                $modelClass = $row['model'] ?? null;
+                if (! in_array($modelClass, self::SECTION_MODEL, true)) {
+                    $summary['failed']++;
+
+                    continue;
+                }
+
+                /** @var Model|null $model */
+                $model = $modelClass::find($row['id'] ?? null);
+                if ($model === null || $model->getAttribute('slug') !== ($row['slug'] ?? null)) {
+                    $summary['failed']++;
+
+                    continue;
+                }
+
+                $payload = [
+                    'overview' => $row['overview'] ?? '',
+                    'itinerary' => $row['itinerary'] ?? null,
+                ];
+                if ($model->getAttribute('overview') == $payload['overview']
+                    && $model->getAttribute('itinerary') == $payload['itinerary']) {
+                    $summary['unchanged']++;
+
+                    continue;
+                }
+
+                if ($dryRun) {
+                    $summary['would-restore']++;
+
+                    continue;
+                }
+
+                $model->fill($payload)->save();
+                $summary['restored']++;
+            }
+        };
+
+        $dryRun ? $restore() : DB::transaction($restore);
+
+        return $summary;
     }
 
     private function processRecord(ProgramData $record, string $slug, array $options): void
