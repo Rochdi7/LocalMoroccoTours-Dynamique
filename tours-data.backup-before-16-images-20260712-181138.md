@@ -1,4 +1,4 @@
-# LocalMoroccoTours — Extracted Content
+# Authentic Morocco Adventures - Extracted Content
 Source: https://www.local-morocco-tours.com (crawled from local HTML source)
 Totals: 62 tours, 12 activities, 3 trekking
 
@@ -653,7 +653,7 @@ Totals: 62 tours, 12 activities, 3 trekking
       description: "Explore the Sahara on a tour from Marrakech with Authentic Morocco Adventures, your private desert tour company. On the way to Ouarzazate, we travel through Berber villages and take in Atlas views while crossing the breathtaking Tizi n'Tichka pass at 2,260 metres. Before continuing on to Zagora, we stop at the Taourirt Kasbah. Authentic Morocco Adventures can help you plan the whole trip. We then drive through the Draa Valley — the largest palm-grove valley in Morocco — and pass through Agdz on our way to Zagora. There you will watch the sun set over the desert and ride a camel for about an hour to reach a bivouac for dinner, followed by Berber music under the stars. You can choose the style of camp where you will spend the night."
     - day: 2
       title: "Zagora to Marrakech via the Draa Valley"
-      description: "After watching the sunrise over the desert, we ride camels back to Zagora and have breakfast before continuing through the Atlas Mountains. The Sahara is a highlight of many of our local Morocco tours. We then visit the UNESCO World Heritage ksar of Aït Benhaddou with a local guide, before crossing the Tichka pass and driving you back to your accommodation in Marrakech. At Authentic Morocco Adventures, we will do everything we can to tailor a holiday in Morocco that is perfect for you, your family, your friends or your group."
+      description: "After watching the sunrise over the desert, we ride camels back to Zagora and have breakfast before continuing through the Atlas Mountains. The Sahara is a highlight of many of our Morocco tours. We then visit the UNESCO World Heritage ksar of Aït Benhaddou with a local guide, before crossing the Tichka pass and driving you back to your accommodation in Marrakech. At Authentic Morocco Adventures, we will do everything we can to tailor a holiday in Morocco that is perfect for you, your family, your friends or your group."
 - itinerary_details_source: "best-tours-from-marrakech/2-days-tour-from-marrakech-to-zagora"
 - bestseller: false
 - free_cancellation: true
@@ -6181,3 +6181,4 @@ Totals: 62 tours, 12 activities, 3 trekking
       - "Only remaining 3-day Toubkal trek; summit trek = Toubkal trekking tour"
       - "Images show Toubkal high valleys"
     review_notes: "Folder says 'trekking tour', record says 'Summit Trek'; same program - only 3-day Toubkal trek in both sets."
+

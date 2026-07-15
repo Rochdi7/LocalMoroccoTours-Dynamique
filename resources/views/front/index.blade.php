@@ -127,66 +127,66 @@
             color: #C49539;
         }
 
-        /* ---- Hero search bar: float on the seam between the hero and the
-           About section, so more of the hero image is visible. The search
-           form is the last child of .hero__content; we anchor it to the
-           bottom of the hero and pull it down so it half-overlaps into the
-           section below. ---- */
-        /* Keep a tall hero so the full desert image is visible. The content is a
-           flex column that fills the hero height; the search bar is the last
-           child and uses margin-top:auto to sit at the bottom, then a negative
-           bottom margin pulls it down to half-overlap the section below. This
-           avoids absolute positioning (the reveal-animation transform on .row
-           would otherwise trap it). */
-        .hero.-type-8 {
-            min-height: 780px;
-            display: flex;
-            padding-bottom: 40px;
-        }
-        .hero.-type-8 > .container {
-            width: 100%;
-            align-self: stretch;
-            display: flex;
-        }
-        .hero.-type-8 > .container > .row {
-            width: 100%;
-            align-items: stretch;
-        }
-        .hero.-type-8 .hero__content {
-            height: 100%;
-            justify-content: flex-start;
-        }
-        .heroSearchOverlap {
-            margin-top: auto;   /* push to the bottom of the hero */
-            margin-bottom: -40px; /* overlap ~half the bar into the next section */
-            z-index: 6;
-            position: relative;
-        }
-        .heroSearchOverlap > form {
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        /* Give the About section top room so its title clears the overlapping bar. */
-        .heroAboutSpacer {
-            padding-top: 90px;
-        }
-
-        @media (max-width: 991px) {
-            .hero.-type-8 { min-height: 680px; }
-        }
+        /* ---- Hero search bar ----
+           DESKTOP / TABLET: restored to the theme default — the search bar
+           sits inside the hero (no seam-float). The seam-overlap treatment is
+           now MOBILE-ONLY (see the max-width:767px block below), which is the
+           layout that was requested to stay as-is on phones. On desktop the
+           .heroSearchOverlap / .heroAboutSpacer classes are inert. */
 
         @media (max-width: 767px) {
+            /* --- Mobile: float the search bar on the seam between the hero and
+               the About section (kept as the current phone layout). --- */
+            .hero.-type-8 {
+                min-height: 620px;
+                display: flex;
+                padding-bottom: 40px;
+            }
+            .hero.-type-8 > .container {
+                width: 100%;
+                align-self: stretch;
+                display: flex;
+            }
+            .hero.-type-8 > .container > .row {
+                width: 100%;
+                align-items: stretch;
+            }
+            .hero.-type-8 .hero__content {
+                height: 100%;
+                justify-content: flex-start;
+            }
+
             /* The theme reorders .hero__content children on mobile; with our
                DOM order (title first, search last) that would move the search
                bar back to the top. Force the natural order. */
             .hero.-type-8 .hero__content > *:nth-child(1) { order: 1; }
             .hero.-type-8 .hero__content > *:nth-child(2) { order: 2; }
-            .hero.-type-8 { min-height: 620px; }
+
+            /* Horizontal centering fix: on mobile the theme column
+               (.col-lg-8/.col-md-10) doesn't span the full container width, so
+               the search bar sat flush-left with an uneven gap on the right.
+               Force the column + row to full width so the bar is symmetric
+               within the container's 15px side padding. */
+            .hero.-type-8 > .container > .row { justify-content: center; margin-left: 0; margin-right: 0; }
+            .hero.-type-8 > .container > .row > [class*="col-"] {
+                flex: 0 0 100%;
+                max-width: 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .hero.-type-8 .hero__content { align-items: stretch; text-align: center; }
+
             /* On mobile the search bar is tall (stacked). Pull it down by ~half
                its height so its CENTER sits on the hero's bottom seam (half in
                the hero, half in the section below). */
-            .heroSearchOverlap { margin-bottom: -191px; }
+            .heroSearchOverlap {
+                width: 100%;
+                margin-top: auto;      /* push to the bottom of the hero */
+                margin-bottom: -191px; /* overlap ~half the bar into the next section */
+                z-index: 6;
+                position: relative;
+            }
+            .heroSearchOverlap > form { width: 100%; max-width: 100%; margin-left: auto; margin-right: auto; }
             .heroAboutSpacer { padding-top: 205px; }
         }
     </style>
@@ -224,9 +224,10 @@
                                 Discover amazing places at exclusive deals. Eat, Shop, Visit interesting places around the world.</div>
                         </div>
 
-                        {{-- SEARCH FILTER — pulled down to overlap the hero's bottom edge
-                             (floats on the seam between the hero and the About section) --}}
-                        <div class="hero__filter heroSearchOverlap">
+                        {{-- SEARCH FILTER — theme-default placement inside the hero on
+                             desktop/tablet. On mobile, .heroSearchOverlap floats it on
+                             the seam between the hero and the About section (see CSS). --}}
+                        <div class="hero__filter mb-60 md:mb-0 md:mt-30 heroSearchOverlap">
                             <form action="{{ route('front.tours.index') }}" method="GET">
                                 <div class="searchForm -type-1 shadow-1 rounded-200">
                                     <div class="searchForm__form">

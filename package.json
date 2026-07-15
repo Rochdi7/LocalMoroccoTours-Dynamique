@@ -1,4 +1,5 @@
 {
+    "name": "authenticmoroccoadventures",
     "private": true,
     "type": "module",
     "scripts": {

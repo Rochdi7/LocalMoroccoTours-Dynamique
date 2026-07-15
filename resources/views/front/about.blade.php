@@ -20,13 +20,14 @@
     <section data-anim="fade" class="pageHeader -type-1">
         <div class="pageHeader__bg">
             <figure style="margin: 0;">
-                <img src="{{ asset('assets/images/home/chefchaouen-blue-stairs-morocco-handicrafts-market.webp') }}"
-                    alt="Blue-painted stairs lined with Moroccan crafts and rugs in Chefchaouen, Morocco."
-                    title="Chefchaouen Blue Stairs and Moroccan Handicrafts Market" loading="lazy"
+                <img src="{{ asset('assets/images/hero/marrakech-souk-spice-merchant-morocco.webp') }}"
+                    alt="Moroccan spice merchant serving a customer beside colorful mounds of spices in a Marrakech souk"
+                    title="A Moroccan spice merchant scoops fragrant spices in a traditional Marrakech souk." loading="lazy"
                     style="object-fit: cover; width: 100%; height: 100%; display: block;">
                 <figcaption class="visually-hidden">
-                    Vibrant blue alleyways in Chefchaouen showcase colorful Moroccan handicrafts and woven rugs,
-                    capturing the city’s charm and artisan spirit.
+                    A friendly spice merchant works his stall of vivid red, ochre and golden spices beneath shelves of
+                    labelled jars in a Marrakech souk — the kind of authentic local encounter at the heart of
+                    Authentic Morocco Adventures.
                 </figcaption>
             </figure>
             <img src="{{ asset('assets/img/hero/1/shape.svg') }}" alt="Decorative shape">

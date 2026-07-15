@@ -3,9 +3,15 @@
 @section('content')
     <section data-anim="fade" class="hero -type-1 -min">
         <div class="hero__bg">
-            <img src="{{ asset('assets/images/hero/localmorocco-tours-guide-high-atlas-mountain-climb.webp') }}"
-                alt="Owner of LocalMorocco Tours guiding clients on a winter climb in the High Atlas Mountains of Morocco"
-                title="LocalMorocco Tours Guide with Clients in Morocco's High Atlas Mountains">
+            <figure class="m-0">
+                <img src="{{ asset('assets/images/hero/high-atlas-snow-peaks-trekking-morocco.webp') }}"
+                    alt="Snow-capped High Atlas mountain peaks rising above red-earth foothills on a Morocco trekking route"
+                    title="Snow-capped summits of Morocco's High Atlas Mountains tower over dramatic red foothills.">
+                <figcaption class="visually-hidden">
+                    Snow-dusted High Atlas summits rise above rugged red foothills under a dramatic cloudy sky,
+                    the backdrop for Authentic Morocco Adventures' guided mountain treks.
+                </figcaption>
+            </figure>
 
             <img src="{{ asset('assets/img/hero/1/shape.svg') }}" alt="decorative shape">
         </div>

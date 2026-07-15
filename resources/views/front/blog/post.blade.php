@@ -8,9 +8,17 @@
      {{-- HERO SECTION --}}
      <section data-anim="fade" class="hero -type-1 -min-2">
          <div class="hero__bg">
-             <img src="{{ asset('assets/images/hero/moroccan-riad-courtyard-fountain-architecture.webp') }}"
-                 alt="Ornate Moroccan riad courtyard with central mosaic fountain and traditional arches"
-                 title="Moroccan Riad Courtyard with Fountain" loading="lazy" width="612" height="408">
+             <figure class="m-0">
+                 <img src="{{ asset('assets/images/hero/jemaa-el-fnaa-square-cafe-view-marrakech-morocco.webp') }}"
+                     alt="View from a shaded café over the bustling Jemaa el-Fnaa square and market stalls in Marrakech, Morocco"
+                     title="Looking out over Marrakech's Jemaa el-Fnaa square and its market stalls from a shaded café."
+                     loading="lazy" width="1600" height="1060">
+                 <figcaption class="visually-hidden">
+                     Travelers relax in a shaded café overlooking the lively Jemaa el-Fnaa square in Marrakech,
+                     where market stalls, minarets and rooftops set the scene for Authentic Morocco Adventures'
+                     travel stories and guides.
+                 </figcaption>
+             </figure>
              <img src="{{ asset('assets/images/hero/1/shape.svg') }}" alt="Decorative shape">
          </div>
 

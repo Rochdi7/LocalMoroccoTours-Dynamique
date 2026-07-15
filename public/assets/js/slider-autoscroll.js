@@ -16,14 +16,9 @@
 
     var INTERVAL_MS = 3000;
 
-    // Auto-scroll is desktop/tablet only. On phones we leave the carousels
-    // static (the user asked for the old, non-auto behavior on mobile). 768px
-    // matches the theme's mobile boundary (its 767px media queries / sm cols).
-    var MOBILE_MAX_WIDTH = 767;
-
-    function isMobile() {
-        return window.innerWidth <= MOBILE_MAX_WIDTH;
-    }
+    // Auto-scroll now runs on ALL screen sizes, including phones. (It used to be
+    // disabled on mobile; the guard has been removed so the carousels advance on
+    // mobile too.)
 
     // Only these sliders auto-scroll. Match by the data-nav-next value that the
     // Blade markup sets on each target section.
@@ -55,7 +50,6 @@
 
     function startAutoScroll(el) {
         if (el.__autoScrollTimer) return; // already running
-        if (isMobile()) return;           // no auto-scroll on phones
         el.__autoScrollTimer = setInterval(function () {
             // Skip a tick while the tab is hidden or the user is hovering, so
             // the slider doesn't jump the moment they look back at it.
@@ -103,8 +97,8 @@
             initSliders();
             tries++;
 
-            // Stop polling once every target slider has a running timer, or
-            // after a reasonable number of attempts.
+            // Stop polling once every target slider has a running timer (or we
+            // give up after enough tries).
             var pending = Array.prototype.filter.call(
                 document.querySelectorAll('.js-section-slider'),
                 function (el) { return isTargetSlider(el) && !el.__autoScrollTimer; }
@@ -112,6 +106,19 @@
             if (pending.length === 0 || tries >= 20) clearInterval(poll);
         }, 250);
     }
+
+    // On resize, (re)initialise any target slider that isn't running yet —
+    // e.g. after an orientation change once Swiper has (re)built. Debounced so a
+    // drag-resize doesn't thrash. Auto-scroll runs on every screen size now.
+    function handleResize() {
+        initSliders();
+    }
+
+    var resizeT;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeT);
+        resizeT = setTimeout(handleResize, 200);
+    });
 
     window.addEventListener('load', run);
 })();

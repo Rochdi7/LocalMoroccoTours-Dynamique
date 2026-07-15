@@ -1,4 +1,4 @@
-# LocalMoroccoTours — Extracted Content
+# Authentic Morocco Adventures - Extracted Content
 Source: https://www.local-morocco-tours.com (crawled from local HTML source)
 Totals: 62 tours, 12 activities, 3 trekking
 
@@ -1241,7 +1241,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Tours from Fes
 - location: Fes, Morocco
 - overview: |
-    Discover the famous blue city on a tailor-made 2-day private trip from Fes to Chefchaouen — the perfect cool-mountain bookend to a Morocco desert tour. With expert local guides, you will explore the Rif Mountains, wander Chefchaouen's painted medina and travel in comfort with Local Morocco Tours, an experienced operator of morocco desert tours and sahara desert tours morocco since 2012. See our wider Fes tours page to combine it with a Sahara extension.
+    Discover the famous blue city on a tailor-made 2-day private trip from Fes to Chefchaouen — the perfect cool-mountain bookend to a Morocco desert tour. With expert local guides, you will explore the Rif Mountains, wander Chefchaouen's painted medina and travel in comfort with Authentic Morocco Adventures, an experienced operator of morocco desert tours and sahara desert tours morocco since 2012. See our wider Fes tours page to combine it with a Sahara extension.
 - highlights:
     - Chefchaouen blue city
     - Rif mountains
@@ -1309,7 +1309,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Tours from Fes
 - location: Fes, Morocco
 - overview: |
-    Experience the beauty of the Erg Chebbi dunes on a 2-day morocco desert tour from Fes to Merzouga and back — one of our most popular morocco desert tours from the imperial north. We travel through the Middle Atlas and Berber villages, then ride camels into the dunes for an overnight stay in a Berber camp. Discover the best of the Atlas Mountains and the Sahara on this short sahara desert tour from fes with Local Morocco Tours, running private trips since 2012 — see also our other Fes tours or the equivalent 3-day Sahara desert tour from Marrakech.
+    Experience the beauty of the Erg Chebbi dunes on a 2-day morocco desert tour from Fes to Merzouga and back — one of our most popular morocco desert tours from the imperial north. We travel through the Middle Atlas and Berber villages, then ride camels into the dunes for an overnight stay in a Berber camp. Discover the best of the Atlas Mountains and the Sahara on this short sahara desert tour from fes with Authentic Morocco Adventures, running private trips since 2012 — see also our other Fes tours or the equivalent 3-day Sahara desert tour from Marrakech.
 - highlights:
     - Erg Chebbi dunes
     - Camel trek
@@ -1377,7 +1377,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Tours from Fes
 - location: Fes, Morocco
 - overview: |
-    This 3-day, 2-night private morocco desert tour from Fes to Merzouga and back takes you on a breathtaking camel ride into the Erg Chebbi dunes — among our most popular morocco desert tours from the imperial north, and a return version of the classic 3-day Sahara desert tour from Marrakech. Cross the Middle Atlas, sleep beneath the stars in a Berber desert camp and discover the best of the Atlas with Local Morocco Tours, running private Morocco tours since 2012 — see other Fes tours if you want a one-way fes to marrakech desert tour instead.
+    This 3-day, 2-night private morocco desert tour from Fes to Merzouga and back takes you on a breathtaking camel ride into the Erg Chebbi dunes — among our most popular morocco desert tours from the imperial north, and a return version of the classic 3-day Sahara desert tour from Marrakech. Cross the Middle Atlas, sleep beneath the stars in a Berber desert camp and discover the best of the Atlas with Authentic Morocco Adventures, running private Morocco tours since 2012 — see other Fes tours if you want a one-way fes to marrakech desert tour instead.
 - highlights:
     - Erg Chebbi dunes
     - Camel trek
@@ -1447,7 +1447,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Tours from Fes
 - location: Fes, Morocco
 - overview: |
-    Travel across Morocco on a 3-day, 2-night private fes to marrakech desert tour — the same route as the popular marrakech to fes desert tour, simply reversed. With private transfers and a camel ride into the Merzouga Sahara desert, this marrakech fes desert tour explores the best of the Middle and High Atlas Mountains alongside the Erg Chebbi dunes with Local Morocco Tours, running private trips since 2012. See more Fes tours or our wider tours from Marrakech page if you prefer a longer one-way itinerary.
+    Travel across Morocco on a 3-day, 2-night private fes to marrakech desert tour — the same route as the popular marrakech to fes desert tour, simply reversed. With private transfers and a camel ride into the Merzouga Sahara desert, this marrakech fes desert tour explores the best of the Middle and High Atlas Mountains alongside the Erg Chebbi dunes with Authentic Morocco Adventures, running private trips since 2012. See more Fes tours or our wider tours from Marrakech page if you prefer a longer one-way itinerary.
 - highlights:
     - Merzouga Sahara dunes
     - Camel trek
@@ -1517,7 +1517,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Tours from Fes
 - location: Fes, Morocco
 - overview: |
-    A 4-day private fes to marrakech desert tour across the Erg Chebbi dunes — a slower alternative to the marrakech to fes desert tours 3 days option, simply reversed. Explore southern Morocco on this fez marrakech desert tour through the Dadès Valley, Ouarzazate and Aït Benhaddou; discover the best of the Atlas Mountains and the Sahara with Local Morocco Tours, running private trips since 2012. Browse our wider Fes tours page or equivalent tours from Marrakech for one-way alternatives.
+    A 4-day private fes to marrakech desert tour across the Erg Chebbi dunes — a slower alternative to the marrakech to fes desert tours 3 days option, simply reversed. Explore southern Morocco on this fez marrakech desert tour through the Dadès Valley, Ouarzazate and Aït Benhaddou; discover the best of the Atlas Mountains and the Sahara with Authentic Morocco Adventures, running private trips since 2012. Browse our wider Fes tours page or equivalent tours from Marrakech for one-way alternatives.
 - highlights:
     - Erg Chebbi dunes
     - Camel trek
@@ -1588,7 +1588,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Tours from Fes
 - location: Fes, Morocco
 - overview: |
-    This 5-day fes to marrakech desert tour is ideal for families exploring the best of Morocco in private travel — a slower version of the marrakech to fes desert tour, simply reversed and one of our most relaxed marrakech fes desert tours. We cross the Middle and High Atlas Mountains, ride camels into the Erg Chebbi dunes and reach Marrakech via Aït Benhaddou with Local Morocco Tours, running private trips since 2012. See more Fes tours or our wider tours from Marrakech page for shorter alternatives.
+    This 5-day fes to marrakech desert tour is ideal for families exploring the best of Morocco in private travel — a slower version of the marrakech to fes desert tour, simply reversed and one of our most relaxed marrakech fes desert tours. We cross the Middle and High Atlas Mountains, ride camels into the Erg Chebbi dunes and reach Marrakech via Aït Benhaddou with Authentic Morocco Adventures, running private trips since 2012. See more Fes tours or our wider tours from Marrakech page for shorter alternatives.
 - highlights:
     - Fes to Merzouga via Ifrane & Midelt
     - Merzouga Desert Excursion
@@ -2985,7 +2985,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Tours from Casablanca
 - location: Casablanca, Morocco
 - overview: |
-    Looking for a private tour from Casablanca that pairs the Atlantic coast with the red city in just 48 hours? Our drivers and local guides craft a seamless 2-day Casablanca to Marrakech tour through the medina, palaces and gardens of Marrakech. As one of the most booked Casablanca tours we run, this itinerary is the standout short break for travellers who want depth without long miles — with Local Morocco Tours as your dependable companion on the road.
+    Looking for a private tour from Casablanca that pairs the Atlantic coast with the red city in just 48 hours? Our drivers and local guides craft a seamless 2-day Casablanca to Marrakech tour through the medina, palaces and gardens of Marrakech. As one of the most booked Casablanca tours we run, this itinerary is the standout short break for travellers who want depth without long miles — with Authentic Morocco Adventures as your dependable companion on the road.
 - highlights:
     - Bahia Palace
     - Menara Garden
@@ -3920,7 +3920,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Fes Day Trips
 - location: Fes, Morocco
 - overview: |
-    This Fes to Meknes Volubilis day trip is a full-day private excursion to two of Morocco's most important historical sites: the imperial city of Meknes and the UNESCO Volubilis Roman ruins. With your local guide you will explore the basilica, the temple and the triumphal arch at Volubilis, then visit the holy hilltop town of Moulay Idriss before returning to Fes. Local Morocco Tours is happy to arrange this private full-day excursion for couples, families and small groups — and to pair it with our wider range of tours from Fes or a longer 3-day Sahara desert tour from Marrakech. Contact us or request a quote to tailor your itinerary.
+    This Fes to Meknes Volubilis day trip is a full-day private excursion to two of Morocco's most important historical sites: the imperial city of Meknes and the UNESCO Volubilis Roman ruins. With your local guide you will explore the basilica, the temple and the triumphal arch at Volubilis, then visit the holy hilltop town of Moulay Idriss before returning to Fes. Authentic Morocco Adventures is happy to arrange this private full-day excursion for couples, families and small groups — and to pair it with our wider range of tours from Fes or a longer 3-day Sahara desert tour from Marrakech. Contact us or request a quote to tailor your itinerary.
 - highlights:
     - Private driver-guide
     - Authentic experience
@@ -4723,7 +4723,7 @@ Totals: 62 tours, 12 activities, 3 trekking
 - category: Atlas Trekking
 - location: Marrakech, Morocco
 - overview: |
-    Our 2-day Mount Toubkal trek from Marrakech is the perfect high-altitude bookend to a Morocco desert tour — a breathtaking ascent of North Africa's highest peak across two days and one night of High Atlas hiking through Berber villages and dramatic mountain scenery. You explore the best of this atlas mountains trek with seasoned local guides, while Local Morocco Tours, as your trusted travel partner, arranges everything from A to Z. Many travellers pair this toubkal trek with a 3-day Sahara desert tour from Marrakech to combine summit and dunes in a single trip.
+    Our 2-day Mount Toubkal trek from Marrakech is the perfect high-altitude bookend to a Morocco desert tour — a breathtaking ascent of North Africa's highest peak across two days and one night of High Atlas hiking through Berber villages and dramatic mountain scenery. You explore the best of this atlas mountains trek with seasoned local guides, while Authentic Morocco Adventures, as your trusted travel partner, arranges everything from A to Z. Many travellers pair this toubkal trek with a 3-day Sahara desert tour from Marrakech to combine summit and dunes in a single trip.
 - highlights:
     - Summit Toubkal at 4,167 m
     - Hike from Imlil at 1,740 m
@@ -4945,3 +4945,4 @@ Totals: 62 tours, 12 activities, 3 trekking
       - "Only remaining 3-day Toubkal trek; summit trek = Toubkal trekking tour"
       - "Images show Toubkal high valleys"
     review_notes: "Folder says 'trekking tour', record says 'Summit Trek'; same program - only 3-day Toubkal trek in both sets."
+

@@ -62,7 +62,8 @@ class AppServiceProvider extends ServiceProvider
                     'Agadir, Morocco',
                 ];
 
-                // Exact tour order (by slug) copied from the localmoroccotours
+                // Exact tour order (by slug) copied from the
+                // authenticmoroccoadventures
                 // reference site so each city group ranks identically. Tours
                 // not listed fall to the end (by day count, then title).
                 $slugOrder = array_flip([

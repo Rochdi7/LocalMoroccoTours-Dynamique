@@ -3,9 +3,16 @@
 @section('content')
     <section data-anim="fade" class="hero -type-1 -min">
         <div class="hero__bg">
-            <img src="{{ asset('assets/images/hero/morocco-sahara-camel-trek-sunset-merzouga.webp') }}"
-                alt="Camel caravan crossing Morocco’s Sahara Desert dunes at sunset under a vivid orange and purple sky"
-                title="Camel trekking at sunset in the golden dunes of Merzouga, Morocco.">
+            <figure class="m-0">
+                <img src="{{ asset('assets/images/hero/sahara-desert-camel-trek-caravan-merzouga-morocco.webp') }}"
+                    alt="Line of travelers riding camels in a caravan across the orange Sahara dunes near Merzouga, Morocco"
+                    title="A camel caravan carries travelers across the golden dunes of the Sahara at Merzouga, Morocco.">
+                <figcaption class="visually-hidden">
+                    A single-file caravan of camels carries travelers over the rippling orange sand of Erg Chebbi
+                    near Merzouga against a clear blue sky — one of the signature desert activities offered by
+                    Authentic Morocco Adventures.
+                </figcaption>
+            </figure>
 
             <img src="{{ asset('assets/img/hero/1/shape.svg') }}" alt="decorative shape">
         </div>

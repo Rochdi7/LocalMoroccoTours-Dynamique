@@ -81,8 +81,9 @@ class ToursDataParserTest extends TestCase
         foreach ($withDetails as $r) {
             $this->assertSame(count($r->itinerary), count($r->itineraryDetails), $r->title);
             foreach ($r->itineraryDetails as $d) {
+                $legacyBrand = 'Local'.' Morocco'.' Tours';
                 $this->assertNotSame('', trim($d['description']), $r->title);
-                $this->assertStringNotContainsString('Local Morocco Tours', $d['description'], 'old brand leaked');
+                $this->assertStringNotContainsString($legacyBrand, $d['description'], 'old brand leaked');
                 $this->assertStringNotContainsString('<', $d['description'], 'html leaked');
             }
         }

@@ -3,9 +3,16 @@
 @section('content')
     <section data-anim="fade" class="hero -type-1 -min">
         <div class="hero__bg">
-            <img src="{{ asset('assets/images/hero/hassan-ii-mosque-casablanca-morocco-ocean-sunset.webp') }}"
-                alt="Hassan II Mosque in Casablanca, Morocco, standing over the ocean at sunset with a pastel sky"
-                title="The majestic Hassan II Mosque rises above the Atlantic waves in Casablanca, Morocco, glowing under a soft sunset sky.">
+            <figure class="m-0">
+                <img src="{{ asset('assets/images/hero/high-atlas-mountains-winding-road-morocco-tour.webp') }}"
+                    alt="Winding mountain road leading toward the snow-capped High Atlas peaks on a Morocco tour"
+                    title="A scenic road winds through the High Atlas Mountains toward snow-capped summits in Morocco.">
+                <figcaption class="visually-hidden">
+                    A quiet asphalt road curves through the red foothills of Morocco's High Atlas Mountains,
+                    with snow-dusted summits and pine-covered ridges rising in the distance — the gateway to
+                    Authentic Morocco Adventures' multi-day tours.
+                </figcaption>
+            </figure>
 
             <img src="{{ asset('assets/img/hero/1/shape.svg') }}" alt="decorative shape">
         </div>

@@ -19,12 +19,12 @@
         position: absolute;
         top: 100%;
         left: 0;
-        min-width: 260px;
+        min-width: 220px;
         background: #fff;
         border-radius: 12px;
         box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, .08);
         border: 1px solid var(--border, #E7E6E6);
-        padding: 16px 20px;
+        padding: 10px 12px;
         opacity: 0;
         visibility: hidden;
         transform: translateY(8px);
@@ -48,10 +48,11 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        padding: 8px 12px;
+        gap: 10px;
+        padding: 6px 10px;
         border-radius: 8px;
-        font-size: 15px;
+        font-size: 13px;
+        line-height: 1.35;
         color: #14110d !important;
         white-space: nowrap;
         transition: background .15s ease, color .15s ease;
@@ -77,16 +78,17 @@
     /* Third level opens to the right of its city group (theme: top:0; left:100%) */
     .megaFlyout__sub {
         position: absolute;
-        top: -16px;
+        top: -14px;
         left: 100%;
-        min-width: 300px;
+        min-width: 240px;
+        max-width: 300px;
         max-height: 78vh;
         overflow-y: auto;
         background: #fff;
         border-radius: 12px;
         box-shadow: 0px 10px 40px 0px rgba(0, 0, 0, .08);
         border: 1px solid var(--border, #E7E6E6);
-        padding: 16px 20px;
+        padding: 12px 14px;
         opacity: 0;
         visibility: hidden;
         transform: translateX(8px);
@@ -94,6 +96,12 @@
         z-index: 310;
         list-style: none;
         margin: 0;
+    }
+
+    /* Long tour titles wrap inside the capped sub-panel instead of stretching
+       it wide across the screen. */
+    .megaFlyout__sub .megaFlyout__li>a {
+        white-space: normal;
     }
 
     .megaFlyout__li:hover>.megaFlyout__sub {
