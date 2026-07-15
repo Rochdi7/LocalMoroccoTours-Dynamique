@@ -253,17 +253,51 @@
                 text-align: center;
             }
 
-            /* On mobile the search bar is tall (stacked). Pull it down by ~half
-                   its height so its CENTER sits on the hero's bottom seam (half in
-                   the hero, half in the section below). */
+            /* On mobile the search bar is tall (stacked). Sit its TOP edge at the
+                   hero's bottom line so the bar hangs down into the section below
+                   (like the reference), rather than being centered on the seam. */
             .heroSearchOverlap {
                 width: 100%;
                 margin-top: auto;
-                /* push to the bottom of the hero */
-                margin-bottom: -191px;
-                /* overlap ~half the bar into the next section */
+                margin-bottom: 0;
+                /* Pin the bar to the hero's bottom edge, then push it DOWN so it
+                   hangs across the seam into the white section below (matches the
+                   reference). The .heroAboutSpacer padding-top reserves room so the
+                   translated bar doesn't cover the About content. */
+                transform: translateY(58%);
                 z-index: 6;
                 position: relative;
+            }
+
+            /* --- Make the mobile search bar more compact (smaller than desktop) --- */
+            .heroSearchOverlap .searchFormItem__button {
+                padding: 14px 16px;
+            }
+
+            .heroSearchOverlap .searchFormItem__icon.size-50 {
+                width: 40px;
+                height: 40px;
+            }
+
+            .heroSearchOverlap .searchFormItem__icon i {
+                font-size: 16px;
+            }
+
+            .heroSearchOverlap .searchFormItem__content h5 {
+                font-size: 15px;
+                margin-bottom: 2px;
+            }
+
+            .heroSearchOverlap .searchFormItem__content > div,
+            .heroSearchOverlap .searchFormItem__content .js-select-control-chosen {
+                font-size: 14px;
+            }
+
+            .heroSearchOverlap .searchForm__button .button {
+                min-height: 0;
+                padding-top: 16px;
+                padding-bottom: 16px;
+                font-size: 15px;
             }
 
             .heroSearchOverlap>form {
@@ -274,7 +308,7 @@
             }
 
             .heroAboutSpacer {
-                padding-top: 205px;
+                padding-top: 175px;
             }
         }
     </style>

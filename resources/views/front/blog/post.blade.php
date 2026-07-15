@@ -5,8 +5,30 @@
 
  @section('content')
 
+     {{-- Shift the hero image focus downward so the foreground is visible instead of
+          only the sky at the top. Desktop is short & wide, so ease the crop back up;
+          mobile is tall, so anchor to the bottom. The theme applies object-fit:cover
+          to the <figure> (direct child of .hero__bg), so target both figure & img. --}}
+     <style>
+         .hero.-page-hero .hero__bg figure,
+         .hero.-page-hero .hero__bg figure img {
+             width: 100%;
+             height: 100%;
+             object-fit: cover;
+             object-position: center 78%;
+         }
+
+         @media (max-width: 991px) {
+
+             .hero.-page-hero .hero__bg figure,
+             .hero.-page-hero .hero__bg figure img {
+                 object-position: center bottom;
+             }
+         }
+     </style>
+
      {{-- HERO SECTION --}}
-     <section data-anim="fade" class="hero -type-1 -min-2">
+     <section data-anim="fade" class="hero -type-1 -min-2 -page-hero">
          <div class="hero__bg">
              <figure class="m-0">
                  <img src="{{ asset('assets/images/hero/jemaa-el-fnaa-square-cafe-view-marrakech-morocco.webp') }}"

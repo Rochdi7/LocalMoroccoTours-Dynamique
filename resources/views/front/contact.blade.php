@@ -4,7 +4,21 @@
 
 @section('content')
 
-<section data-anim="fade" class="pageHeader -type-1">
+{{-- Shift the hero image focus downward to match the other page heroes. Desktop is
+     short & wide, so ease the crop back up; mobile is tall, so anchor to the bottom. --}}
+<style>
+    .pageHeader.-contact-hero .pageHeader__bg figure img {
+        object-position: center 78% !important;
+    }
+
+    @media (max-width: 991px) {
+        .pageHeader.-contact-hero .pageHeader__bg figure img {
+            object-position: center bottom !important;
+        }
+    }
+</style>
+
+<section data-anim="fade" class="pageHeader -type-1 -contact-hero">
     <div class="pageHeader__bg">
         <figure style="margin: 0; width: 100%; height: 100%;">
             <img src="{{ asset('assets/images/hero/contact-authentic-morocco-adventures-marrakech.webp') }}"

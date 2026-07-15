@@ -17,8 +17,24 @@
 @endif
 
 @section('content')
+    {{-- Shift the hero image focus downward so the foreground is visible instead of
+         only the sky at the top. Desktop is short & wide, so ease the crop back up;
+         mobile is tall, so anchor to the bottom. Here the <img> is a direct child of
+         .hero__bg (no <figure>), so target the first image only (not the shape svg). --}}
+    <style>
+        .hero.-page-hero .hero__bg>img:first-of-type {
+            object-position: center 78%;
+        }
+
+        @media (max-width: 991px) {
+            .hero.-page-hero .hero__bg>img:first-of-type {
+                object-position: center bottom;
+            }
+        }
+    </style>
+
     {{-- HERO SECTION --}}
-    <section data-anim="fade" class="hero -type-1 -min-2">
+    <section data-anim="fade" class="hero -type-1 -min-2 -page-hero">
         <div class="hero__bg">
             <img src="{{ asset('assets/images/hero/fes-tannery-worker-red-dye-vat-morocco.webp') }}"
                 alt="Moroccan tannery worker standing in red dye vat at Fes tannery, Morocco" loading="lazy" width="1152"

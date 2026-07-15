@@ -1,15 +1,38 @@
 @extends('front.layouts.app2')
 
 @section('content')
-    <section data-anim="fade" class="hero -type-1 -min">
+    {{-- Shift the tours hero image focus downward so the fortress/port at the
+         bottom is visible instead of only the sky at the top. Desktop is short &
+         wide, so ease the crop back up; mobile is tall, so anchor to the bottom. --}}
+    <style>
+        /* The theme applies object-fit:cover to the <figure> (the direct child of
+           .hero__bg), not the <img> — so object-position must go on both. */
+        .hero.-tours-hero .hero__bg figure,
+        .hero.-tours-hero .hero__bg figure img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 78%;
+        }
+
+        @media (max-width: 991px) {
+
+            .hero.-tours-hero .hero__bg figure,
+            .hero.-tours-hero .hero__bg figure img {
+                object-position: center bottom;
+            }
+        }
+    </style>
+
+    <section data-anim="fade" class="hero -type-1 -min -tours-hero">
         <div class="hero__bg">
             <figure class="m-0">
-                <img src="{{ asset('assets/images/hero/high-atlas-mountains-winding-road-morocco-tour.webp') }}"
-                    alt="Winding mountain road leading toward the snow-capped High Atlas peaks on a Morocco tour"
-                    title="A scenic road winds through the High Atlas Mountains toward snow-capped summits in Morocco.">
+                <img src="{{ asset('assets/images/hero/high-atlas-snow-peaks-trekking-morocco.webp') }}"
+                    alt="Seagulls soaring over the historic fortress and fishing port of Essaouira under a bright blue Moroccan sky"
+                    title="Seagulls circle above the ramparts and fishing harbour of Essaouira on Morocco's Atlantic coast.">
                 <figcaption class="visually-hidden">
-                    A quiet asphalt road curves through the red foothills of Morocco's High Atlas Mountains,
-                    with snow-dusted summits and pine-covered ridges rising in the distance — the gateway to
+                    A flock of seagulls wheels above the weathered ramparts and busy fishing port of Essaouira
+                    on Morocco's Atlantic coast, set against a clear blue sky — one of the coastal escapes on
                     Authentic Morocco Adventures' multi-day tours.
                 </figcaption>
             </figure>

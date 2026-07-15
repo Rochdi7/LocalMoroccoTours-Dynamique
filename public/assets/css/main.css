@@ -79,7 +79,7 @@
 }
 
 :root {
-  --font-primary: "Bricolage Grotesque", sans-serif;
+  --font-primary: "DM sans", sans-serif;
 }
 
 :root {
@@ -13967,12 +13967,4 @@ button.gm-ui-hover-effect::after {
   .featureIcon.-type-1 {
     padding-right: 20px;
   }
-}
-.bricolage-grotesque-<uniquifier> {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
 }
