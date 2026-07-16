@@ -57,6 +57,6 @@ class Post extends Model implements HasMedia
         $media = $this->getFirstMedia('featured_image');
         return $media
             ? $media->getUrl()  // Get the original image URL instead of 'thumb'
-            : asset('img/blogCards/placeholder.jpg');  // Fallback to placeholder image
+            : asset('assets/images/blog/morocco-tour-guide-atlas-mountains-scenic-view.webp');  // Fallback to placeholder image
     }
 }

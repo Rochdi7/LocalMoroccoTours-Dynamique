@@ -5996,6 +5996,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .blogCard.-type-1 .blogCard__image {
   position: relative;
+  background-color: #f0f0f0;
 }
 
 .blogCard.-type-1 .blogCard__badge {
