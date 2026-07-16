@@ -119,7 +119,9 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .whatsapp-float img {
@@ -127,6 +129,54 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            border-radius: 50%;
+        }
+
+        /* Attention message that slides in from the left of the WhatsApp button,
+           pauses, hides, and comes back on a loop. */
+        .whatsapp-float__bubble {
+            position: absolute;
+            right: calc(100% + 12px);
+            top: 50%;
+            white-space: nowrap;
+            background: #fff;
+            color: #05073C;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1;
+            padding: 10px 14px;
+            border-radius: 22px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+            pointer-events: none;
+            transform: translate(20px, -50%);
+            opacity: 0;
+            animation: whatsappBubble 6s ease-in-out infinite;
+        }
+
+        .whatsapp-float__bubble::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            transform: translateY(-50%);
+            border: 7px solid transparent;
+            border-left-color: #fff;
+        }
+
+        @keyframes whatsappBubble {
+            0%   { transform: translate(20px, -50%); opacity: 0; }
+            10%  { transform: translate(0, -50%);    opacity: 1; }
+            45%  { transform: translate(0, -50%);    opacity: 1; }
+            55%  { transform: translate(20px, -50%); opacity: 0; }
+            100% { transform: translate(20px, -50%); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .whatsapp-float__bubble {
+                animation: none;
+                transform: translate(0, -50%);
+                opacity: 1;
+            }
         }
 
         @media (max-width: 767px) {
@@ -135,6 +185,11 @@
                 right: 20px;
                 width: 54px;
                 height: 54px;
+            }
+
+            .whatsapp-float__bubble {
+                font-size: 12px;
+                padding: 8px 11px;
             }
         }
     </style>
@@ -182,6 +237,7 @@
 
 <a href="https://wa.me/212666107312?text=Hello%20Authentic%20Morocco%20Adventures%2C%20I%E2%80%99d%20like%20more%20info!"
    class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <span class="whatsapp-float__bubble" aria-hidden="true">Need help? Chat with us 👋</span>
     <img src="{{ asset('assets/images/icon/whatsapp.png') }}" alt="WhatsApp Chat">
 </a>
 

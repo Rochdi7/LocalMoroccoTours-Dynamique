@@ -186,6 +186,33 @@
             color: #C49539;
         }
 
+        /* ---- Hero search DROPDOWNS: make the option rows more compact ----
+               The theme sets each dropdown row (location + tour type) to a fixed
+               60px height, which reads oversized. Trim the height/padding/font so
+               the lists look tighter on desktop and mobile alike. */
+        .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__item button,
+        .searchForm.-type-1 .searchFormItemDropdown.-tour-type .searchFormItemDropdown__item button {
+            height: 42px;
+            padding: 0 14px;
+        }
+
+        .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__item button > span:nth-child(1),
+        .searchForm.-type-1 .searchFormItemDropdown.-tour-type .searchFormItemDropdown__item button > span:nth-child(1) {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .searchForm.-type-1 .searchFormItemDropdown.-location .searchFormItemDropdown__item button > span:nth-child(2) {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        /* Calendar: drop the tall min-height so the panel isn't oversized. */
+        .searchForm.-type-1 .searchFormItemDropdown.-calendar .searchFormItemDropdown__container {
+            min-height: 0;
+            padding: 16px;
+        }
+
         /* ---- Hero search bar ----
                DESKTOP / TABLET: restored to the theme default — the search bar
                sits inside the hero (no seam-float). The seam-overlap treatment is
@@ -480,6 +507,36 @@
     </section>
 
     @push('scripts')
+        {{-- TEST ONLY: disable scroll-reveal animations on the homepage to check
+             if they are causing lag. Strips the data-anim* attributes before the
+             theme's RevealAnim (window.load) can wire up ScrollMagic scenes, and
+             forces the elements visible. Remove this block to restore animations. --}}
+        <style>
+            [data-anim],
+            [data-anim-wrap],
+            [data-anim-child] {
+                opacity: 1 !important;
+                transform: none !important;
+                visibility: visible !important;
+            }
+        </style>
+        <script>
+            (function() {
+                function killAnims() {
+                    document.querySelectorAll('[data-anim], [data-anim-wrap], [data-anim-child]')
+                        .forEach(function(el) {
+                            el.removeAttribute('data-anim');
+                            el.removeAttribute('data-anim-wrap');
+                            el.removeAttribute('data-anim-child');
+                        });
+                }
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', killAnims);
+                } else {
+                    killAnims();
+                }
+            })();
+        </script>
         <script>
             (function() {
                 var els = Array.prototype.slice.call(document.querySelectorAll('.heroIntro .js-typewriter'));

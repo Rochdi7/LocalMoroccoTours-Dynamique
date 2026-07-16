@@ -49,13 +49,18 @@
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        padding: 6px 10px;
+        padding: 9px 10px;
         border-radius: 8px;
         font-size: 13px;
         line-height: 1.35;
         color: #14110d !important;
         white-space: nowrap;
         transition: background .15s ease, color .15s ease;
+    }
+
+    /* A little breathing room between consecutive items in either column. */
+    .megaFlyout__li+.megaFlyout__li {
+        margin-top: 2px;
     }
 
     .megaFlyout__li>a:hover {
@@ -99,9 +104,16 @@
     }
 
     /* Long tour titles wrap inside the capped sub-panel instead of stretching
-       it wide across the screen. */
+       it wide across the screen. Extra vertical padding + row gap so the
+       multi-line titles don't crowd each other. */
     .megaFlyout__sub .megaFlyout__li>a {
         white-space: normal;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .megaFlyout__sub .megaFlyout__li+.megaFlyout__li {
+        margin-top: 4px;
     }
 
     .megaFlyout__li:hover>.megaFlyout__sub {

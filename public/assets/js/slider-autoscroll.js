@@ -1,16 +1,3 @@
-/**
- * Auto-scroll for the homepage card carousels.
- *
- * Advances a fixed set of `.js-section-slider` instances one slide every 3s.
- * We deliberately drive only three sliders (Best Morocco Day Trips, Marrakech
- * Activities, Morocco Trekking Tours) — identified by their unique
- * `data-nav-next` class — so other sliders (e.g. testimonials) are left alone.
- *
- * Non-destructive: we never create or destroy a Swiper. We read the existing
- * instance the theme already created (`el.swiper`, the same handle slider-fix.js
- * uses) and call slideNext()/slideTo(0). Each slider gets its OWN independent
- * interval, so one pausing/looping never affects the others.
- */
 (function () {
     'use strict';
 
