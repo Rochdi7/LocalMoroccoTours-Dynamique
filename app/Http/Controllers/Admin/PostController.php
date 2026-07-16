@@ -34,6 +34,9 @@ class PostController extends Controller
             'quote' => 'nullable|string',
             'content' => 'required',
             'featured_image' => 'nullable|image|max:2048',
+            'image_alt' => 'nullable|string|max:255',
+            'image_title' => 'nullable|string|max:255',
+            'image_caption' => 'nullable|string|max:255',
             'status' => 'required|in:draft,published',
             'category_id' => 'nullable|exists:blog_categories,id',
             'tags' => 'array|nullable',
@@ -56,6 +59,7 @@ class PostController extends Controller
 
         if ($request->hasFile('featured_image')) {
             $post->addMediaFromRequest('featured_image')
+                ->withCustomProperties($this->imageSeoProperties($request, $post))
                 ->toMediaCollection('featured_image');
         }
 
@@ -83,6 +87,9 @@ class PostController extends Controller
             'quote' => 'nullable|string',
             'content' => 'required',
             'featured_image' => 'nullable|image|max:2048',
+            'image_alt' => 'nullable|string|max:255',
+            'image_title' => 'nullable|string|max:255',
+            'image_caption' => 'nullable|string|max:255',
             'status' => 'required|in:draft,published',
             'category_id' => 'nullable|exists:blog_categories,id',
             'tags' => 'array|nullable',
@@ -110,9 +117,18 @@ class PostController extends Controller
         ]);
 
         if ($request->hasFile('featured_image')) {
+            // New image uploaded: replace media and set SEO custom properties
             $post->clearMediaCollection('featured_image');
             $post->addMediaFromRequest('featured_image')
+                ->withCustomProperties($this->imageSeoProperties($request, $post))
                 ->toMediaCollection('featured_image');
+        } elseif ($media = $post->getFirstMedia('featured_image')) {
+            // Keep existing image: just update its SEO custom properties
+            $props = $this->imageSeoProperties($request, $post);
+            $media->setCustomProperty('alt', $props['alt']);
+            $media->setCustomProperty('title', $props['title']);
+            $media->setCustomProperty('caption', $props['caption']);
+            $media->save();
         }
 
         $post->tags()->sync($request->tags ?? []);
@@ -129,6 +145,21 @@ class PostController extends Controller
 
         return redirect()->route('admin.posts.index')
             ->with('success', 'Post deleted.');
+    }
+
+    /**
+     * Build the SEO custom properties for the post featured image.
+     * Alt/title fall back to the post title so the image is never left without alt text.
+     */
+    private function imageSeoProperties(Request $request, Post $post): array
+    {
+        $alt = $request->filled('image_alt') ? $request->input('image_alt') : $post->title;
+
+        return [
+            'alt'     => $alt,
+            'title'   => $request->filled('image_title') ? $request->input('image_title') : $alt,
+            'caption' => $request->input('image_caption'),
+        ];
     }
 
     private function generateUniqueSlug($slug)

@@ -131,7 +131,7 @@
                 <h2 class="text-30 fw-700 text-center mb-30">Leave us your info</h2>
 
                 <div class="contactForm">
-                    <form action="{{ route('contact.send') }}" method="POST">
+                    <form action="{{ route('contact.send') }}" method="POST" data-recaptcha-action="contact">
                         @csrf
 
                         <div class="row y-gap-30">

@@ -65,8 +65,16 @@
                 <div class="col-lg-8">
 
                     @if ($post->getFirstMediaUrl('featured_image'))
-                        <img src="{{ $post->getFirstMediaUrl('featured_image') }}" alt="{{ $post->title }}"
-                            class="rounded-8 w-100 mb-30">
+                        @php $featuredMedia = $post->getFirstMedia('featured_image'); @endphp
+                        <figure class="m-0 mb-30">
+                            <img src="{{ $post->getFirstMediaUrl('featured_image') }}"
+                                alt="{{ $featuredMedia?->getCustomProperty('alt') ?? $post->title }}"
+                                title="{{ $featuredMedia?->getCustomProperty('title') ?? $post->title }}"
+                                class="rounded-8 w-100">
+                            @if ($featuredMedia?->getCustomProperty('caption'))
+                                <figcaption class="text-14 text-light-1 mt-10">{{ $featuredMedia->getCustomProperty('caption') }}</figcaption>
+                            @endif
+                        </figure>
                     @endif
 
                     <div class="d-flex x-gap-20 text-14 text-dark-1 mb-30">
@@ -424,7 +432,7 @@
 
                     <div class="contactForm y-gap-30 pt-30">
                         <form method="POST" action="{{ route('blog.leaveReview', $post->slug) }}"
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data" data-recaptcha-action="leave_review">
                             @csrf
 
                             <div class="row y-gap-30 mt-30">

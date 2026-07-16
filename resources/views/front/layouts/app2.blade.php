@@ -250,6 +250,9 @@
 <script src="{{ asset('assets/js/favorites.js') }}" defer></script>
 <script src="{{ asset('assets/js/slider-fix.js') }}" defer></script>
 <script src="{{ asset('assets/js/slider-autoscroll.js') }}" defer></script>
+<script src="{{ asset('assets/js/mobile-css-slider-autoscroll.js') }}" defer></script>
+
+@include('front.partials._recaptcha')
 
 @stack('scripts')
 

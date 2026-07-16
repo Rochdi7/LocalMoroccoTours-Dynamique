@@ -85,6 +85,7 @@
                         </div>
 
                         {{-- Featured Image --}}
+                        @php $featuredMedia = $post->getFirstMedia('featured_image'); @endphp
                         <div class="mb-3 col-md-12">
                             <label for="featured_image" class="form-label">Featured Image</label>
                             <input type="file" name="featured_image" class="form-control @error('featured_image') is-invalid @enderror" accept="image/*">
@@ -92,14 +93,38 @@
                                 <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
 
-                            @if ($post->getFirstMediaUrl('featured_image'))
+                            @if ($featuredMedia)
                                 <div class="mt-3">
                                     <p class="mb-1">Current Image:</p>
-                                    <img src="{{ $post->getFirstMediaUrl('featured_image') }}"
+                                    <img src="{{ $featuredMedia->getUrl() }}"
      class="img-thumbnail" style="max-width:200px;">
 
                                 </div>
                             @endif
+                        </div>
+
+                        {{-- Featured Image SEO: Alt text --}}
+                        <div class="mb-3 col-md-6">
+                            <label for="image_alt" class="form-label">Image Alt Text <small class="text-muted">(SEO)</small></label>
+                            <input type="text" name="image_alt" class="form-control"
+                                   value="{{ old('image_alt', $featuredMedia?->getCustomProperty('alt')) }}"
+                                   placeholder="e.g. Camel trek across Sahara dunes at sunset">
+                            <small class="text-muted">Describes the image for search engines & screen readers.</small>
+                        </div>
+
+                        {{-- Featured Image SEO: Title --}}
+                        <div class="mb-3 col-md-6">
+                            <label for="image_title" class="form-label">Image Title <small class="text-muted">(SEO)</small></label>
+                            <input type="text" name="image_title" class="form-control"
+                                   value="{{ old('image_title', $featuredMedia?->getCustomProperty('title')) }}"
+                                   placeholder="Shown on hover; leave blank to reuse Alt text">
+                        </div>
+
+                        {{-- Featured Image SEO: Caption --}}
+                        <div class="mb-3 col-md-12">
+                            <label for="image_caption" class="form-label">Image Caption <small class="text-muted">(optional)</small></label>
+                            <input type="text" name="image_caption" class="form-control"
+                                   value="{{ old('image_caption', $featuredMedia?->getCustomProperty('caption')) }}">
                         </div>
 
                         {{-- Excerpt --}}

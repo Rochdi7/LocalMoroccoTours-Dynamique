@@ -41,24 +41,24 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('tours')->name('front.tours.')->group(function () {
     Route::get('/', [FrontTourController::class, 'index'])->name('index');
     Route::get('/{slug}', [FrontTourController::class, 'show'])->name('show');
-    Route::post('/{slug}/leave-review', [FrontTourController::class, 'leaveReview'])->name('leaveReview');
-    Route::post('/{slug}/reserve', [TourReservationController::class, 'store'])->name('reserve');
+    Route::post('/{slug}/leave-review', [FrontTourController::class, 'leaveReview'])->name('leaveReview')->middleware('recaptcha:leave_review');
+    Route::post('/{slug}/reserve', [TourReservationController::class, 'store'])->name('reserve')->middleware('recaptcha:reserve');
 });
 
 // Activities
 Route::prefix('activities')->name('front.activities.')->group(function () {
     Route::get('/', [FrontActivityController::class, 'index'])->name('index');
     Route::get('/{slug}', [FrontActivityController::class, 'show'])->name('show');
-    Route::post('/{slug}/leave-review', [FrontActivityController::class, 'leaveReview'])->name('leaveReview');
-    Route::post('/{slug}/reserve', [ActivityReservationController::class, 'store'])->name('reserve');
+    Route::post('/{slug}/leave-review', [FrontActivityController::class, 'leaveReview'])->name('leaveReview')->middleware('recaptcha:leave_review');
+    Route::post('/{slug}/reserve', [ActivityReservationController::class, 'store'])->name('reserve')->middleware('recaptcha:reserve');
 });
 
 // Trekking
 Route::prefix('trekking')->name('front.trekking.')->group(function () {
     Route::get('/', [FrontTrekkingController::class, 'index'])->name('index');
     Route::get('/{slug}', [FrontTrekkingController::class, 'show'])->name('show');
-    Route::post('/{slug}/leave-review', [FrontTrekkingController::class, 'leaveReview'])->name('leaveReview');
-    Route::post('/{slug}/reserve', [TrekkingReservationController::class, 'store'])->name('reserve');
+    Route::post('/{slug}/leave-review', [FrontTrekkingController::class, 'leaveReview'])->name('leaveReview')->middleware('recaptcha:leave_review');
+    Route::post('/{slug}/reserve', [TrekkingReservationController::class, 'store'])->name('reserve')->middleware('recaptcha:reserve');
 });
 
 // Blog
@@ -68,7 +68,7 @@ Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/category/{slug}', [FrontPostController::class, 'category'])->name('category');
     Route::get('/tag/{slug}', [FrontPostController::class, 'tag'])->name('tag');
     Route::get('/{slug}', [FrontPostController::class, 'show'])->name('show');
-    Route::post('/{slug}/leave-review', [FrontPostController::class, 'leaveReview'])->name('leaveReview');
+    Route::post('/{slug}/leave-review', [FrontPostController::class, 'leaveReview'])->name('leaveReview')->middleware('recaptcha:leave_review');
 });
 
 // Locations (frontend)
@@ -83,13 +83,13 @@ Route::post('/review/{review}/not-helpful', [ReviewController::class, 'markNotHe
 
 // Static Pages
 Route::view('/contact', 'front.contact')->name('front.contact');
-Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send')->middleware('recaptcha:contact');
 
 Route::view('/about', 'front.about')->name('front.about');
 Route::view('/terms', 'front.terms')->name('front.terms');
 Route::view('/privacy', 'front.privacy')->name('front.privacy');
 
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe')->middleware('recaptcha:newsletter');
 
 Route::view('/404', 'errors.404')->name('error.404');
 Route::view('/help-center', 'front.help-center')->name('front.help-center');

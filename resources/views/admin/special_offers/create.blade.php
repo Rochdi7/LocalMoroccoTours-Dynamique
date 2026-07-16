@@ -76,6 +76,27 @@
                             </div>
                         </div>
 
+                        {{-- Image SEO: Alt text --}}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Image Alt Text <small class="text-muted">(SEO)</small></label>
+                            <input type="text" name="image_alt" class="form-control" value="{{ old('image_alt') }}"
+                                   placeholder="e.g. Sahara desert camel trek at sunset">
+                            <small class="text-muted">Describes the image for search engines & screen readers.</small>
+                        </div>
+
+                        {{-- Image SEO: Title --}}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Image Title <small class="text-muted">(SEO)</small></label>
+                            <input type="text" name="image_title" class="form-control" value="{{ old('image_title') }}"
+                                   placeholder="Shown on hover; leave blank to reuse Alt text">
+                        </div>
+
+                        {{-- Image SEO: Caption --}}
+                        <div class="mb-3 col-md-6">
+                            <label class="form-label">Image Caption <small class="text-muted">(optional)</small></label>
+                            <input type="text" name="image_caption" class="form-control" value="{{ old('image_caption') }}">
+                        </div>
+
                         {{-- Order --}}
                         <div class="mb-3 col-md-3">
                             <label class="form-label">Display Order</label>

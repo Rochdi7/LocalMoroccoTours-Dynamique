@@ -105,6 +105,27 @@
                                 @enderror
                             </div>
 
+                            {{-- Featured Image SEO: Alt text --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="image_alt" class="form-label">Image Alt Text <small class="text-muted">(SEO)</small></label>
+                                <input type="text" name="image_alt" class="form-control" value="{{ old('image_alt') }}"
+                                       placeholder="e.g. Camel trek across Sahara dunes at sunset">
+                                <small class="text-muted">Describes the image for search engines & screen readers.</small>
+                            </div>
+
+                            {{-- Featured Image SEO: Title --}}
+                            <div class="mb-3 col-md-6">
+                                <label for="image_title" class="form-label">Image Title <small class="text-muted">(SEO)</small></label>
+                                <input type="text" name="image_title" class="form-control" value="{{ old('image_title') }}"
+                                       placeholder="Shown on hover; leave blank to reuse Alt text">
+                            </div>
+
+                            {{-- Featured Image SEO: Caption --}}
+                            <div class="mb-3 col-md-12">
+                                <label for="image_caption" class="form-label">Image Caption <small class="text-muted">(optional)</small></label>
+                                <input type="text" name="image_caption" class="form-control" value="{{ old('image_caption') }}">
+                            </div>
+
                             {{-- Excerpt --}}
                             <div class="mb-3 col-md-12">
                                 <label for="excerpt" class="form-label">Excerpt</label>

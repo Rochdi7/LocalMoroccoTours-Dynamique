@@ -31,4 +31,11 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'recaptcha' => [
+        'site_key' => env('RECAPTCHA_SITE_KEY'),
+        'secret_key' => env('RECAPTCHA_SECRET_KEY'),
+        // Minimum v3 score (0.0 = likely bot, 1.0 = likely human) to accept a submission.
+        'score_threshold' => env('RECAPTCHA_SCORE_THRESHOLD', 0.5),
+    ],
+
 ];

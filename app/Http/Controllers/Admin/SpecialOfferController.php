@@ -26,21 +26,28 @@ class SpecialOfferController extends Controller
             'subtitle' => 'required|string|max:255',
             'text' => 'nullable|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'image_alt' => 'nullable|string|max:255',
+            'image_title' => 'nullable|string|max:255',
+            'image_caption' => 'nullable|string|max:255',
             'link' => 'nullable|url|max:255',
             'order' => 'nullable|numeric|min:0',
             'is_active' => 'sometimes|boolean',
         ]);
 
-        // Create the special offer excluding 'image' and 'is_active'
-        $specialOffer = SpecialOffer::create($request->except('image', 'is_active'));
+        // Create the special offer excluding non-column fields
+        $specialOffer = SpecialOffer::create(
+            $request->except('image', 'image_alt', 'image_title', 'image_caption', 'is_active')
+        );
 
         // Set is_active based on checkbox presence
         $specialOffer->is_active = $request->has('is_active');
         $specialOffer->save();
 
-        // Attach the uploaded image to media collection
+        // Attach the uploaded image to media collection with SEO custom properties
         if ($request->hasFile('image')) {
-            $specialOffer->addMediaFromRequest('image')->toMediaCollection('special_offers');
+            $specialOffer->addMediaFromRequest('image')
+                ->withCustomProperties($this->imageSeoProperties($request, $specialOffer))
+                ->toMediaCollection('special_offers');
         }
 
         return redirect()->route('admin.special-offers.index')->with('success', 'Special offer created successfully.');
@@ -58,23 +65,50 @@ class SpecialOfferController extends Controller
             'subtitle' => 'required|string|max:255',
             'text' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'image_alt' => 'nullable|string|max:255',
+            'image_title' => 'nullable|string|max:255',
+            'image_caption' => 'nullable|string|max:255',
             'link' => 'nullable|url|max:255',
             'order' => 'nullable|numeric|min:0',
             'is_active' => 'sometimes|boolean',
         ]);
 
-        $data = $request->except('image');
+        $data = $request->except('image', 'image_alt', 'image_title', 'image_caption');
         $data['is_active'] = $request->has('is_active');
 
         $specialOffer->update($data);
 
-        // If new image uploaded, clear old media and add new one
         if ($request->hasFile('image')) {
+            // New image uploaded: replace media and set SEO custom properties
             $specialOffer->clearMediaCollection('special_offers');
-            $specialOffer->addMediaFromRequest('image')->toMediaCollection('special_offers');
+            $specialOffer->addMediaFromRequest('image')
+                ->withCustomProperties($this->imageSeoProperties($request, $specialOffer))
+                ->toMediaCollection('special_offers');
+        } elseif ($media = $specialOffer->getFirstMedia('special_offers')) {
+            // Keep existing image: just update its SEO custom properties
+            $props = $this->imageSeoProperties($request, $specialOffer);
+            $media->setCustomProperty('alt', $props['alt']);
+            $media->setCustomProperty('title', $props['title']);
+            $media->setCustomProperty('caption', $props['caption']);
+            $media->save();
         }
 
         return redirect()->route('admin.special-offers.index')->with('success', 'Special offer updated successfully.');
+    }
+
+    /**
+     * Build the SEO custom properties for the offer image.
+     * Alt/title fall back to the offer title so the image is never left without alt text.
+     */
+    private function imageSeoProperties(Request $request, SpecialOffer $specialOffer): array
+    {
+        $alt = $request->filled('image_alt') ? $request->input('image_alt') : $specialOffer->title;
+
+        return [
+            'alt'     => $alt,
+            'title'   => $request->filled('image_title') ? $request->input('image_title') : $alt,
+            'caption' => $request->input('image_caption'),
+        ];
     }
 
     public function destroy(SpecialOffer $specialOffer)

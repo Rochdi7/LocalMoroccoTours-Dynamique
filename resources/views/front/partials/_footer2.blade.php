@@ -190,7 +190,7 @@
                         <h4 class="text-20 fw-500">Newsletter</h4>
                         <p class="mt-20">Subscribe to the free newsletter and stay up to date</p>
 
-                        <form class="footer__newsletter" action="{{ route('newsletter.subscribe') }}" method="POST">
+                        <form class="footer__newsletter" action="{{ route('newsletter.subscribe') }}" method="POST" data-recaptcha-action="newsletter">
                             @csrf
                             <label for="footer2-email" class="visually-hidden">Email address</label>
                             <input type="email" id="footer2-email" name="email" placeholder="Your email address" required>

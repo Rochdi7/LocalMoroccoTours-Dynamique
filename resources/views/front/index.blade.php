@@ -153,6 +153,16 @@
             }
         }
 
+        /* ---- Marrakech CTA (desktop): the heading/paragraph column is wide
+               enough to run under the right-hand image. Cap the text width so it
+               wraps before it reaches the image edge. ---- */
+        @media (min-width: 992px) {
+            .cta.-type-4 .cta__content .col-xl-7 h2,
+            .cta.-type-4 .cta__content .col-xl-7 p {
+                max-width: 560px;
+            }
+        }
+
         /* ---- Marrakech CTA (mobile): add breathing room between the
                "Explore Tours" button and the image stacked below it. The theme
                reserves fixed bottom padding for the absolutely-positioned image;
@@ -161,11 +171,85 @@
             .cta.-type-4 .cta__content {
                 padding-bottom: 340px;
             }
+            /* Pin the image to the bottom of the content and force its height to
+               match the reserved padding above, so it fills the whole reserved
+               strip (no white gap under the image). */
+            .cta.-type-4 .cta__image {
+                top: unset;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 320px;
+                padding-right: 0;
+            }
+            .cta.-type-4 .cta__image figure,
+            .cta.-type-4 .cta__image img {
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                object-fit: cover;
+            }
+        }
+
+        /* ---- Decorative travel SVG in the Marrakech CTA left column ----
+               Sits as a faint watermark BEHIND the text/button, absolutely
+               positioned so it takes no layout space and never stretches the
+               column or pushes content around. */
+        .ctaTextCol {
+            position: relative;
+        }
+
+        .ctaTravelArt {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -18px;
+            max-width: 460px;
+            opacity: .16;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Keep the real content above the watermark. */
+        .ctaTextCol > h2,
+        .ctaTextCol > p,
+        .ctaTextCol > button {
+            position: relative;
+            z-index: 1;
+        }
+
+        .ctaTravelArt svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* gentle float so it feels alive without being distracting */
+            animation: ctaTravelFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes ctaTravelFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-6px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .ctaTravelArt svg { animation: none; }
+        }
+
+        /* Mobile: the watermark spans the full stacked column, so cap it a bit
+           smaller to match the narrower text block. */
+        @media (max-width: 767px) {
+            .ctaTravelArt {
+                max-width: 320px;
+                bottom: -10px;
+            }
         }
 
         @media (max-width: 575px) {
             .cta.-type-4 .cta__content {
                 padding-bottom: 250px;
+            }
+            .cta.-type-4 .cta__image {
+                height: 230px;
             }
         }
 
@@ -666,6 +750,16 @@
 
 
     @if ($specialOffers->isNotEmpty())
+        <style>
+            /* Ensure the special offer image always fills the card (overrides the
+               .h-auto utility so the bottom of the image reaches the card edge,
+               especially on mobile where the card becomes full-width). */
+            .specialCard__image img {
+                height: 100% !important;
+                width: 100% !important;
+                object-fit: cover;
+            }
+        </style>
         <section class="layout-pt-xl">
             <div data-anim-wrap class="container">
                 <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
@@ -786,7 +880,7 @@
         <div class="container">
             <div class="cta__content">
                 <div class="row justify-between">
-                    <div class="col-xl-7 col-lg-8">
+                    <div class="col-xl-7 col-lg-8 ctaTextCol">
                         <h2 class="text-24 lh-13">
                             Uncover the Magic of Marrakech with Authentic Morocco Adventures
                         </h2>
@@ -804,6 +898,51 @@
                                 <i class="icon-arrow-top-right ml-10" aria-hidden="true"></i>
                             </a>
                         </button>
+
+                        {{-- Decorative travel illustration (self-contained SVG) —
+                             a dotted flight path from a start pin to a destination
+                             pin with a plane, plus a small compass. Purely visual,
+                             hidden on small screens so it never crowds the text. --}}
+                        <div class="ctaTravelArt" aria-hidden="true">
+                            <svg viewBox="0 0 520 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                role="img" aria-label="Travel route illustration">
+                                <!-- dotted flight path -->
+                                <path d="M40 92 C 150 20, 260 20, 350 60"
+                                    stroke="#044cb8" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-dasharray="2 10" opacity=".55" />
+
+                                <!-- start location pin -->
+                                <g>
+                                    <path d="M40 92c0 0-13-13-13-24a13 13 0 1 1 26 0c0 11-13 24-13 24z"
+                                        fill="#C49539" />
+                                    <circle cx="40" cy="68" r="5" fill="#fff" />
+                                </g>
+
+                                <!-- plane travelling along the path -->
+                                <g transform="translate(200 34) rotate(18)">
+                                    <path d="M2 12l30-8-6 10 14 2-2 6-14-2 2 12-6-2-4-12-14 4z"
+                                        fill="#05073C" />
+                                </g>
+
+                                <!-- destination location pin (brand blue) -->
+                                <g>
+                                    <path d="M350 60c0 0-14-14-14-26a14 14 0 1 1 28 0c0 12-14 26-14 26z"
+                                        fill="#044cb8" />
+                                    <circle cx="350" cy="34" r="5.5" fill="#fff" />
+                                </g>
+
+                                <!-- little compass -->
+                                <g transform="translate(430 40)">
+                                    <circle cx="30" cy="30" r="28" fill="#fff" stroke="#e3e3e3"
+                                        stroke-width="2" />
+                                    <circle cx="30" cy="30" r="28" fill="none" stroke="#C49539"
+                                        stroke-width="2" stroke-dasharray="3 5" opacity=".6" />
+                                    <path d="M30 12l7 18-7 6-7-6z" fill="#044cb8" />
+                                    <path d="M30 48l-7-18 7-6 7 6z" fill="#C49539" />
+                                    <circle cx="30" cy="30" r="3" fill="#05073C" />
+                                </g>
+                            </svg>
+                        </div>
                     </div>
 
                     <div class="col-lg-6">
@@ -863,7 +1002,7 @@
                     </div>
                 </div>
 
-                <div class="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300">
+                <div class="row y-gap-30 justify-between pt-40 sm:pt-20 mobile-css-slider -w-300 js-mobile-autoscroll">
                     @foreach ($tours as $tour)
                         @php
                             $cover = $tour->getFirstMedia('cover');
@@ -1137,6 +1276,51 @@
             </div>
         </section>
     @endif
+
+    <!-- Stats / Counters Section -->
+    <section class="layout-pt-xl">
+        <div data-anim-wrap class="container">
+            <div class="row y-gap-30">
+
+                <div class="col-lg-3 col-6">
+                    <div data-anim-child="fade delay-2" class="text-center">
+                        <img src="{{ asset('assets/img/icons/3/1.svg') }}" alt="Destinations icon">
+
+                        <h3 class="text-40 md:text-30 lh-14 fw-700 mt-30 md:mt-15">12</h3>
+                        <p class="lh-15">Total Destinations</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div data-anim-child="fade delay-3" class="text-center">
+                        <img src="{{ asset('assets/img/icons/3/2.svg') }}" alt="Tours icon">
+
+                        <h3 class="text-40 md:text-30 lh-14 fw-700 mt-30 md:mt-15">45</h3>
+                        <p class="lh-15">Amazing Tours</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div data-anim-child="fade delay-4" class="text-center">
+                        <img src="{{ asset('assets/img/icons/3/3.svg') }}" alt="Happy customers icon">
+
+                        <h3 class="text-40 md:text-30 lh-14 fw-700 mt-30 md:mt-15">350</h3>
+                        <p class="lh-15">Happy Customers</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-6">
+                    <div data-anim-child="fade delay-5" class="text-center">
+                        <img src="{{ asset('assets/img/icons/3/4.svg') }}" alt="Years of experience icon">
+
+                        <h3 class="text-40 md:text-30 lh-14 fw-700 mt-30 md:mt-15">10</h3>
+                        <p class="lh-15">Years of Experience</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
     <!-- Activities Section -->
     @if ($activities->isNotEmpty())

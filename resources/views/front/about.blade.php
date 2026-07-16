@@ -514,7 +514,7 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('newsletter.subscribe') }}" method="POST">
+                        <form action="{{ route('newsletter.subscribe') }}" method="POST" data-recaptcha-action="newsletter">
                             @csrf
                             <div class="singleInput type-1 mt-30">
                                 <label for="newsletter-email" class="visually-hidden">Your email</label>

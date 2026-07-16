@@ -87,7 +87,7 @@
                                  <a href="{{ route('blog.show', $post->slug) }}" class="pl-blog-list">
                                      <div class="pl-blog-list__image">
                                          <img src="{{ $post->getFirstMediaUrl('featured_image') ?: asset('img/blogCards/1/placeholder.png') }}"
-                                             alt="{{ $post->title }}">
+                                             alt="{{ $post->getFirstMedia('featured_image')?->getCustomProperty('alt') ?? $post->title }}">
                                      </div>
 
                                      <div class="pl-blog-list__content">
@@ -240,7 +240,7 @@
                                      <a href="{{ route('blog.show', $recent->slug) }}" class="d-flex align-center">
                                          <div class="size-70 overflow-hidden rounded-12">
                                              <img src="{{ $recent->getFirstMediaUrl('featured_image') ?: asset('img/blogCards/1/placeholder.png') }}"
-                                                 alt="{{ $recent->title }}" class="img-cover">
+                                                 alt="{{ $recent->getFirstMedia('featured_image')?->getCustomProperty('alt') ?? $recent->title }}" class="img-cover">
                                          </div>
 
                                          <div class="ml-20">

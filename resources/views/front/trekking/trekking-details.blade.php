@@ -632,7 +632,7 @@
                          @endif
 
                          <form id="reservationForm" action="{{ route('front.trekking.reserve', $trekking->slug) }}"
-                             method="POST">
+                             method="POST" data-recaptcha-action="reserve">
                              <div class="row y-gap-30 contactForm pt-30">
                                  @csrf
 
@@ -927,7 +927,7 @@
                      {{-- Leave Review Form --}}
                      <div class="contactForm y-gap-30 pt-30">
                          <form method="POST" action="{{ route('front.trekking.leaveReview', $trekking->slug) }}"
-                             enctype="multipart/form-data">
+                             enctype="multipart/form-data" data-recaptcha-action="leave_review">
 
                              @csrf
 
