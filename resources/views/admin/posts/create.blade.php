@@ -146,8 +146,12 @@
 
                             {{-- Content with Quill --}}
                             <div class="mb-3 col-md-12">
-                                <label class="form-label">Content</label>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label class="form-label mb-0">Content</label>
+                                    <button type="button" id="toggle-html-view" class="btn btn-sm btn-outline-secondary">View/Edit HTML</button>
+                                </div>
                                 <div id="quill-editor" style="height: 400px;">{!! old('content') !!}</div>
+                                <textarea id="html-source" class="form-control d-none" style="height: 400px; font-family: monospace; font-size: 13px;"></textarea>
                                 @error('content')
                                     <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
@@ -267,8 +271,32 @@
                 };
             }
 
+            // HTML source view toggle: lets you paste raw HTML (e.g. tables)
+            // that Quill's normal paste handler would otherwise sanitize away.
+            var htmlSource = document.getElementById('html-source');
+            var toggleBtn = document.getElementById('toggle-html-view');
+            var quillEditorEl = document.getElementById('quill-editor');
+            var showingHtml = false;
+
+            toggleBtn.addEventListener('click', function() {
+                if (!showingHtml) {
+                    htmlSource.value = quill.root.innerHTML;
+                    quillEditorEl.parentElement.querySelector('.ql-toolbar').classList.add('d-none');
+                    quillEditorEl.classList.add('d-none');
+                    htmlSource.classList.remove('d-none');
+                    toggleBtn.textContent = 'Apply HTML to Editor';
+                } else {
+                    quill.clipboard.dangerouslyPasteHTML(htmlSource.value);
+                    quillEditorEl.parentElement.querySelector('.ql-toolbar').classList.remove('d-none');
+                    quillEditorEl.classList.remove('d-none');
+                    htmlSource.classList.add('d-none');
+                    toggleBtn.textContent = 'View/Edit HTML';
+                }
+                showingHtml = !showingHtml;
+            });
+
             document.querySelector('.needs-validation').addEventListener('submit', function(e) {
-                var html = quill.root.innerHTML;
+                var html = showingHtml ? htmlSource.value : quill.root.innerHTML;
                 document.getElementById('content-hidden').value = html;
             });
 
