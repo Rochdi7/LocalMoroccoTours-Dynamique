@@ -150,6 +150,9 @@
                                 <textarea name="message" placeholder="Message" rows="6" required>{{ old('message') }}</textarea>
                             </div>
                             <div class="col-12">
+                                @include('front.partials._recaptcha_notice')
+                            </div>
+                            <div class="col-12 mt-20">
                                 <button type="submit" class="button -md -dark-1 bg-accent-1 text-white col-12">
                                     Send Message
                                 </button>

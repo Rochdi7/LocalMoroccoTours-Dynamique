@@ -525,6 +525,7 @@
                                     Subscribe
                                 </button>
                             </div>
+                            @include('front.partials._recaptcha_notice')
                         </form>
 
                     </div>

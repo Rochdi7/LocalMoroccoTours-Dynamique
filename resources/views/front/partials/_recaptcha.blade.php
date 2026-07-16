@@ -1,4 +1,21 @@
 @if(config('services.recaptcha.site_key'))
+<style>
+    /* Hide Google's floating badge; the required disclosure is shown inside each
+       form via the _recaptcha_notice partial instead. */
+    .grecaptcha-badge { visibility: hidden; }
+
+    .recaptcha-notice {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #6b7280;
+        line-height: 1.4;
+        margin-top: 15px;
+    }
+    .recaptcha-notice img { flex-shrink: 0; }
+    .recaptcha-notice a { color: #6b7280; text-decoration: underline; }
+    .recaptcha-notice a:hover { color: #044cb8; }
+</style>
 <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}" defer></script>
 <script>
     // Attaches an invisible reCAPTCHA v3 token to every <form data-recaptcha-action="...">

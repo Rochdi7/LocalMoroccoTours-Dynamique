@@ -196,6 +196,7 @@
                             <input type="email" id="footer2-email" name="email" placeholder="Your email address" required>
                             <button type="submit">Send</button>
                         </form>
+                        @include('front.partials._recaptcha_notice')
                     </div>
 
                     @if (session('newsletter_success') || session('newsletter_error'))

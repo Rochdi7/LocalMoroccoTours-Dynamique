@@ -218,6 +218,44 @@
             z-index: 1;
         }
 
+        /* Corner accents (top-left / top-right), framing the heading with room
+           to breathe so they never sit on top of the letters. Reserve a strip of
+           space above the heading (padding-top on the text column) so the icons
+           get their own row instead of overlapping text. Shown on desktop and
+           mobile alike. */
+        .ctaTextCol {
+            padding-top: 52px;
+        }
+
+        .ctaCornerArt {
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            opacity: .55;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ctaCornerArt--left {
+            left: 2px;
+        }
+
+        .ctaCornerArt--right {
+            right: 2px;
+        }
+
+        @media (max-width: 767px) {
+            .ctaTextCol {
+                padding-top: 44px;
+            }
+
+            .ctaCornerArt {
+                width: 34px;
+                height: 34px;
+            }
+        }
+
         .ctaTravelArt svg {
             width: 100%;
             height: auto;
@@ -881,6 +919,31 @@
             <div class="cta__content">
                 <div class="row justify-between">
                     <div class="col-xl-7 col-lg-8 ctaTextCol">
+                        {{-- Corner accents: small decorative SVGs that frame the
+                             heading (top-left pin, top-right plane), offset clear
+                             of the text so they never overlap letters. Shown on
+                             both desktop and mobile. --}}
+                        <svg class="ctaCornerArt ctaCornerArt--left" viewBox="0 0 64 64" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="32" cy="32" r="30" fill="none" stroke="#C49539" stroke-width="1.5"
+                                stroke-dasharray="1 7" stroke-linecap="round" opacity=".5" />
+                            <path
+                                d="M32 15c-7.2 0-13 5.77-13 12.9 0 9.68 13 21.1 13 21.1s13-11.42 13-21.1C45 20.77 39.2 15 32 15z"
+                                fill="#C49539" />
+                            <circle cx="32" cy="27.5" r="5.5" fill="#fff" />
+                        </svg>
+
+                        <svg class="ctaCornerArt ctaCornerArt--right" viewBox="0 0 64 64" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M6 46c10-18 26-30 46-34" stroke="#044cb8" stroke-width="1.5"
+                                stroke-linecap="round" stroke-dasharray="1 7" opacity=".45" />
+                            <g transform="translate(30 6) rotate(48)">
+                                <path
+                                    d="M0 11.5 24 0l-6.5 9.8L28 12l-1 4.6-11.5-2.4L13 26l-4.3-1.6-2-10.2z"
+                                    fill="#05073C" />
+                            </g>
+                        </svg>
+
                         <h2 class="text-24 lh-13">
                             Uncover the Magic of Marrakech with Authentic Morocco Adventures
                         </h2>

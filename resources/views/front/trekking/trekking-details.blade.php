@@ -719,6 +719,9 @@
                                  </div>
 
                                  <div class="col-12">
+                                     <div class="col-12">
+                                         @include('front.partials._recaptcha_notice')
+                                     </div>
                                      <div class="row y-gap-20 items-center justify-between">
                                          <div class="col-auto">
                                              <div class="text-14">
@@ -1103,6 +1106,9 @@
 
                              <div class="row mt-30">
                                  <div class="col-12">
+                                     @include('front.partials._recaptcha_notice')
+                                 </div>
+                                 <div class="col-12 mt-20">
                                      <button type="submit" class="button -md -dark-1 bg-accent-1 text-white">
                                          Post Comment
                                          <i class="icon-arrow-top-right text-16 ml-10"></i>
