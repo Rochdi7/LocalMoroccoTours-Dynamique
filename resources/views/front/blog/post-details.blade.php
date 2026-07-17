@@ -72,7 +72,7 @@
                                 title="{{ $featuredMedia?->getCustomProperty('title') ?? $post->title }}"
                                 class="rounded-8 w-100">
                             @if ($featuredMedia?->getCustomProperty('caption'))
-                                <figcaption class="text-14 text-light-1 mt-10">{{ $featuredMedia->getCustomProperty('caption') }}</figcaption>
+                                <figcaption class="text-14 text-dark-1 mt-10">{{ $featuredMedia->getCustomProperty('caption') }}</figcaption>
                             @endif
                         </figure>
                     @endif

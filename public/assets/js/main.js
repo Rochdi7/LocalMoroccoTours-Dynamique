@@ -39,6 +39,26 @@ function initialReveal() {
   // Preloader removed — initialize components immediately.
   RevealAnim.init()
   initComponents()
+  revealAnimFallback()
+}
+
+// Safety net for ScrollMagic reveal animations: on some browsers (notably
+// iOS Safari, where the dynamic address bar changes window.innerHeight
+// during scroll) ScrollMagic's trigger calculations can misfire and never
+// add .is-in-view to a section, leaving it permanently invisible (opacity:0
+// + translated off-position) instead of just skipping the animation.
+// After a short grace period, force-reveal anything still hidden so content
+// is never lost — sections that animated normally are unaffected since this
+// only touches elements missing .is-in-view.
+function revealAnimFallback() {
+  setTimeout(function () {
+    document.querySelectorAll('[data-anim]:not(.is-in-view), [data-anim-child]:not(.is-in-view)').forEach(function (el) {
+      el.classList.add('is-in-view');
+    });
+    document.querySelectorAll('[data-anim-wrap]:not(.animated)').forEach(function (el) {
+      el.classList.add('animated');
+    });
+  }, 2000);
 }
 
 // Reloads all scripts when navigating through pages

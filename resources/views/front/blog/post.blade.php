@@ -80,17 +80,18 @@
          <div class="container">
              <div class="row y-gap-30 justify-between">
                  <div class="col-lg-8">
-                     <div class="row y-gap-30">
+                     <div class="row y-gap-60">
 
                          @forelse ($posts as $post)
                              <div class="col-12">
-                                 <a href="{{ route('blog.show', $post->slug) }}" class="pl-blog-list">
-                                     <div class="pl-blog-list__image">
+                                 <a href="{{ route('blog.show', $post->slug) }}" class="blogCard -type-1">
+                                     <div class="blogCard__image ratio ratio-41:30">
                                          <img src="{{ $post->getFirstMediaUrl('featured_image') ?: asset('img/blogCards/1/placeholder.png') }}"
-                                             alt="{{ $post->getFirstMedia('featured_image')?->getCustomProperty('alt') ?? $post->title }}">
+                                             alt="{{ $post->getFirstMedia('featured_image')?->getCustomProperty('alt') ?? $post->title }}"
+                                             class="img-ratio rounded-12">
                                      </div>
 
-                                     <div class="pl-blog-list__content">
+                                     <div class="blogCard__content mt-30">
                                          <div class="d-flex x-gap-10 text-14">
                                              <div class="lh-13">
                                                  {{ $post->published_at?->format('M d Y') }}
@@ -100,7 +101,7 @@
                                              </div>
                                          </div>
 
-                                         <h3 class="blogCard__title text-20 fw-500 lh-15 mt-10">
+                                         <h3 class="blogCard__title text-30 lh-15 mt-10">
                                              {{ $post->title }}
                                          </h3>
 
@@ -193,8 +194,8 @@
                  {{-- SIDEBAR --}}
                  <div class="col-lg-4">
                      <div class="sidebar -type-2">
-                         {{-- Search box (static placeholder) --}}
-                         <div class="sidebar__search">
+                         {{-- Search box --}}
+                         <form action="{{ route('blog.search') }}" method="GET" class="sidebar__search">
                              <i>
                                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -203,19 +204,8 @@
                                          fill="#05073C" />
                                  </svg>
                              </i>
-
-                             <form action="{{ route('blog.search') }}" method="GET" class="sidebar__search">
-                                 <i>
-                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                         <path
-                                             d="M8.20459 1.44849C4.48555 1.44849 1.45605 4.47798 1.45605 8.19703C1.45605 11.9161 4.48555 14.9515 8.20459 14.9515C9.7931 14.9515 11.254 14.3948 12.4087 13.4705L15.2197 16.28C15.3616 16.416 15.5511 16.491 15.7476 16.489C15.944 16.487 16.1319 16.4082 16.271 16.2693C16.41 16.1304 16.4892 15.9427 16.4915 15.7462C16.4937 15.5497 16.419 15.3601 16.2832 15.2181L13.4722 12.407C14.3972 11.2506 14.9546 9.78738 14.9546 8.19703C14.9546 4.47798 11.9236 1.44849 8.20459 1.44849ZM8.20459 2.94851C11.113 2.94851 13.4531 5.28866 13.4531 8.19703C13.4531 11.1054 11.113 13.4514 8.20459 13.4514C5.29621 13.4514 2.95605 11.1054 2.95605 8.19703C2.95605 5.28866 5.29621 2.94851 8.20459 2.94851Z"
-                                             fill="#05073C" />
-                                     </svg>
-                                 </i>
-                                 <input type="text" name="q" placeholder="Search..." value="{{ request('q') }}">
-                             </form>
-                         </div>
+                             <input type="text" name="q" placeholder="Search..." value="{{ request('q') }}">
+                         </form>
 
                          {{-- Categories --}}
                          <div class="sidebar__item">
