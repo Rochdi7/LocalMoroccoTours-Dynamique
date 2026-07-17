@@ -41,9 +41,10 @@ class HomeController extends Controller
         $tourCategories = TourCategory::orderBy('name')->get();
 
         // -----------------------
-        // TOURS
+        // TOURS (multi-day)
         // -----------------------
         $tours = Tour::with(['category', 'location', 'media'])
+            ->where('type', 'multi_day')
             ->withCount('reviews')
             ->orderByDesc('bestseller_flag') // Popular first
             ->latest('id')

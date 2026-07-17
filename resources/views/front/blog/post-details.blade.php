@@ -155,11 +155,12 @@
                         </div>
 
                         <div class="col-auto">
-                            <div class="d-flex x-gap-10">
+                            <div class="d-flex flex-wrap x-gap-10 y-gap-10">
                                 @foreach ($post->tags as $tag)
                                     <div>
                                         <a href="{{ route('blog.tag', $tag->slug) }}"
-                                            class="button -accent-1 border-1 text-14 px-15 py-10 rounded-200">
+                                            class="button -accent-1 border-1 text-14 px-15 py-10 rounded-200"
+                                            style="white-space: nowrap;">
                                             {{ $tag->name }}
                                         </a>
                                     </div>

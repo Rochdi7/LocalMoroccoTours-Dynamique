@@ -832,11 +832,33 @@
     @endif
 
     @if ($locationsForSection->isNotEmpty())
+        <style>
+            /* Round "trending destination" avatar cards — circular image,
+               title and tour count beneath, matching the theme's existing
+               -hover-image-scale interaction pattern but without needing
+               the .featureCard aspect-ratio wrapper. */
+            .destAvatar {
+                display: block;
+                text-align: center;
+            }
+            .destAvatar__image {
+                width: 130px;
+                height: 130px;
+                margin: 0 auto;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+            .destAvatar__image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        </style>
         <section class="layout-pt-xl layout-pb-xl">
             <div data-anim-wrap class="container">
                 <div data-anim-child="slide-up" class="row y-gap-10 justify-between items-end">
                     <div class="col-auto">
-                        <h2 class="text-30">Morocco Destinations</h2>
+                        <h2 class="text-30">Trending Morocco Destinations</h2>
                     </div>
                     <div class="col-auto">
                         <a href="{{ route('front.locations.index') }}" class="buttonArrow d-flex items-center">
@@ -847,8 +869,8 @@
                 </div>
 
                 <div data-anim-child="slide-up delay-2" class="relative pt-40 sm:pt-20">
-                    <div class="overflow-hidden js-section-slider" data-gap="30"
-                        data-slider-cols="xl-5 lg-4 md-2 sm-1 base-1" data-nav-prev="js-slider5-prev"
+                    <div class="overflow-hidden js-section-slider" data-gap="36"
+                        data-slider-cols="xl-8 lg-5 md-4 sm-3 base-2" data-nav-prev="js-slider5-prev"
                         data-nav-next="js-slider5-next">
 
                         <div class="swiper-wrapper">
@@ -858,41 +880,21 @@
                                     $imgUrl = $media?->getUrl() ?? asset('assets/images/aga1.jpg');
                                     $alt = $media?->getCustomProperty('alt') ?? $location->name;
                                     $title = $media?->getCustomProperty('title') ?? $location->name;
-                                    $caption = $media?->getCustomProperty('caption') ?? '';
-                                    $desc = $media?->getCustomProperty('description') ?? '';
                                 @endphp
 
                                 <div class="swiper-slide">
                                     <a href="{{ route('front.locations.show', $location->slug) }}"
-                                        class="featureCard -type-7 -hover-image-scale d-block"
+                                        class="destAvatar -hover-image-scale"
                                         title="{{ $title }}" aria-label="Explore {{ $location->name }}">
-                                        <div
-                                            class="featureCard__image ratio ratio-23:30 -hover-image-scale__image rounded-12">
+                                        <div class="destAvatar__image -hover-image-scale__image">
                                             <img src="{{ $imgUrl }}" alt="{{ $alt }}"
-                                                title="{{ $title }}" class="img-ratio rounded-12 w-100 h-auto"
-                                                loading="lazy" width="460" height="600">
+                                                title="{{ $title }}" loading="lazy" width="130" height="130">
                                         </div>
 
-                                        {{-- Caption/description kept in the DOM for SEO but hidden
-                                         visually (visually-hidden, still read by crawlers/AT). --}}
-                                        @if ($caption)
-                                            <div class="visually-hidden">
-                                                <em>{{ $caption }}</em>
-                                            </div>
-                                        @endif
-
-                                        @if ($desc)
-                                            <div class="visually-hidden">
-                                                {{ \Illuminate\Support\Str::limit($desc, 80) }}
-                                            </div>
-                                        @endif
-
-                                        <div class="mt-20">
-                                            <h3 class="text-18 fw-500">{{ $location->name }}</h3>
-                                            <div class="text-14 lh-13 mt-5">
-                                                {{ $location->tours_count }}
-                                                {{ \Illuminate\Support\Str::plural('Tour', $location->tours_count) }}
-                                            </div>
+                                        <h3 class="text-16 fw-500 mt-20">{{ $location->name }}</h3>
+                                        <div class="text-14 mt-5">
+                                            {{ $location->tours_count }}
+                                            {{ \Illuminate\Support\Str::plural('Tour', $location->tours_count) }}
                                         </div>
                                     </a>
                                 </div>
@@ -1055,10 +1057,10 @@
             <div data-anim-wrap class="container">
                 <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
                     <div class="col-auto">
-                        <h2 class="text-30 md:text-24">Best Morocco Tours</h2>
+                        <h2 class="text-30 md:text-24">Best Morocco Multi-Day Tours</h2>
                     </div>
                     <div class="col-auto">
-                        <a href="{{ route('front.tours.index') }}" class="buttonArrow d-flex items-center">
+                        <a href="{{ route('front.tours.index', ['type' => 'multi_day']) }}" class="buttonArrow d-flex items-center">
                             <span>See all</span>
                             <i class="icon-arrow-top-right text-16 ml-10"></i>
                         </a>
