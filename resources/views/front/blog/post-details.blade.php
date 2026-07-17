@@ -17,13 +17,14 @@
 @endif
 
 @section('content')
-    {{-- Shift the hero image focus downward so the foreground is visible instead of
-         only the sky at the top. Desktop is short & wide, so ease the crop back up;
-         mobile is tall, so anchor to the bottom. Here the <img> is a direct child of
-         .hero__bg (no <figure>), so target the first image only (not the shape svg). --}}
+    {{-- Keep the Koutoubia minaret and square in frame rather than cropping into
+         mostly sky. Desktop is short & wide, so a slight downward bias keeps the
+         square visible; mobile is tall, so anchor further down. Here the <img> is
+         a direct child of .hero__bg (no <figure>), so target the first image only
+         (not the shape svg). --}}
     <style>
         .hero.-page-hero .hero__bg>img:first-of-type {
-            object-position: center 78%;
+            object-position: center 65%;
         }
 
         @media (max-width: 991px) {
@@ -36,9 +37,9 @@
     {{-- HERO SECTION --}}
     <section data-anim="fade" class="hero -type-1 -min-2 -page-hero">
         <div class="hero__bg">
-            <img src="{{ asset('assets/images/hero/fes-tannery-worker-red-dye-vat-morocco.webp') }}"
-                alt="Moroccan tannery worker standing in red dye vat at Fes tannery, Morocco" loading="lazy" width="1152"
-                height="768">
+            <img src="{{ asset('assets/images/hero/medina-marrakech-square-sunset-morocco.webp') }}"
+                alt="Koutoubia Mosque minaret silhouetted against a vivid sunset over Jemaa el-Fnaa square in Marrakech, Morocco"
+                loading="lazy" width="1024" height="683">
             <img src="{{ asset('assets/images/hero/1/shape.svg') }}" alt="Decorative shape">
         </div>
 
