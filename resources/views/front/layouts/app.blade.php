@@ -259,6 +259,7 @@
 <script src="{{ asset('assets/js/vendors.min.js') }}" defer></script>
 <script src="{{ asset('assets/js/main.min.js') }}" defer></script>
 <script src="{{ asset('assets/js/favorites.js') }}" defer></script>
+<script src="{{ asset('assets/js/protect.js') }}" defer></script>
 <script src="{{ asset('assets/js/slider-fix.js') }}" defer></script>
 <script src="{{ asset('assets/js/slider-autoscroll.js') }}" defer></script>
 <script src="{{ asset('assets/js/mobile-css-slider-autoscroll.js') }}" defer></script>
