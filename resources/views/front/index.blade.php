@@ -797,6 +797,19 @@
                 width: 100% !important;
                 object-fit: cover;
             }
+
+            /* iOS Safari fix: the theme layers the image with z-index: -1, but
+               Safari doesn't paint negative z-index children inside transformed
+               (translate3d) ancestors — the reveal animation leaves one on the
+               card's column, so the image never rendered on iPhone. Same visual
+               layering, no negative z-index: image at 0, content above at 1. */
+            .specialCard__image {
+                z-index: 0 !important;
+            }
+            .specialCard__content {
+                position: relative;
+                z-index: 1;
+            }
         </style>
         <section class="layout-pt-xl">
             <div data-anim-wrap class="container">
