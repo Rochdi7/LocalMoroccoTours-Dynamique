@@ -788,56 +788,146 @@
 
 
     @if ($specialOffers->isNotEmpty())
+        {{-- Special Offers — standalone section, deliberately theme-free.
+             The theme's specialCard (absolute image at z-index:-1 + reveal
+             animations) never painted on iOS Safari, so this block uses only
+             its own amaOffer* classes: the image sits in normal flow and sets
+             the card height (no cropping, like the reference design), and the
+             text is overlaid above it. No animations, no negative z-index. --}}
         <style>
-            /* Ensure the special offer image always fills the card (overrides the
-               .h-auto utility so the bottom of the image reaches the card edge,
-               especially on mobile where the card becomes full-width). */
-            .specialCard__image img {
-                height: 100% !important;
-                width: 100% !important;
-                object-fit: cover;
+            .amaOffers {
+                padding-top: 100px;
             }
 
-            /* iOS Safari fix: the theme layers the image with z-index: -1, but
-               Safari doesn't paint negative z-index children inside transformed
-               (translate3d) ancestors — the reveal animation leaves one on the
-               card's column, so the image never rendered on iPhone. Same visual
-               layering, no negative z-index: image at 0, content above at 1. */
-            .specialCard__image {
-                z-index: 0 !important;
+            /* Container geometry mirrors the theme's bootstrap container so the
+               section stays aligned with the rest of the page. */
+            .amaOffers__container {
+                width: 100%;
+                margin: 0 auto;
+                padding: 0 12px;
             }
-            .specialCard__content {
+            @media (min-width: 576px)  { .amaOffers__container { max-width: 540px; } }
+            @media (min-width: 768px)  { .amaOffers__container { max-width: 720px; } }
+            @media (min-width: 992px)  { .amaOffers__container { max-width: 960px; } }
+            @media (min-width: 1200px) { .amaOffers__container { max-width: 1140px; } }
+            @media (min-width: 1400px) { .amaOffers__container { max-width: 1320px; } }
+
+            .amaOffers__heading {
+                font-size: 30px;
+                font-weight: 700;
+                color: #05073C;
+                line-height: 1.3;
+            }
+
+            .amaOffers__grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding-top: 20px;
+            }
+            @media (min-width: 768px) {
+                .amaOffers__grid {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 30px;
+                    padding-top: 40px;
+                }
+            }
+            @media (min-width: 1200px) {
+                .amaOffers__grid {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            .amaOffer {
                 position: relative;
+                display: block;
+                border-radius: 12px;
+                overflow: hidden;
+                color: #fff;
+                text-decoration: none;
+                -webkit-transform: translateZ(0); /* own layer; avoids Safari repaint glitches */
+            }
+
+            /* The artwork renders in normal flow and defines the card height —
+               exactly the uploaded image, uncropped, like the reference. */
+            .amaOffer__bg {
+                display: block;
+                width: 100%;
+                height: auto;
+                border-radius: 12px;
+            }
+
+            .amaOffer__content {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
                 z-index: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                padding: 20px 20px 20px 28px;
+                text-align: left;
+            }
+
+            .amaOffer__subtitle {
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 1.3;
+                margin-bottom: 5px;
+            }
+
+            .amaOffer__title {
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 1.3;
+                text-transform: capitalize;
+                margin: 0;
+            }
+
+            .amaOffer__text {
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 1.3;
+                margin-top: 5px;
+            }
+
+            /* Third card's artwork is light, so its text is brand navy. */
+            .amaOffers__grid > .amaOffer:nth-child(3) {
+                color: #05073C;
+            }
+
+            @media (max-width: 767px) {
+                .amaOffers {
+                    padding-top: 60px;
+                }
+                .amaOffers__heading {
+                    font-size: 24px;
+                }
             }
         </style>
-        <section class="layout-pt-xl">
-            <div data-anim-wrap class="container">
-                <div data-anim-child="slide-up" class="row justify-between items-end y-gap-10">
-                    <div class="col-auto">
-                        <h2 class="text-30 md:text-24">Special Offers</h2>
-                    </div>
-                </div>
 
-                <div class="specialCardGrid row y-gap-30 md:y-gap-20 pt-40 sm:pt-20">
+        <section class="amaOffers">
+            <div class="amaOffers__container">
+                <h2 class="amaOffers__heading">Special Offers</h2>
+
+                <div class="amaOffers__grid">
                     @foreach ($specialOffers as $offer)
-                        <div data-anim-child="slide-up delay-{{ $loop->iteration }}" class="col-xl-4 col-lg-6 col-md-6">
-                            <a href="{{ $offer->link ?? '#' }}" class="specialCard"
-                                aria-label="{{ strip_tags($offer->title) }}">
-                                <div class="specialCard__image">
-                                    <img src="{{ $offer->getFirstMediaUrl('special_offers') }}"
-                                        alt="{{ $offer->getFirstMedia('special_offers')?->getCustomProperty('alt') ?? $offer->title }}"
-                                        title="{{ $offer->getFirstMedia('special_offers')?->getCustomProperty('title') ?? $offer->title }}"
-                                        loading="lazy" width="600" height="400" class="rounded-12 w-100 h-auto">
-                                </div>
+                        <a href="{{ $offer->link ?? '#' }}" class="amaOffer"
+                            aria-label="{{ strip_tags($offer->title) }}">
+                            <img src="{{ $offer->getFirstMediaUrl('special_offers') }}"
+                                alt="{{ $offer->getFirstMedia('special_offers')?->getCustomProperty('alt') ?? $offer->title }}"
+                                title="{{ $offer->getFirstMedia('special_offers')?->getCustomProperty('title') ?? $offer->title }}"
+                                loading="lazy" width="600" height="400" class="amaOffer__bg">
 
-                                <div class="specialCard__content">
-                                    <div class="specialCard__subtitle">{{ $offer->subtitle }}</div>
-                                    <h3 class="specialCard__title">{!! $offer->title !!}</h3>
-                                    <div class="specialCard__text">{{ $offer->text }}</div>
-                                </div>
-                            </a>
-                        </div>
+                            <span class="amaOffer__content">
+                                <span class="amaOffer__subtitle">{{ $offer->subtitle }}</span>
+                                <h3 class="amaOffer__title">{!! $offer->title !!}</h3>
+                                <span class="amaOffer__text">{{ $offer->text }}</span>
+                            </span>
+                        </a>
                     @endforeach
                 </div>
             </div>
