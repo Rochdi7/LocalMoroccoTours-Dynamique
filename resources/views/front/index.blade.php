@@ -916,6 +916,15 @@
     @endif
 
 
+    <style>
+        /* Keep the heading from crowding the souk image on desktop only */
+        @media (min-width: 992px) {
+            .ctaHeading {
+                padding-right: 40px;
+            }
+        }
+    </style>
+
     <section data-anim="slide-up" class="cta -type-4 -style-2">
         <div class="container">
             <div class="cta__content">
@@ -946,7 +955,7 @@
                             </g>
                         </svg>
 
-                        <h2 class="text-24 lh-13">
+                        <h2 class="text-24 lh-13 ctaHeading">
                             Uncover the Magic of Marrakech with Authentic Morocco Adventures
                         </h2>
 

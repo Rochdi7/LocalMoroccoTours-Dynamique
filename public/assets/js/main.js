@@ -37,10 +37,17 @@ window.onload = function () {
 
 function initialReveal() {
   // Preloader removed — initialize components immediately.
+  // Fallback registered FIRST so a component throwing below can't cancel it.
+  revealAnimFallback()
   RevealAnim.init()
   initComponents()
-  revealAnimFallback()
 }
+
+// Extra safety net: window.onload / document.fonts.ready can stall on iOS
+// Safari, in which case initialReveal (and its fallback) never runs. Register
+// the fallback from DOMContentLoaded too — it's idempotent, so double
+// registration is harmless.
+document.addEventListener('DOMContentLoaded', revealAnimFallback);
 
 // Safety net for ScrollMagic reveal animations: on some browsers (notably
 // iOS Safari, where the dynamic address bar changes window.innerHeight
